@@ -13,35 +13,173 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import trophyImg from "@/assets/award-cybersec-trophy.jpeg";
 import ceremonyImg from "@/assets/award-cybersec-ceremony.jpeg";
 import stageImg from "@/assets/award-cybersec-stage.jpeg";
+import nexusCertImg from "@/assets/award-nexus-certificate.jpeg";
+import nexusPres1Img from "@/assets/award-nexus-presentation-1.jpeg";
+import nexusPres2Img from "@/assets/award-nexus-presentation-2.jpeg";
 
-const award = {
-  title: "Digital Retail Guardian Award 2026",
-  date: "April 2026",
-  description:
-    "Awarded to Nexus Select Malls at the CyberSec India Awards 2026 for excellence in safeguarding digital retail infrastructure and demonstrating leadership in enterprise cybersecurity and risk management.",
-  images: [
-    { src: trophyImg, alt: "Digital Retail Guardian Award trophy" },
-    { src: stageImg, alt: "On stage at CyberSec India Awards 2026" },
-    { src: ceremonyImg, alt: "Receiving the award at CyberSec India Expo 2026" },
-  ],
+type AwardImage = { src: string; alt: string };
+type Award = {
+  id: string;
+  title: string;
+  date: string;
+  description: string;
+  images: AwardImage[];
+};
+
+const awards: Award[] = [
+  {
+    id: "digital-retail-guardian",
+    title: "Digital Retail Guardian Award 2026",
+    date: "April 2026",
+    description:
+      "Awarded for excellence in safeguarding digital retail infrastructure and leadership in cybersecurity.",
+    images: [
+      { src: trophyImg, alt: "Digital Retail Guardian Award trophy" },
+      { src: stageImg, alt: "On stage at CyberSec India Awards 2026" },
+      { src: ceremonyImg, alt: "Receiving the award at CyberSec India Expo 2026" },
+    ],
+  },
+  {
+    id: "nexus-one-heroes",
+    title: "Nexus One Heroes Recognition",
+    date: "July 2024",
+    description:
+      "Recognized as a \"Nexus One Hero\" for leadership, dedication, and contributing to organizational excellence.",
+    images: [
+      { src: nexusCertImg, alt: "Nexus One Heroes certificate" },
+      { src: nexusPres1Img, alt: "Receiving the Nexus One Heroes recognition" },
+      { src: nexusPres2Img, alt: "Nexus One Heroes recognition presentation" },
+    ],
+  },
+];
+
+type LightboxState = { awardIndex: number; imageIndex: number } | null;
+
+const AwardCard = ({
+  award,
+  awardIndex,
+  onOpenLightbox,
+}: {
+  award: Award;
+  awardIndex: number;
+  onOpenLightbox: (awardIndex: number, imageIndex: number) => void;
+}) => {
+  const [api, setApi] = useState<CarouselApi | null>(null);
+  const [current, setCurrent] = useState(0);
+
+  const handleSetApi = (a: CarouselApi) => {
+    setApi(a);
+    if (!a) return;
+    a.on("select", () => setCurrent(a.selectedScrollSnap()));
+  };
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="bg-card border border-border rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:border-accent/40 transition-all duration-300 flex flex-col"
+    >
+      {/* Carousel */}
+      <div className="relative bg-muted">
+        <Carousel
+          setApi={handleSetApi}
+          opts={{ loop: true, align: "start" }}
+          className="w-full"
+        >
+          <CarouselContent className="ml-0">
+            {award.images.map((img, idx) => (
+              <CarouselItem key={idx} className="pl-0">
+                <button
+                  type="button"
+                  onClick={() => onOpenLightbox(awardIndex, idx)}
+                  className="block w-full aspect-[4/3] overflow-hidden group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  aria-label={`View ${img.alt}`}
+                >
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </button>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-3 bg-background/80 backdrop-blur border-border hover:bg-background" />
+          <CarouselNext className="right-3 bg-background/80 backdrop-blur border-border hover:bg-background" />
+        </Carousel>
+
+        {/* Dots */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          {award.images.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => api?.scrollTo(idx)}
+              aria-label={`Go to image ${idx + 1}`}
+              className={`h-2 rounded-full transition-all ${
+                current === idx ? "w-6 bg-white" : "w-2 bg-white/60 hover:bg-white"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-6 md:p-7 flex flex-col flex-1">
+        <div className="flex items-center gap-2 text-xs text-accent font-medium mb-3">
+          <Calendar size={14} />
+          <span>{award.date}</span>
+        </div>
+        <h3 className="font-display text-xl md:text-2xl font-semibold text-foreground mb-3 leading-snug">
+          {award.title}
+        </h3>
+        <p className="text-muted-foreground leading-relaxed mb-5 flex-1">
+          {award.description}
+        </p>
+        <button
+          type="button"
+          onClick={() => onOpenLightbox(awardIndex, 0)}
+          className="self-start text-sm font-medium text-accent hover:text-accent/80 transition-colors inline-flex items-center gap-1"
+        >
+          View More Photos →
+        </button>
+      </div>
+    </motion.article>
+  );
 };
 
 const AchievementsSection = () => {
-  const [api, setApi] = useState<CarouselApi | null>(null);
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [lightbox, setLightbox] = useState<LightboxState>(null);
 
-  const openLightbox = (index: number) => setLightboxIndex(index);
-  const closeLightbox = () => setLightboxIndex(null);
+  const openLightbox = (awardIndex: number, imageIndex: number) =>
+    setLightbox({ awardIndex, imageIndex });
+  const closeLightbox = () => setLightbox(null);
+
+  const currentImages = lightbox ? awards[lightbox.awardIndex].images : [];
   const nextImage = () =>
-    setLightboxIndex((i) => (i === null ? 0 : (i + 1) % award.images.length));
+    setLightbox((s) =>
+      s === null
+        ? null
+        : { ...s, imageIndex: (s.imageIndex + 1) % awards[s.awardIndex].images.length },
+    );
   const prevImage = () =>
-    setLightboxIndex((i) =>
-      i === null ? 0 : (i - 1 + award.images.length) % award.images.length,
+    setLightbox((s) =>
+      s === null
+        ? null
+        : {
+            ...s,
+            imageIndex:
+              (s.imageIndex - 1 + awards[s.awardIndex].images.length) %
+              awards[s.awardIndex].images.length,
+          },
     );
 
   return (
     <section id="achievements" className="section-padding bg-section-alt">
-      <div className="container mx-auto max-w-5xl">
+      <div className="container mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -55,94 +193,30 @@ const AchievementsSection = () => {
             Awards & Achievements
           </h2>
           <p className="text-muted-foreground max-w-2xl mb-12">
-            Industry recognition for cybersecurity leadership and digital transformation impact.
+            Industry recognition for cybersecurity leadership and organizational impact.
           </p>
         </motion.div>
 
-        <motion.article
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-card border border-border rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:border-accent/40 transition-all duration-300"
-        >
-          <div className="grid md:grid-cols-2 gap-0">
-            {/* Carousel */}
-            <div className="relative bg-muted">
-              <Carousel
-                setApi={setApi}
-                opts={{ loop: true, align: "start" }}
-                className="w-full h-full"
-              >
-                <CarouselContent className="ml-0">
-                  {award.images.map((img, idx) => (
-                    <CarouselItem key={idx} className="pl-0">
-                      <button
-                        type="button"
-                        onClick={() => openLightbox(idx)}
-                        className="block w-full aspect-[4/3] md:aspect-auto md:h-full overflow-hidden group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                        aria-label={`View ${img.alt}`}
-                      >
-                        <img
-                          src={img.src}
-                          alt={img.alt}
-                          loading="lazy"
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                      </button>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-3 bg-background/80 backdrop-blur border-border hover:bg-background" />
-                <CarouselNext className="right-3 bg-background/80 backdrop-blur border-border hover:bg-background" />
-              </Carousel>
-
-              {/* Thumbnails */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                {award.images.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => api?.scrollTo(idx)}
-                    aria-label={`Go to image ${idx + 1}`}
-                    className="w-2 h-2 rounded-full bg-white/60 hover:bg-white transition-colors"
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 md:p-8 flex flex-col justify-center">
-              <div className="flex items-center gap-2 text-xs text-accent font-medium mb-3">
-                <Calendar size={14} />
-                <span>{award.date}</span>
-              </div>
-              <h3 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-4 leading-snug">
-                {award.title}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                {award.description}
-              </p>
-              <button
-                type="button"
-                onClick={() => openLightbox(0)}
-                className="self-start text-sm font-medium text-accent hover:text-accent/80 transition-colors inline-flex items-center gap-1"
-              >
-                View More Photos →
-              </button>
-            </div>
-          </div>
-        </motion.article>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          {awards.map((award, idx) => (
+            <AwardCard
+              key={award.id}
+              award={award}
+              awardIndex={idx}
+              onOpenLightbox={openLightbox}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Lightbox */}
-      <Dialog open={lightboxIndex !== null} onOpenChange={(open) => !open && closeLightbox()}>
+      <Dialog open={lightbox !== null} onOpenChange={(open) => !open && closeLightbox()}>
         <DialogContent className="max-w-5xl w-[95vw] p-0 bg-background border-border [&>button]:hidden">
-          {lightboxIndex !== null && (
+          {lightbox !== null && (
             <div className="relative">
               <img
-                src={award.images[lightboxIndex].src}
-                alt={award.images[lightboxIndex].alt}
+                src={currentImages[lightbox.imageIndex].src}
+                alt={currentImages[lightbox.imageIndex].alt}
                 className="w-full h-auto max-h-[85vh] object-contain bg-black"
               />
               <button
@@ -168,7 +242,8 @@ const AchievementsSection = () => {
               </button>
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-center">
                 <p className="text-white text-sm">
-                  {award.images[lightboxIndex].alt} ({lightboxIndex + 1}/{award.images.length})
+                  {currentImages[lightbox.imageIndex].alt} ({lightbox.imageIndex + 1}/
+                  {currentImages.length})
                 </p>
               </div>
             </div>

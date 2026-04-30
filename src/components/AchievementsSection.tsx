@@ -20,6 +20,8 @@ import nexus7Years1Img from "@/assets/award-nexus-7years-1.jpeg";
 import nexus7Years2Img from "@/assets/award-nexus-7years-2.jpeg";
 import cybersecMgmtTrophy from "@/assets/award-cybersec-mgmt-trophy.png";
 import cybersecMgmtStage from "@/assets/award-cybersec-mgmt-stage-2.png";
+import cybersecMgmtStage1 from "@/assets/award-cybersec-mgmt-stage-1.png";
+import cybersecMgmtStage3 from "@/assets/award-cybersec-mgmt-stage-3.png";
 
 type AwardImage = { src: string; alt: string };
 type Award = {
@@ -75,6 +77,8 @@ const awards: Award[] = [
     images: [
       { src: cybersecMgmtTrophy, alt: "Best Cybersecurity Management Initiative trophy — CyberSec Awards 2025" },
       { src: cybersecMgmtStage, alt: "Receiving the Best Cybersecurity Management Initiative award on stage" },
+      { src: cybersecMgmtStage1, alt: "On stage at the CyberSec Innovation Summit & Awards 2025" },
+      { src: cybersecMgmtStage3, alt: "Award presentation at CyberSec Innovation Summit & Awards 2025" },
     ],
   },
 ];

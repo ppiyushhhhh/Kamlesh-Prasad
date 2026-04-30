@@ -18,6 +18,8 @@ import nexusPres1Img from "@/assets/award-nexus-presentation-1.jpeg";
 import nexusPres2Img from "@/assets/award-nexus-presentation-2.jpeg";
 import nexus7Years1Img from "@/assets/award-nexus-7years-1.jpeg";
 import nexus7Years2Img from "@/assets/award-nexus-7years-2.jpeg";
+import cybersecMgmtTrophy from "@/assets/award-cybersec-mgmt-trophy.png";
+import cybersecMgmtStage from "@/assets/award-cybersec-mgmt-stage-2.png";
 
 type AwardImage = { src: string; alt: string };
 type Award = {
@@ -62,6 +64,17 @@ const awards: Award[] = [
     images: [
       { src: nexus7Years1Img, alt: "Seven years completion recognition at Nexus Select Malls" },
       { src: nexus7Years2Img, alt: "Nexus Select Malls 7 years milestone celebration" },
+    ],
+  },
+  {
+    id: "best-cybersec-mgmt-initiative",
+    title: "Best Cybersecurity Management Initiative — Nexus Select Malls",
+    date: "2025",
+    description:
+      "Honored at the 2nd Edition CyberSec Innovation Summit & Awards 2025 for spearheading the Best Cybersecurity Management Initiative at Nexus Select Malls.",
+    images: [
+      { src: cybersecMgmtTrophy, alt: "Best Cybersecurity Management Initiative trophy — CyberSec Awards 2025" },
+      { src: cybersecMgmtStage, alt: "Receiving the Best Cybersecurity Management Initiative award on stage" },
     ],
   },
 ];

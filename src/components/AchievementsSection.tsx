@@ -16,6 +16,8 @@ import stageImg from "@/assets/award-cybersec-stage.jpeg";
 import nexusCertImg from "@/assets/award-nexus-certificate.jpeg";
 import nexusPres1Img from "@/assets/award-nexus-presentation-1.jpeg";
 import nexusPres2Img from "@/assets/award-nexus-presentation-2.jpeg";
+import nexus7Years1Img from "@/assets/award-nexus-7years-1.jpeg";
+import nexus7Years2Img from "@/assets/award-nexus-7years-2.jpeg";
 
 type AwardImage = { src: string; alt: string };
 type Award = {
@@ -49,6 +51,17 @@ const awards: Award[] = [
       { src: nexusCertImg, alt: "Nexus One Heroes certificate" },
       { src: nexusPres1Img, alt: "Receiving the Nexus One Heroes recognition" },
       { src: nexusPres2Img, alt: "Nexus One Heroes recognition presentation" },
+    ],
+  },
+  {
+    id: "nexus-select-malls-7-years",
+    title: "Nexus Select Malls — Seven Years Completed",
+    date: "March 2025",
+    description:
+      "Celebrating seven years of dedicated service and leadership at Nexus Select Malls, contributing to sustained operational excellence and team success.",
+    images: [
+      { src: nexus7Years1Img, alt: "Seven years completion recognition at Nexus Select Malls" },
+      { src: nexus7Years2Img, alt: "Nexus Select Malls 7 years milestone celebration" },
     ],
   },
 ];
@@ -197,7 +210,7 @@ const AchievementsSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {awards.map((award, idx) => (
             <AwardCard
               key={award.id}

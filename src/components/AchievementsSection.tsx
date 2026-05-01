@@ -28,6 +28,9 @@ import quanticTrophyImg from "@/assets/award-quantic-trophy.jpeg";
 import quanticStageImg from "@/assets/award-quantic-stage.png";
 import quanticGroup1Img from "@/assets/award-quantic-group-1.png";
 import quanticGroup2Img from "@/assets/award-quantic-group-2.png";
+import appdevsecTrophyImg from "@/assets/award-appdevsec-trophy.png";
+import appdevsecStage1Img from "@/assets/award-appdevsec-stage-1.png";
+import appdevsecStage2Img from "@/assets/award-appdevsec-stage-2.png";
 
 type AwardImage = { src: string; alt: string };
 type Award = {
@@ -109,6 +112,18 @@ const awards: Award[] = [
       { src: quanticStageImg, alt: "Receiving the IT Infrastructure Leader of the Year award on stage" },
       { src: quanticGroup1Img, alt: "Award recipients group photo at Cyber Security Excellence Awards 2023" },
       { src: quanticGroup2Img, alt: "Cyber Security Excellence Awards 2023 ceremony group photo" },
+    ],
+  },
+  {
+    id: "appdevsec-best-grc-strategy",
+    title: "Best GRC Strategy for DevSecOps (Retail) — AppDevSec Show 2025",
+    date: "2025",
+    description:
+      "Awarded at the AppDevSec Show 2025, organized by Quantic, for the Best GRC Strategy for DevSecOps in Retail — recognizing Nexus Select Malls' leadership in embedding governance, risk, and compliance into modern DevSecOps practices.",
+    images: [
+      { src: appdevsecTrophyImg, alt: "Best GRC Strategy for DevSecOps trophy — AppDevSec Show 2025" },
+      { src: appdevsecStage1Img, alt: "Receiving the Best GRC Strategy for DevSecOps award on stage" },
+      { src: appdevsecStage2Img, alt: "Acceptance speech at AppDevSec Show 2025" },
     ],
   },
 ];

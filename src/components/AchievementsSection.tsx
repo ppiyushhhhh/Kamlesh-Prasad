@@ -24,6 +24,10 @@ import cybersecMgmtStage1 from "@/assets/award-cybersec-mgmt-stage-1.png";
 import cybersecMgmtStage3 from "@/assets/award-cybersec-mgmt-stage-3.png";
 import upgradCertImg from "@/assets/award-upgrad-certificate.png";
 import upgradCeremonyImg from "@/assets/award-upgrad-ceremony.jpeg";
+import quanticTrophyImg from "@/assets/award-quantic-trophy.jpeg";
+import quanticStageImg from "@/assets/award-quantic-stage.png";
+import quanticGroup1Img from "@/assets/award-quantic-group-1.png";
+import quanticGroup2Img from "@/assets/award-quantic-group-2.png";
 
 type AwardImage = { src: string; alt: string };
 type Award = {

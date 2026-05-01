@@ -37,11 +37,12 @@ type Award = {
   id: string;
   title: string;
   date: string;
+  sortKey: string; // YYYY-MM for chronological sorting (newest first)
   description: string;
   images: AwardImage[];
 };
 
-const awards: Award[] = [
+const awardsData: Award[] = [
   {
     id: "digital-retail-guardian",
     title: "Digital Retail Guardian Award 2026",

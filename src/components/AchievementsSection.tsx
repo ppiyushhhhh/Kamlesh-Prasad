@@ -24,6 +24,10 @@ import cybersecMgmtStage1 from "@/assets/award-cybersec-mgmt-stage-1.png";
 import cybersecMgmtStage3 from "@/assets/award-cybersec-mgmt-stage-3.png";
 import upgradCertImg from "@/assets/award-upgrad-certificate.png";
 import upgradCeremonyImg from "@/assets/award-upgrad-ceremony.jpeg";
+import quanticTrophyImg from "@/assets/award-quantic-trophy.jpeg";
+import quanticStageImg from "@/assets/award-quantic-stage.png";
+import quanticGroup1Img from "@/assets/award-quantic-group-1.png";
+import quanticGroup2Img from "@/assets/award-quantic-group-2.png";
 
 type AwardImage = { src: string; alt: string };
 type Award = {
@@ -92,6 +96,19 @@ const awards: Award[] = [
     images: [
       { src: upgradCertImg, alt: "upGrad Enterprise Certificate of Appreciation — Lightspeed Learner" },
       { src: upgradCeremonyImg, alt: "Receiving the Leadership Excellence and Development Program certificate" },
+    ],
+  },
+  {
+    id: "quantic-it-infra-leader",
+    title: "IT Infrastructure Leader of the Year (Retail) — Cyber Security Excellence Awards 2023",
+    date: "2023",
+    description:
+      "Honored at the 2nd Annual Cyber Security Excellence Awards 2023, hosted by Quantic, as IT Infrastructure Leader of the Year in the Retail category — recognizing outstanding leadership in securing and scaling enterprise IT infrastructure.",
+    images: [
+      { src: quanticTrophyImg, alt: "IT Infrastructure Leader of the Year trophy — Cyber Security Excellence Awards 2023" },
+      { src: quanticStageImg, alt: "Receiving the IT Infrastructure Leader of the Year award on stage" },
+      { src: quanticGroup1Img, alt: "Award recipients group photo at Cyber Security Excellence Awards 2023" },
+      { src: quanticGroup2Img, alt: "Cyber Security Excellence Awards 2023 ceremony group photo" },
     ],
   },
 ];

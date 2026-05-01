@@ -54,9 +54,20 @@ const Navbar = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const el = document.getElementById(href.replace("#", ""));
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    const id = href.replace("#", "");
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    // Move focus to the section for keyboard/tab users without re-scrolling
+    const prevTabIndex = el.getAttribute("tabindex");
+    if (prevTabIndex === null) el.setAttribute("tabindex", "-1");
+    el.focus({ preventScroll: true });
+
+    // Update the URL hash without jumping
+    if (history.replaceState) {
+      history.replaceState(null, "", `#${id}`);
     }
   };
 

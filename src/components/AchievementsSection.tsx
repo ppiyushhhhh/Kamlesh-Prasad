@@ -265,7 +265,11 @@ const AchievementsSection = () => {
     );
 
   return (
-    <section id="achievements" className="section-padding bg-section-alt">
+    <section
+      id="achievements"
+      tabIndex={-1}
+      className="section-padding bg-section-alt scroll-mt-20 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
+    >
       <div className="container mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

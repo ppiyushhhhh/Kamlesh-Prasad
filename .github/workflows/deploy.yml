@@ -1,4 +1,4 @@
-name: EC2 Deployment
+name: Deploy React Vite App to EC2
 
 on:
   push:
@@ -7,21 +7,42 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to EC2
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to EC2 server
+      - name: Checkout latest code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload build to EC2 temp folder
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 13.203.154.124
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "dist/*"
+          target: "/tmp/kamlesh-deploy"
+
+      - name: Move build to Nginx folder
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: 13.203.154.124
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd ~/kamlesh-prasad-executive
-            git pull origin main
-            npm install
-            npm run build
             sudo rm -rf /var/www/html/*
-            sudo cp -r dist/* /var/www/html/
+            sudo cp -r /tmp/kamlesh-deploy/dist/* /var/www/html/
+            sudo chown -R www-data:www-data /var/www/html
+            sudo nginx -t
             sudo systemctl restart nginx
+            rm -rf /tmp/kamlesh-deploy

@@ -98,6 +98,19 @@ const awards: Award[] = [
       { src: upgradCeremonyImg, alt: "Receiving the Leadership Excellence and Development Program certificate" },
     ],
   },
+  {
+    id: "quantic-it-infra-leader",
+    title: "IT Infrastructure Leader of the Year (Retail) — Cyber Security Excellence Awards 2023",
+    date: "2023",
+    description:
+      "Honored at the 2nd Annual Cyber Security Excellence Awards 2023, hosted by Quantic, as IT Infrastructure Leader of the Year in the Retail category — recognizing outstanding leadership in securing and scaling enterprise IT infrastructure.",
+    images: [
+      { src: quanticTrophyImg, alt: "IT Infrastructure Leader of the Year trophy — Cyber Security Excellence Awards 2023" },
+      { src: quanticStageImg, alt: "Receiving the IT Infrastructure Leader of the Year award on stage" },
+      { src: quanticGroup1Img, alt: "Award recipients group photo at Cyber Security Excellence Awards 2023" },
+      { src: quanticGroup2Img, alt: "Cyber Security Excellence Awards 2023 ceremony group photo" },
+    ],
+  },
 ];
 
 type LightboxState = { awardIndex: number; imageIndex: number } | null;

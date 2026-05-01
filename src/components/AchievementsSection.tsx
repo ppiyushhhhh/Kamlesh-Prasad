@@ -37,15 +37,17 @@ type Award = {
   id: string;
   title: string;
   date: string;
+  sortKey: string; // YYYY-MM for chronological sorting (newest first)
   description: string;
   images: AwardImage[];
 };
 
-const awards: Award[] = [
+const awardsData: Award[] = [
   {
     id: "digital-retail-guardian",
     title: "Digital Retail Guardian Award 2026",
     date: "April 2026",
+    sortKey: "2026-04",
     description:
       "Awarded for excellence in safeguarding digital retail infrastructure and leadership in cybersecurity.",
     images: [
@@ -58,6 +60,7 @@ const awards: Award[] = [
     id: "nexus-one-heroes",
     title: "Nexus One Heroes Recognition",
     date: "July 2024",
+    sortKey: "2024-07",
     description:
       "Recognized as a \"Nexus One Hero\" for leadership, dedication, and contributing to organizational excellence.",
     images: [
@@ -70,6 +73,7 @@ const awards: Award[] = [
     id: "nexus-select-malls-7-years",
     title: "Nexus Select Malls — Seven Years Completed",
     date: "March 2025",
+    sortKey: "2025-03",
     description:
       "Celebrating seven years of dedicated service and leadership at Nexus Select Malls, contributing to sustained operational excellence and team success.",
     images: [
@@ -81,6 +85,7 @@ const awards: Award[] = [
     id: "best-cybersec-mgmt-initiative",
     title: "Best Cybersecurity Management Initiative — Nexus Select Malls",
     date: "2025",
+    sortKey: "2025-06",
     description:
       "Honored at the 2nd Edition CyberSec Innovation Summit & Awards 2025 for spearheading the Best Cybersecurity Management Initiative at Nexus Select Malls.",
     images: [
@@ -94,6 +99,7 @@ const awards: Award[] = [
     id: "upgrad-leadership-excellence",
     title: "Lightspeed Learner — Leadership Excellence & Development Program",
     date: "July 2024",
+    sortKey: "2024-07",
     description:
       "Certificate of Appreciation from upGrad Enterprise & Nexus Quest for being the Lightspeed Learner in the Leadership Excellence and Development Program — recognized for exceptional dedication, enthusiasm, and rapid progress.",
     images: [
@@ -105,6 +111,7 @@ const awards: Award[] = [
     id: "quantic-it-infra-leader",
     title: "IT Infrastructure Leader of the Year (Retail) — Cyber Security Excellence Awards 2023",
     date: "2023",
+    sortKey: "2023-06",
     description:
       "Honored at the 2nd Annual Cyber Security Excellence Awards 2023, hosted by Quantic, as IT Infrastructure Leader of the Year in the Retail category — recognizing outstanding leadership in securing and scaling enterprise IT infrastructure.",
     images: [
@@ -118,6 +125,7 @@ const awards: Award[] = [
     id: "appdevsec-best-grc-strategy",
     title: "Best GRC Strategy for DevSecOps (Retail) — AppDevSec Show 2025",
     date: "2025",
+    sortKey: "2025-06",
     description:
       "Awarded at the AppDevSec Show 2025, organized by Quantic, for the Best GRC Strategy for DevSecOps in Retail — recognizing Nexus Select Malls' leadership in embedding governance, risk, and compliance into modern DevSecOps practices.",
     images: [
@@ -127,6 +135,10 @@ const awards: Award[] = [
     ],
   },
 ];
+
+const awards: Award[] = [...awardsData].sort((a, b) =>
+  b.sortKey.localeCompare(a.sortKey),
+);
 
 type LightboxState = { awardIndex: number; imageIndex: number } | null;
 

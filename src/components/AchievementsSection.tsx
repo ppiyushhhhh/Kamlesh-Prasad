@@ -87,6 +87,8 @@ const awardsData: Award[] = [
       { src: bestTechImpl2024Img4, alt: "CIO Conclave & Awards 2024 ceremony" },
     ],
   },
+  {
+    id: "digital-retail-guardian",
     title: "Digital Retail Guardian Award 2026",
     date: "April 2026",
     sortKey: "2026-04",

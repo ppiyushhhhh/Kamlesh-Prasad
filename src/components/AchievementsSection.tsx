@@ -34,6 +34,10 @@ import appdevsecStage2Img from "@/assets/award-appdevsec-stage-2.png";
 import devopsSecurity2026Img from "@/assets/award-devops-security-2026.jpg";
 import dellTechWorld2025Img1 from "@/assets/dell-tech-world-2025-1.jpg";
 import dellTechWorld2025Img2 from "@/assets/dell-tech-world-2025-2.jpg";
+import bestTechImpl2024Img1 from "@/assets/award-best-tech-impl-2024-1.jpg";
+import bestTechImpl2024Img2 from "@/assets/award-best-tech-impl-2024-2.jpg";
+import bestTechImpl2024Img3 from "@/assets/award-best-tech-impl-2024-3.jpg";
+import bestTechImpl2024Img4 from "@/assets/award-best-tech-impl-2024-4.jpg";
 
 type AwardImage = { src: string; alt: string };
 type Award = {
@@ -67,6 +71,20 @@ const awardsData: Award[] = [
     images: [
       { src: dellTechWorld2025Img1, alt: "Dell Technologies World 2025 at The Venetian Resort, Las Vegas" },
       { src: dellTechWorld2025Img2, alt: "Attending Dell Tech World 2025" },
+    ],
+  },
+  {
+    id: "best-tech-implementation-2024",
+    title: "Best Technology Implementation of the Year — CIO Conclave & Awards 2024",
+    date: "2024",
+    sortKey: "2024-06",
+    description:
+      "Nominated and recognized for \"Best Technology Implementation of the Year\" at the 7th Edition of CIO Conclave & Awards 2024 by UBS Forums. Grateful to Omesh Bhujbal for the unwavering support and to the Jury Members for this proud moment.",
+    images: [
+      { src: bestTechImpl2024Img1, alt: "Best Technology Implementation of the Year — CIO Conclave & Awards 2024" },
+      { src: bestTechImpl2024Img2, alt: "On stage at the 7th Edition CIO Conclave & Awards 2024" },
+      { src: bestTechImpl2024Img3, alt: "Receiving the Best Technology Implementation award" },
+      { src: bestTechImpl2024Img4, alt: "CIO Conclave & Awards 2024 ceremony" },
     ],
   },
   {

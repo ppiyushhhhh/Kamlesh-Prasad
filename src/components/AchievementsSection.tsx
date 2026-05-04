@@ -31,6 +31,7 @@ import quanticGroup2Img from "@/assets/award-quantic-group-2.png";
 import appdevsecTrophyImg from "@/assets/award-appdevsec-trophy.png";
 import appdevsecStage1Img from "@/assets/award-appdevsec-stage-1.png";
 import appdevsecStage2Img from "@/assets/award-appdevsec-stage-2.png";
+import devopsSecurity2026Img from "@/assets/award-devops-security-2026.jpg";
 
 type AwardImage = { src: string; alt: string };
 type Award = {
@@ -43,6 +44,17 @@ type Award = {
 };
 
 const awardsData: Award[] = [
+  {
+    id: "devops-security-expert-2026",
+    title: "DevOps Security Expert of the Year — DevOps 2.0 Confex & Awards 2026",
+    date: "2026",
+    sortKey: "2026-05",
+    description:
+      "Recognized as \"DevOps Security Expert of the Year\" at the DevOps 2.0 Confex & Awards 2026 — Mumbai Chapter, held at ITC Maratha. A proud moment celebrating leadership in building secure, scalable, and modern digital platforms at Nexus Select Malls.",
+    images: [
+      { src: devopsSecurity2026Img, alt: "DevOps Security Expert of the Year — DevOps 2.0 Confex & Awards 2026" },
+    ],
+  },
   {
     id: "digital-retail-guardian",
     title: "Digital Retail Guardian Award 2026",

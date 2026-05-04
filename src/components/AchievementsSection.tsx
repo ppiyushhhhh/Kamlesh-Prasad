@@ -34,6 +34,10 @@ import appdevsecStage2Img from "@/assets/award-appdevsec-stage-2.png";
 import devopsSecurity2026Img from "@/assets/award-devops-security-2026.jpg";
 import dellTechWorld2025Img1 from "@/assets/dell-tech-world-2025-1.jpg";
 import dellTechWorld2025Img2 from "@/assets/dell-tech-world-2025-2.jpg";
+import bestTechImpl2024Img1 from "@/assets/award-best-tech-impl-2024-1.jpg";
+import bestTechImpl2024Img2 from "@/assets/award-best-tech-impl-2024-2.jpg";
+import bestTechImpl2024Img3 from "@/assets/award-best-tech-impl-2024-3.jpg";
+import bestTechImpl2024Img4 from "@/assets/award-best-tech-impl-2024-4.jpg";
 
 type AwardImage = { src: string; alt: string };
 type Award = {

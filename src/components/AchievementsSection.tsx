@@ -74,7 +74,19 @@ const awardsData: Award[] = [
     ],
   },
   {
-    id: "digital-retail-guardian",
+    id: "best-tech-implementation-2024",
+    title: "Best Technology Implementation of the Year — CIO Conclave & Awards 2024",
+    date: "2024",
+    sortKey: "2024-06",
+    description:
+      "Nominated and recognized for \"Best Technology Implementation of the Year\" at the 7th Edition of CIO Conclave & Awards 2024 by UBS Forums. Grateful to Omesh Bhujbal for the unwavering support and to the Jury Members for this proud moment.",
+    images: [
+      { src: bestTechImpl2024Img1, alt: "Best Technology Implementation of the Year — CIO Conclave & Awards 2024" },
+      { src: bestTechImpl2024Img2, alt: "On stage at the 7th Edition CIO Conclave & Awards 2024" },
+      { src: bestTechImpl2024Img3, alt: "Receiving the Best Technology Implementation award" },
+      { src: bestTechImpl2024Img4, alt: "CIO Conclave & Awards 2024 ceremony" },
+    ],
+  },
     title: "Digital Retail Guardian Award 2026",
     date: "April 2026",
     sortKey: "2026-04",

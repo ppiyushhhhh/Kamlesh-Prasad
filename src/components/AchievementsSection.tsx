@@ -32,6 +32,8 @@ import appdevsecTrophyImg from "@/assets/award-appdevsec-trophy.png";
 import appdevsecStage1Img from "@/assets/award-appdevsec-stage-1.png";
 import appdevsecStage2Img from "@/assets/award-appdevsec-stage-2.png";
 import devopsSecurity2026Img from "@/assets/award-devops-security-2026.jpg";
+import dellTechWorld2025Img1 from "@/assets/dell-tech-world-2025-1.jpg";
+import dellTechWorld2025Img2 from "@/assets/dell-tech-world-2025-2.jpg";
 
 type AwardImage = { src: string; alt: string };
 type Award = {
@@ -53,6 +55,18 @@ const awardsData: Award[] = [
       "Recognized as \"DevOps Security Expert of the Year\" at the DevOps 2.0 Confex & Awards 2026 — Mumbai Chapter, held at ITC Maratha. A proud moment celebrating leadership in building secure, scalable, and modern digital platforms at Nexus Select Malls.",
     images: [
       { src: devopsSecurity2026Img, alt: "DevOps Security Expert of the Year — DevOps 2.0 Confex & Awards 2026" },
+    ],
+  },
+  {
+    id: "dell-tech-world-2025",
+    title: "Dell Technologies World 2025 — Invited Attendee",
+    date: "May 2025",
+    sortKey: "2025-05",
+    description:
+      "Privileged to be invited by Dell Technologies to attend Dell Tech World 2025 at The Venetian Resort, Las Vegas — engaging with global leaders on the future of enterprise technology, AI, and infrastructure innovation.",
+    images: [
+      { src: dellTechWorld2025Img1, alt: "Dell Technologies World 2025 at The Venetian Resort, Las Vegas" },
+      { src: dellTechWorld2025Img2, alt: "Attending Dell Tech World 2025" },
     ],
   },
   {

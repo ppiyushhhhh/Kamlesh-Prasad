@@ -104,6 +104,7 @@ const companies: Company[] = [
   },
   {
     name: "Accenture Consulting Services",
+    tenure: "1 year",
     roles: [
       {
         title: "Consulting – IT Infrastructure",

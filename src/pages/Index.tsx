@@ -8,6 +8,7 @@ import CertificationsSection from "@/components/CertificationsSection";
 import EducationSection from "@/components/EducationSection";
 import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
+import { Linkedin } from "lucide-react";
 
 const Index = () => {
   return (

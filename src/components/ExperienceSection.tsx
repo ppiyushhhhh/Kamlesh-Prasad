@@ -50,11 +50,11 @@ interface Company {
 const companies: Company[] = [
   {
     name: "Nexus Malls",
-    tenure: "8 years 3 months",
+    tenure: "9 years",
     roles: [
       {
-        title: "General Manager – Head IT (Dec 2017 – Present)",
-        duration: "Dec 2017 – Present",
+        title: "General Manager – Information Technology & Cyber Security (Dec 2017 – May 2026)",
+        duration: "Dec 2017 – May 2026",
         location: "Mumbai, India",
         highlights: [
           "Primary IT interface to CXOs & Head of Departments, Centre Directors and Finance Heads",

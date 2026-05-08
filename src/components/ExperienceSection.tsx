@@ -146,6 +146,7 @@ const companies: Company[] = [
   },
   {
     name: "Sitel India Pvt Ltd",
+    tenure: "4 years",
     roles: [
       {
         title: "Team Manager",

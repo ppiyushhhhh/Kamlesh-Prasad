@@ -28,7 +28,7 @@ const ProfileSection = () => {
           </h2>
 
           <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-            Senior IT Leader with over 22+ years' experience, including 10+ years in Retail, 8 years in IBM & Accenture, and 4 years in Technical Support Services for India & USA. In the last 8 years, played leadership roles in Digital Transformation, IT Security, Merger IT Integration, Data & Analytics, IT Operations & Business Support Services programs.
+            Senior IT Leader with over 22+ years' experience, including 12+ years in Retail, 8 years in IBM & Accenture, and 4 years in Technical Support Services for India & USA. In the last 8 years, played leadership roles in Digital Transformation, IT Security, Merger IT Integration, Data & Analytics, IT Operations & Business Support Services programs.
           </p>
           <p className="text-muted-foreground text-lg leading-relaxed mb-4">
             Effective at partnering with CXOs, senior leaders & partners to understand strategic goals and provide technological direction & IT roadmaps for delivering digital capabilities in alignment with business strategies. Strong business knowledge with proven ability to lead the strategic planning & delivery of innovative, cost-effective solutions by leveraging emerging technologies.

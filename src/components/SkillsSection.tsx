@@ -64,9 +64,14 @@ const SkillsSection = () => {
             </div>
             <div className="flex flex-wrap gap-3">
               {languages.map((l) => (
-                <span key={l} className="px-4 py-2 bg-muted rounded-md text-sm font-medium text-foreground">
+                <motion.span
+                  key={l}
+                  whileHover={{ y: -2, scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 18 }}
+                  className="px-4 py-2 bg-muted rounded-md text-sm font-medium text-foreground cursor-default transition-colors duration-300 hover:bg-accent hover:text-accent-foreground hover:shadow-md"
+                >
                   {l}
-                </span>
+                </motion.span>
               ))}
             </div>
           </motion.div>

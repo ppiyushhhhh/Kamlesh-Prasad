@@ -85,6 +85,7 @@ const companies: Company[] = [
   },
   {
     name: "Avenue E-Commerce Limited",
+    tenure: "3 years",
     roles: [
       {
         title: "Manager – IT Infrastructure / Start-Up Lead",

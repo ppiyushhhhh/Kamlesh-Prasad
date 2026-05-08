@@ -8,6 +8,15 @@ import CertificationsSection from "@/components/CertificationsSection";
 import EducationSection from "@/components/EducationSection";
 import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
+import { Linkedin } from "lucide-react";
+import ProfileSection from "@/components/ProfileSection";
+import ExperienceSection from "@/components/ExperienceSection";
+import ExpertiseSection from "@/components/ExpertiseSection";
+import AchievementsSection from "@/components/AchievementsSection";
+import CertificationsSection from "@/components/CertificationsSection";
+import EducationSection from "@/components/EducationSection";
+import SkillsSection from "@/components/SkillsSection";
+import ContactSection from "@/components/ContactSection";
 
 const Index = () => {
   return (

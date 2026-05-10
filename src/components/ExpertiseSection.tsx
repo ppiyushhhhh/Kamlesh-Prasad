@@ -8,6 +8,7 @@ import {
   Network,
   BarChart3,
   Users,
+  Lock,
 } from "lucide-react";
 
 const expertise = [
@@ -18,6 +19,7 @@ const expertise = [
   { icon: Network, title: "Program & Vendor Management", desc: "Multi-vendor management with IBM, TCS, Wipro & Accenture. SOW, RFI/RFP, IT Services contracts & negotiations." },
   { icon: HardDrive, title: "M&A IT Integration", desc: "Technology due diligence, knowledge transfer, data migration, employee rebadging, and digital transformation for acquisitions." },
   { icon: Users, title: "Stakeholder Engagement", desc: "Primary IT interface to CXOs, Head of Departments, Centre Directors. Steering committee reviews and business benefits realization." },
+  { icon: Lock, title: "Cyber Security", desc: "End-to-end cyber defense — threat detection, incident response, Zero Trust architecture, VAPT, DPDP Act 2023 readiness, and continuous security posture management across enterprise." },
 ];
 
 const ExpertiseSection = () => {

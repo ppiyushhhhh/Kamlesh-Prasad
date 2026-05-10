@@ -9,6 +9,7 @@ import EducationSection from "@/components/EducationSection";
 import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
 import { Linkedin } from "lucide-react";
+import runtimeLogo from "@/assets/runtime-solutions-logo.png";
 
 const Index = () => {
   return (
@@ -37,6 +38,22 @@ const Index = () => {
             className="inline-flex items-center gap-1 text-primary-foreground/50 hover:text-accent transition-colors duration-200 hover:scale-105 transform"
           >
             <Linkedin size={14} />
+          </a>
+        </div>
+        <div className="mt-3 flex items-center justify-center gap-2 text-primary-foreground/50 text-xs">
+          <span>Powered by Runtime Solutions</span>
+          <a
+            href="https://www.linkedin.com/company/runtime-solutions"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Runtime Solutions on LinkedIn"
+            className="inline-flex items-center transition-transform duration-200 hover:scale-110"
+          >
+            <img
+              src={runtimeLogo}
+              alt="Runtime Solutions logo"
+              className="h-6 w-6 rounded object-cover"
+            />
           </a>
         </div>
       </footer>

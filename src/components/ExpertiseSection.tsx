@@ -12,14 +12,14 @@ import {
 } from "lucide-react";
 
 const expertise = [
-  { icon: ShieldCheck, title: "IT Security & CISO Practice", desc: "SOC, NOC, ITSM, ITAM, BCP-DR, VAPT (Black, Brown & White Box), SIEM, EDR, Zscaler, SSO — leading end-to-end cyber security posture." },
+  { icon: ShieldCheck, title: "IT Security & CISO Practice", desc: "SOC, NOC, ITSM, ITAM, BCP-DR, VAPT (Black, Brown & White Box), SIEM, EDR, Zscaler, SSO. Leading end-to-end cyber security posture." },
   { icon: Server, title: "Digital Transformation", desc: "Spearheaded transformation from 2 malls to 20+ malls. Built 98% Cloud Compute Organization (SaaS, PaaS, IaaS) with zero data loss." },
   { icon: Cloud, title: "Cloud & Infrastructure", desc: "3-Tier DC/DR/NDR deployments, Microsoft 365, hybrid cloud migrations, MPLS networks, SD-WAN, and Active-Active HA configurations." },
   { icon: BarChart3, title: "IT Governance & Compliance", desc: "ITGC, SEBI, CERT-In, DPDP Act, NIST & SANS frameworks. ERM post listing achieving risk score of 3.2 (best in REIT)." },
   { icon: Network, title: "Program & Vendor Management", desc: "Multi-vendor management with IBM, TCS, Wipro & Accenture. SOW, RFI/RFP, IT Services contracts & negotiations." },
   { icon: HardDrive, title: "M&A IT Integration", desc: "Technology due diligence, knowledge transfer, data migration, employee rebadging, and digital transformation for acquisitions." },
   { icon: Users, title: "Stakeholder Engagement", desc: "Primary IT interface to CXOs, Head of Departments, Centre Directors. Steering committee reviews and business benefits realization." },
-  { icon: Lock, title: "Cyber Security", desc: "End-to-end cyber defense — threat detection, incident response, Zero Trust architecture, VAPT, DPDP Act 2023 readiness, and continuous security posture management across enterprise." },
+  { icon: Lock, title: "Cyber Security", desc: "End-to-end cyber defense covering threat detection, incident response, Zero Trust architecture, VAPT, DPDP Act 2023 readiness, and continuous security posture management across the enterprise." },
 ];
 
 const ExpertiseSection = () => {

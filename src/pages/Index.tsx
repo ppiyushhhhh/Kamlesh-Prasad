@@ -40,14 +40,14 @@ const Index = () => {
             <Linkedin size={14} />
           </a>
         </div>
-        <div className="mt-3 flex items-center justify-center gap-2 text-primary-foreground/50 text-xs">
+        <div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-1.5 text-primary-foreground/40 text-xs">
           <span>Powered by Runtime Solutions</span>
           <a
             href="https://www.linkedin.com/company/runtime-solutions"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Runtime Solutions on LinkedIn"
-            className="inline-flex items-center transition-transform duration-200 hover:scale-110"
+            className="inline-flex items-center gap-1 text-primary-foreground/50 hover:text-accent transition-colors duration-200 hover:scale-105 transform"
           >
             <img
               src={runtimeLogo}

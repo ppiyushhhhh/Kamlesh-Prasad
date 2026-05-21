@@ -37,3 +37,12 @@ automation/backup-temp/
 automation/logs/
 automation/state/
 automation/.env
+
+# Automation secrets and generated files
+automation/.env
+automation/logs/
+automation/backups/
+automation/backup-temp/
+automation/backup-reports/
+automation/state/
+automation/node_modules/

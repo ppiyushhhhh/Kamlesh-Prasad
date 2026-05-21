@@ -72,7 +72,7 @@ const companies: Company[] = [
     tenure: "9 years",
     roles: [
       {
-        title: "General Manager – Information Technology & Cyber Security (Dec 2017 – May 2026)",
+        title: "General Manager – Information Technology & Cyber Security",
         duration: "Dec 2017 – May 2026",
         location: "Mumbai, India",
         highlights: [

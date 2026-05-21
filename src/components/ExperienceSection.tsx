@@ -51,6 +51,23 @@ interface Company {
 
 const companies: Company[] = [
   {
+    name: "Runwal Realty",
+    tenure: "Present",
+    roles: [
+      {
+        title: "Chief Technology Officer",
+        duration: "May 2026 – Present",
+        location: "Mumbai, Maharashtra, India",
+        highlights: [
+          "Driving enterprise-wide Digital Transformation across Retail and Real Estate operations",
+          "Leading SAP, Salesforce, and IT Infrastructure modernization programs",
+          "Heading Information Security & Cyber Security practice with Zero Trust posture",
+          "Partnering with CXOs on technology strategy, governance, and business outcomes",
+        ],
+      },
+    ],
+  },
+  {
     name: "Nexus Malls",
     tenure: "9 years",
     roles: [

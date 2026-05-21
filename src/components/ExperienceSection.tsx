@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Briefcase } from "lucide-react";
 
+import runwalLogo from "@/assets/logos/runwal-realty.jfif";
 import nexusLogo from "@/assets/logos/nexus-malls.png";
 import avenueLogo from "@/assets/logos/avenue-ecommerce.jfif";
 import accentureLogo from "@/assets/logos/accenture.jfif";
@@ -9,6 +10,7 @@ import ibmLogo from "@/assets/logos/ibm.jfif";
 import sitelLogo from "@/assets/logos/sitel.jfif";
 
 const companyLogos: Record<string, string> = {
+  "Runwal Realty": runwalLogo,
   "Nexus Malls": nexusLogo,
   "Avenue E-Commerce Limited": avenueLogo,
   "Accenture Consulting Services": accentureLogo,
@@ -48,6 +50,23 @@ interface Company {
 }
 
 const companies: Company[] = [
+  {
+    name: "Runwal Realty",
+    tenure: "Present",
+    roles: [
+      {
+        title: "Chief Technology Officer",
+        duration: "May 2026 – Present",
+        location: "Mumbai, Maharashtra, India",
+        highlights: [
+          "Driving enterprise-wide Digital Transformation across Retail and Real Estate operations",
+          "Leading SAP, Salesforce, and IT Infrastructure modernization programs",
+          "Heading Information Security & Cyber Security practice with Zero Trust posture",
+          "Partnering with CXOs on technology strategy, governance, and business outcomes",
+        ],
+      },
+    ],
+  },
   {
     name: "Nexus Malls",
     tenure: "9 years",

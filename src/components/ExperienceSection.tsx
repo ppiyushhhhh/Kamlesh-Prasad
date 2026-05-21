@@ -78,7 +78,7 @@ const companies: Company[] = [
         highlights: [
           "Primary IT interface to CXOs & Head of Departments, Centre Directors and Finance Heads",
           "Managed prioritization, IT Governance, Steering committee reviews on progress & business benefits realization",
-          "Head IT Security Practice and leads cyber security — SOC, NOC, ITSM, ITAM, CISO practice, BCP-DR",
+          "Head IT Security Practice and leads cyber security - SOC, NOC, ITSM, ITAM, CISO practice, BCP-DR",
           "Accountable for ₹250 Mn annual IT budget, with continuous focus on quality & cost efficiencies",
           "Closely work with M&A Team to initiate knowledge transfer and digital transformation",
           "Worked on SOW, RFI/RFP, IT Services contracts & negotiations in close coordination with commercial teams",

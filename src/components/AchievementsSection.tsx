@@ -52,22 +52,22 @@ type Award = {
 const awardsData: Award[] = [
   {
     id: "devops-security-expert-2026",
-    title: "DevOps Security Expert of the Year — DevOps 2.0 Confex & Awards 2026",
+    title: "DevOps Security Expert of the Year - DevOps 2.0 Confex & Awards 2026",
     date: "2026",
     sortKey: "2026-05",
     description:
-      "Recognized as \"DevOps Security Expert of the Year\" at the DevOps 2.0 Confex & Awards 2026 — Mumbai Chapter, held at ITC Maratha. A proud moment celebrating leadership in building secure, scalable, and modern digital platforms at Nexus Select Malls.",
+      "Recognized as \"DevOps Security Expert of the Year\" at the DevOps 2.0 Confex & Awards 2026 - Mumbai Chapter, held at ITC Maratha. A proud moment celebrating leadership in building secure, scalable, and modern digital platforms at Nexus Select Malls.",
     images: [
-      { src: devopsSecurity2026Img, alt: "DevOps Security Expert of the Year — DevOps 2.0 Confex & Awards 2026" },
+      { src: devopsSecurity2026Img, alt: "DevOps Security Expert of the Year - DevOps 2.0 Confex & Awards 2026" },
     ],
   },
   {
     id: "dell-tech-world-2025",
-    title: "Dell Technologies World 2025 — Invited Attendee",
+    title: "Dell Technologies World 2025 - Invited Attendee",
     date: "May 2025",
     sortKey: "2025-05",
     description:
-      "Privileged to be invited by Dell Technologies to attend Dell Tech World 2025 at The Venetian Resort, Las Vegas — engaging with global leaders on the future of enterprise technology, AI, and infrastructure innovation.",
+      "Privileged to be invited by Dell Technologies to attend Dell Tech World 2025 at The Venetian Resort, Las Vegas - engaging with global leaders on the future of enterprise technology, AI, and infrastructure innovation.",
     images: [
       { src: dellTechWorld2025Img1, alt: "Dell Technologies World 2025 at The Venetian Resort, Las Vegas" },
       { src: dellTechWorld2025Img2, alt: "Attending Dell Tech World 2025" },
@@ -75,13 +75,13 @@ const awardsData: Award[] = [
   },
   {
     id: "best-tech-implementation-2024",
-    title: "Best Technology Implementation of the Year — CIO Conclave & Awards 2024",
+    title: "Best Technology Implementation of the Year - CIO Conclave & Awards 2024",
     date: "2024",
     sortKey: "2024-06",
     description:
       "Nominated and recognized for \"Best Technology Implementation of the Year\" at the 7th Edition of CIO Conclave & Awards 2024 by UBS Forums. Grateful to Omesh Bhujbal for the unwavering support and to the Jury Members for this proud moment.",
     images: [
-      { src: bestTechImpl2024Img1, alt: "Best Technology Implementation of the Year — CIO Conclave & Awards 2024" },
+      { src: bestTechImpl2024Img1, alt: "Best Technology Implementation of the Year - CIO Conclave & Awards 2024" },
       { src: bestTechImpl2024Img2, alt: "On stage at the 7th Edition CIO Conclave & Awards 2024" },
       { src: bestTechImpl2024Img3, alt: "Receiving the Best Technology Implementation award" },
       { src: bestTechImpl2024Img4, alt: "CIO Conclave & Awards 2024 ceremony" },
@@ -115,7 +115,7 @@ const awardsData: Award[] = [
   },
   {
     id: "nexus-select-malls-7-years",
-    title: "Nexus Select Malls — Seven Years Completed",
+    title: "Nexus Select Malls - Seven Years Completed",
     date: "March 2025",
     sortKey: "2025-03",
     description:
@@ -127,13 +127,13 @@ const awardsData: Award[] = [
   },
   {
     id: "best-cybersec-mgmt-initiative",
-    title: "Best Cybersecurity Management Initiative — Nexus Select Malls",
+    title: "Best Cybersecurity Management Initiative - Nexus Select Malls",
     date: "2025",
     sortKey: "2025-06",
     description:
       "Honored at the 2nd Edition CyberSec Innovation Summit & Awards 2025 for spearheading the Best Cybersecurity Management Initiative at Nexus Select Malls.",
     images: [
-      { src: cybersecMgmtTrophy, alt: "Best Cybersecurity Management Initiative trophy — CyberSec Awards 2025" },
+      { src: cybersecMgmtTrophy, alt: "Best Cybersecurity Management Initiative trophy - CyberSec Awards 2025" },
       { src: cybersecMgmtStage, alt: "Receiving the Best Cybersecurity Management Initiative award on stage" },
       { src: cybersecMgmtStage1, alt: "On stage at the CyberSec Innovation Summit & Awards 2025" },
       { src: cybersecMgmtStage3, alt: "Award presentation at CyberSec Innovation Summit & Awards 2025" },
@@ -141,25 +141,25 @@ const awardsData: Award[] = [
   },
   {
     id: "upgrad-leadership-excellence",
-    title: "Lightspeed Learner — Leadership Excellence & Development Program",
+    title: "Lightspeed Learner - Leadership Excellence & Development Program",
     date: "July 2024",
     sortKey: "2024-07",
     description:
-      "Certificate of Appreciation from upGrad Enterprise & Nexus Quest for being the Lightspeed Learner in the Leadership Excellence and Development Program — recognized for exceptional dedication, enthusiasm, and rapid progress.",
+      "Certificate of Appreciation from upGrad Enterprise & Nexus Quest for being the Lightspeed Learner in the Leadership Excellence and Development Program - recognized for exceptional dedication, enthusiasm, and rapid progress.",
     images: [
-      { src: upgradCertImg, alt: "upGrad Enterprise Certificate of Appreciation — Lightspeed Learner" },
+      { src: upgradCertImg, alt: "upGrad Enterprise Certificate of Appreciation - Lightspeed Learner" },
       { src: upgradCeremonyImg, alt: "Receiving the Leadership Excellence and Development Program certificate" },
     ],
   },
   {
     id: "quantic-it-infra-leader",
-    title: "IT Infrastructure Leader of the Year (Retail) — Cyber Security Excellence Awards 2023",
+    title: "IT Infrastructure Leader of the Year (Retail) - Cyber Security Excellence Awards 2023",
     date: "2023",
     sortKey: "2023-06",
     description:
-      "Honored at the 2nd Annual Cyber Security Excellence Awards 2023, hosted by Quantic, as IT Infrastructure Leader of the Year in the Retail category — recognizing outstanding leadership in securing and scaling enterprise IT infrastructure.",
+      "Honored at the 2nd Annual Cyber Security Excellence Awards 2023, hosted by Quantic, as IT Infrastructure Leader of the Year in the Retail category - recognizing outstanding leadership in securing and scaling enterprise IT infrastructure.",
     images: [
-      { src: quanticTrophyImg, alt: "IT Infrastructure Leader of the Year trophy — Cyber Security Excellence Awards 2023" },
+      { src: quanticTrophyImg, alt: "IT Infrastructure Leader of the Year trophy - Cyber Security Excellence Awards 2023" },
       { src: quanticStageImg, alt: "Receiving the IT Infrastructure Leader of the Year award on stage" },
       { src: quanticGroup1Img, alt: "Award recipients group photo at Cyber Security Excellence Awards 2023" },
       { src: quanticGroup2Img, alt: "Cyber Security Excellence Awards 2023 ceremony group photo" },
@@ -167,13 +167,13 @@ const awardsData: Award[] = [
   },
   {
     id: "appdevsec-best-grc-strategy",
-    title: "Best GRC Strategy for DevSecOps (Retail) — AppDevSec Show 2025",
+    title: "Best GRC Strategy for DevSecOps (Retail) - AppDevSec Show 2025",
     date: "2025",
     sortKey: "2025-06",
     description:
-      "Awarded at the AppDevSec Show 2025, organized by Quantic, for the Best GRC Strategy for DevSecOps in Retail — recognizing Nexus Select Malls' leadership in embedding governance, risk, and compliance into modern DevSecOps practices.",
+      "Awarded at the AppDevSec Show 2025, organized by Quantic, for the Best GRC Strategy for DevSecOps in Retail - recognizing Nexus Select Malls' leadership in embedding governance, risk, and compliance into modern DevSecOps practices.",
     images: [
-      { src: appdevsecTrophyImg, alt: "Best GRC Strategy for DevSecOps trophy — AppDevSec Show 2025" },
+      { src: appdevsecTrophyImg, alt: "Best GRC Strategy for DevSecOps trophy - AppDevSec Show 2025" },
       { src: appdevsecStage1Img, alt: "Receiving the Best GRC Strategy for DevSecOps award on stage" },
       { src: appdevsecStage2Img, alt: "Acceptance speech at AppDevSec Show 2025" },
     ],

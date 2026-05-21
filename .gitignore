@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Automation secrets and generated files
+automation/.env
+automation/reports/
+automation/logs/
+automation/state/
+automation/node_modules/
+automation/package-lock.json

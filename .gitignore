@@ -30,3 +30,10 @@ automation/logs/
 automation/state/
 automation/node_modules/
 automation/package-lock.json
+
+# Backup automation generated files
+automation/backups/
+automation/backup-temp/
+automation/logs/
+automation/state/
+automation/.env

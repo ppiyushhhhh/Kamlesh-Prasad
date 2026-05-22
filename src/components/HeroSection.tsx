@@ -34,8 +34,13 @@ const HeroSection = () => {
               <img
                 src={kamleshPhoto}
                 alt="Kamlesh Prasad"
+                width={288}
+                height={288}
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
+
             </div>
           </motion.div>
 

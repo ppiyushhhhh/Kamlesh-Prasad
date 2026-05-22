@@ -1,0 +1,13 @@
+# Kamlesh Prasad
+
+> Personal site of Kamlesh Prasad — Chief Technology Officer with 20+ years of experience leading IT operations, infrastructure, cyber security, and digital transformation for large enterprises.
+
+Kamlesh Prasad is currently CTO at Runwal Realty (Mumbai, India). The site presents his professional profile, experience, expertise, recognition, certifications, and education — intended for executives, recruiters, and partners evaluating senior technology leadership.
+
+## Pages
+
+- [Home](/): Single-page profile with hero intro, professional summary, experience timeline, expertise, recognition, certifications, education, skills, and contact.
+
+## Optional
+
+- [LinkedIn](https://www.linkedin.com/in/kamleshsprasad0512/): Professional LinkedIn profile.

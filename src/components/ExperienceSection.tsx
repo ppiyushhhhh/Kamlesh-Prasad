@@ -199,8 +199,7 @@ const ExperienceSection = () => {
         </motion.div>
 
         <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-border" />
+
 
           <div className="space-y-12">
             {companies.map((company, ci) => (

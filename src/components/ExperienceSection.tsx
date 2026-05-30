@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Briefcase } from "lucide-react";
+
 
 import runwalLogo from "@/assets/logos/runwal-realty.jfif";
 import nexusLogo from "@/assets/logos/nexus-malls.png";
@@ -199,8 +199,7 @@ const ExperienceSection = () => {
         </motion.div>
 
         <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-border" />
+
 
           <div className="space-y-12">
             {companies.map((company, ci) => (
@@ -212,9 +211,6 @@ const ExperienceSection = () => {
               >
                 {/* Company header */}
                 <div className="flex items-start md:items-center gap-4 mb-6 pl-2">
-                  <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-primary flex items-center justify-center flex-shrink-0 z-10 shadow-md">
-                    <Briefcase className="text-primary-foreground" size={18} />
-                  </div>
                   <div className="flex flex-col md:flex-row md:items-center gap-3">
                     <CompanyLogo name={company.name} />
                     <div>
@@ -229,7 +225,7 @@ const ExperienceSection = () => {
                 </div>
 
                 {/* Roles */}
-                <div className="ml-16 md:ml-20 space-y-6">
+                <div className="space-y-6">
                   {company.roles.map((role, ri) => (
                     <motion.div
                       key={role.title}

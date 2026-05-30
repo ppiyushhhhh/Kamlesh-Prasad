@@ -212,9 +212,6 @@ const ExperienceSection = () => {
               >
                 {/* Company header */}
                 <div className="flex items-start md:items-center gap-4 mb-6 pl-2">
-                  <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-primary flex items-center justify-center flex-shrink-0 z-10 shadow-md">
-                    <Briefcase className="text-primary-foreground" size={18} />
-                  </div>
                   <div className="flex flex-col md:flex-row md:items-center gap-3">
                     <CompanyLogo name={company.name} />
                     <div>

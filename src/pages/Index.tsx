@@ -52,8 +52,9 @@ const Index = () => {
             <img
               src={runtimeLogo}
               alt="Runtime Solutions logo"
-              className="h-6 w-6 rounded object-cover"
+              className="h-6 w-6 rounded object-cover animate-logo-float transition-transform duration-300 hover:scale-110 hover:rotate-3"
             />
+
           </a>
         </div>
       </footer>

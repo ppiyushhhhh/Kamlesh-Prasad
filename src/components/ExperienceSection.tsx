@@ -225,7 +225,7 @@ const ExperienceSection = () => {
                 </div>
 
                 {/* Roles */}
-                <div className="ml-16 md:ml-20 space-y-6">
+                <div className="space-y-6">
                   {company.roles.map((role, ri) => (
                     <motion.div
                       key={role.title}

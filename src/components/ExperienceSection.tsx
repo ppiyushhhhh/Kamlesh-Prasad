@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Briefcase } from "lucide-react";
+
 
 import runwalLogo from "@/assets/logos/runwal-realty.jfif";
 import nexusLogo from "@/assets/logos/nexus-malls.png";

@@ -197,6 +197,7 @@ const AwardCard = ({
 }) => {
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [current, setCurrent] = useState(0);
+  const [expanded, setExpanded] = useState(false);
 
   const handleSetApi = (a: CarouselApi) => {
     setApi(a);
@@ -204,13 +205,15 @@ const AwardCard = ({
     a.on("select", () => setCurrent(a.selectedScrollSnap()));
   };
 
+  const isLongDescription = award.description.length > 180;
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="bg-card border border-border rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:border-accent/40 transition-all duration-300 flex flex-col"
+      className="h-full bg-card border border-border rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:border-accent/40 transition-all duration-300 flex flex-col"
     >
       {/* Carousel */}
       <div className="relative bg-muted">
@@ -225,7 +228,7 @@ const AwardCard = ({
                 <button
                   type="button"
                   onClick={() => onOpenLightbox(awardIndex, idx)}
-                  className="block w-full aspect-[4/3] overflow-hidden group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="block w-full h-[200px] sm:h-[220px] lg:h-[240px] overflow-hidden group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   aria-label={`View ${img.alt}`}
                 >
                   <img
@@ -238,42 +241,61 @@ const AwardCard = ({
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="left-3 bg-background/80 backdrop-blur border-border hover:bg-background" />
-          <CarouselNext className="right-3 bg-background/80 backdrop-blur border-border hover:bg-background" />
+          {award.images.length > 1 && (
+            <>
+              <CarouselPrevious className="left-2 h-7 w-7 bg-background/70 backdrop-blur border-border hover:bg-background [&_svg]:h-3.5 [&_svg]:w-3.5" />
+              <CarouselNext className="right-2 h-7 w-7 bg-background/70 backdrop-blur border-border hover:bg-background [&_svg]:h-3.5 [&_svg]:w-3.5" />
+            </>
+          )}
         </Carousel>
 
         {/* Dots */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-          {award.images.map((_, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => api?.scrollTo(idx)}
-              aria-label={`Go to image ${idx + 1}`}
-              className={`h-2 rounded-full transition-all ${
-                current === idx ? "w-6 bg-white" : "w-2 bg-white/60 hover:bg-white"
-              }`}
-            />
-          ))}
-        </div>
+        {award.images.length > 1 && (
+          <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+            {award.images.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => api?.scrollTo(idx)}
+                aria-label={`Go to image ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all ${
+                  current === idx ? "w-4 bg-white" : "w-1.5 bg-white/60 hover:bg-white"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Content */}
-      <div className="p-6 md:p-7 flex flex-col flex-1">
-        <div className="flex items-center gap-2 text-xs text-accent font-medium mb-3">
+      <div className="p-5 md:p-6 flex flex-col flex-1">
+        <div className="flex items-center gap-2 text-xs text-accent font-medium mb-2.5">
           <Calendar size={14} />
           <span>{award.date}</span>
         </div>
-        <h3 className="font-display text-xl md:text-2xl font-semibold text-foreground mb-3 leading-snug">
+        <h3 className="font-display text-lg md:text-xl font-semibold text-foreground mb-2.5 leading-snug line-clamp-2 min-h-[3.25rem]">
           {award.title}
         </h3>
-        <p className="text-muted-foreground leading-relaxed mb-5 flex-1">
+        <p
+          className={`text-sm text-muted-foreground leading-relaxed ${
+            expanded ? "" : "line-clamp-4"
+          }`}
+        >
           {award.description}
         </p>
+        {isLongDescription && (
+          <button
+            type="button"
+            onClick={() => setExpanded((v) => !v)}
+            className="self-start mt-1 text-sm font-medium text-accent hover:text-accent/80 transition-colors"
+          >
+            {expanded ? "Read Less" : "Read More"}
+          </button>
+        )}
         <button
           type="button"
           onClick={() => onOpenLightbox(awardIndex, 0)}
-          className="self-start text-sm font-medium text-accent hover:text-accent/80 transition-colors inline-flex items-center gap-1"
+          className="self-start mt-auto pt-4 text-sm font-medium text-accent hover:text-accent/80 transition-colors inline-flex items-center gap-1"
         >
           View More Photos →
         </button>

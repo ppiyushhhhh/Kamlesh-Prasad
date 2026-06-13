@@ -55,7 +55,7 @@ const companies: Company[] = [
     tenure: "Present",
     roles: [
       {
-        title: "Chief Technology Officer",
+        title: "Chief Technology Officer (CTO)",
         duration: "May 2026 – Present",
         location: "Mumbai, Maharashtra, India",
         highlights: [

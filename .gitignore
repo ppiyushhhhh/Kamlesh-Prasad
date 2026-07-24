@@ -46,3 +46,7 @@ automation/backup-temp/
 automation/backup-reports/
 automation/state/
 automation/node_modules/
+
+# Root-level generated reports (should live in automation/*-reports/)
+/backup-report-*.pdf
+/daily-report-*.pdf

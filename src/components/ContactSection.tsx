@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Mail, Linkedin, MapPin, Loader2, Send } from "lucide-react";
+import { useRef, useState } from "react";
+import { Mail, Linkedin, MapPin, Loader2, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -8,6 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+
+const WEB3FORMS_ACCESS_KEY = "d637843b-ba24-444c-82d7-f296deaceea5";
+
 
 const contactSchema = z.object({
   name: z
@@ -54,14 +57,39 @@ const ContactSection = () => {
     },
   });
 
-  const onSubmit = async (_data: ContactFormValues) => {
-    // Web3Forms integration point:
-    // Add the endpoint POST https://api.web3forms.com/submit with the access_key.
-    // The form field names (name, email, subject, message) are already aligned.
-    // Simulating network delay to demonstrate loading state without a fake success message.
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    reset();
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const onSubmit = async (data: ContactFormValues) => {
+    setStatus("idle");
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          name: data.name,
+          email: data.email,
+          subject: data.subject,
+          message: data.message,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setStatus("success");
+        reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
+
 
   const inputBaseClasses =
     "bg-hero-foreground/5 border-hero-foreground/10 text-hero-foreground placeholder:text-hero-muted/60 focus-visible:ring-gold focus-visible:ring-offset-0 transition-colors hover:border-hero-foreground/20";
@@ -200,7 +228,35 @@ const ContactSection = () => {
               )}
             </div>
 
+            {status === "success" && (
+              <div
+                role="status"
+                className="flex items-start gap-3 rounded-md border border-gold/30 bg-gold/10 p-4 text-left"
+              >
+                <CheckCircle2 className="h-5 w-5 text-gold shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-semibold text-hero-foreground">Message Sent Successfully</p>
+                  <p className="text-sm text-hero-muted">
+                    Thank you for reaching out. Your message has been received successfully.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {status === "error" && (
+              <div
+                role="alert"
+                className="flex items-start gap-3 rounded-md border border-red-400/30 bg-red-400/10 p-4 text-left"
+              >
+                <AlertCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
+                <p className="text-sm text-hero-foreground">
+                  Unable to send your message. Please try again.
+                </p>
+              </div>
+            )}
+
             <div className="pt-2">
+
               <Button
                 type="submit"
                 disabled={isSubmitting}

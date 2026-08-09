@@ -228,7 +228,35 @@ const ContactSection = () => {
               )}
             </div>
 
+            {status === "success" && (
+              <div
+                role="status"
+                className="flex items-start gap-3 rounded-md border border-gold/30 bg-gold/10 p-4 text-left"
+              >
+                <CheckCircle2 className="h-5 w-5 text-gold shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-semibold text-hero-foreground">Message Sent Successfully</p>
+                  <p className="text-sm text-hero-muted">
+                    Thank you for reaching out. Your message has been received successfully.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {status === "error" && (
+              <div
+                role="alert"
+                className="flex items-start gap-3 rounded-md border border-red-400/30 bg-red-400/10 p-4 text-left"
+              >
+                <AlertCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
+                <p className="text-sm text-hero-foreground">
+                  Unable to send your message. Please try again.
+                </p>
+              </div>
+            )}
+
             <div className="pt-2">
+
               <Button
                 type="submit"
                 disabled={isSubmitting}

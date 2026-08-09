@@ -63,7 +63,7 @@ const ThankYou = () => {
             >
               <Link
                 to="/"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-gold text-primary-foreground font-semibold rounded-md hover:opacity-90 transition-opacity"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-gold text-primary font-semibold rounded-md hover:opacity-90 transition-opacity"
               >
                 <ArrowLeft size={18} />
                 Back to Portfolio

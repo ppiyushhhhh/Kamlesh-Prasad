@@ -61,6 +61,9 @@ const Index = () => {
           </a>
         </div>
       </footer>
+      <Suspense fallback={null}>
+        <ChatWidget />
+      </Suspense>
     </div>
   );
 };

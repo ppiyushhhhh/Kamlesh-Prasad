@@ -62,35 +62,53 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
     { role: "user", parts: [{ text: rawMessage }] },
   ];
 
-  try {
+  const callGemini = async () => {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 25_000);
+    try {
+      return await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: KAMLESH_SYSTEM_PROMPT }] },
+            contents,
+            generationConfig: {
+              temperature: 0.3,
+              maxOutputTokens: 2048,
+              thinkingConfig: { thinkingBudget: 0 },
+            },
+          }),
+          signal: controller.signal,
+        },
+      );
+    } finally {
+      clearTimeout(timeout);
+    }
+  };
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: KAMLESH_SYSTEM_PROMPT }] },
-          contents,
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 2048,
-            thinkingConfig: { thinkingBudget: 0 },
-          },
-        }),
-        signal: controller.signal,
-      },
-    );
+  try {
+    let response = await callGemini();
 
-    clearTimeout(timeout);
+    // Free-tier rate limits are per-minute; one short retry smooths brief bursts.
+    if (response.status === 429 || response.status >= 500) {
+      await new Promise((r) => setTimeout(r, 1500));
+      response = await callGemini();
+    }
 
     if (!response.ok) {
       const details = await response.text();
       console.error(`Gemini request failed [${response.status}]: ${details}`);
+      if (response.status === 429) {
+        return {
+          status: 429,
+          payload: { error: "I'm getting a lot of questions right now. Please try again in a moment." },
+        };
+      }
       return { status: 502, payload: { error: GENERIC_ERROR } };
     }
+
 
     const data = (await response.json()) as {
       candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;

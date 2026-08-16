@@ -10,6 +10,9 @@ import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
 import { Linkedin } from "lucide-react";
 import runtimeLogo from "@/assets/runtime-solutions-logo.png";
+import { lazy, Suspense } from "react";
+
+const ChatWidget = lazy(() => import("@/components/ChatWidget"));
 
 const Index = () => {
   return (
@@ -58,6 +61,9 @@ const Index = () => {
           </a>
         </div>
       </footer>
+      <Suspense fallback={null}>
+        <ChatWidget />
+      </Suspense>
     </div>
   );
 };

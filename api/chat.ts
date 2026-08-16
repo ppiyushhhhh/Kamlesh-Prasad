@@ -74,7 +74,11 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: KAMLESH_SYSTEM_PROMPT }] },
           contents,
-          generationConfig: { temperature: 0.3, maxOutputTokens: 800 },
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 2048,
+            thinkingConfig: { thinkingBudget: 0 },
+          },
         }),
         signal: controller.signal,
       },

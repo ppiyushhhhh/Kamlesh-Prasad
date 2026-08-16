@@ -51,7 +51,7 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
     return { status: 503, payload: { error: GENERIC_ERROR } };
   }
 
-  const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+  const model = process.env.GEMINI_MODEL || "gemini-flash-latest";
   const history = sanitizeHistory(body?.history);
 
   const contents = [

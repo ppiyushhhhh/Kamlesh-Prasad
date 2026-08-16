@@ -51,7 +51,10 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
     return { status: 503, payload: { error: GENERIC_ERROR } };
   }
 
-  const model = process.env.GEMINI_MODEL || "gemini-flash-latest";
+  // Primary model has a very small free-tier quota; the lite model has a much
+  // larger one, so it is used first and the heavier model is the fallback.
+  const primaryModel = process.env.GEMINI_MODEL || "gemini-flash-lite-latest";
+  const fallbackModel = process.env.GEMINI_FALLBACK_MODEL || "gemini-flash-latest";
   const history = sanitizeHistory(body?.history);
 
   const contents = [
@@ -62,7 +65,7 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
     { role: "user", parts: [{ text: rawMessage }] },
   ];
 
-  const callGemini = async () => {
+  const callGemini = async (model: string) => {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 25_000);
     try {
@@ -77,7 +80,6 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
             generationConfig: {
               temperature: 0.3,
               maxOutputTokens: 2048,
-              thinkingConfig: { thinkingBudget: 0 },
             },
           }),
           signal: controller.signal,
@@ -89,13 +91,18 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
   };
 
   try {
-    let response = await callGemini();
+    let response = await callGemini(primaryModel);
 
-    // Free-tier rate limits are per-minute; one short retry smooths brief bursts.
+    // Quota/transient failures: retry once, then try the fallback model.
     if (response.status === 429 || response.status >= 500) {
       await new Promise((r) => setTimeout(r, 1500));
-      response = await callGemini();
+      response = await callGemini(primaryModel);
     }
+    if (!response.ok && fallbackModel && fallbackModel !== primaryModel) {
+      const alt = await callGemini(fallbackModel);
+      if (alt.ok) response = alt;
+    }
+
 
     if (!response.ok) {
       const details = await response.text();

@@ -32,6 +32,16 @@ function sanitizeHistory(history: unknown): HistoryItem[] {
     .map((h) => ({ role: h.role, content: h.content.slice(0, MAX_MESSAGE_LENGTH) }));
 }
 
+export function resolveApiKey(): string | undefined {
+  const candidates = [
+    process.env.GEMINI_API_KEY,
+    process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+    process.env.GOOGLE_API_KEY,
+    process.env.VITE_GEMINI_API_KEY,
+  ];
+  return candidates.find((v) => typeof v === "string" && v.trim().length > 0)?.trim();
+}
+
 export async function handleChat(body: ChatRequest): Promise<{ status: number; payload: Record<string, unknown> }> {
   const rawMessage = typeof body?.message === "string" ? body.message.trim() : "";
 
@@ -45,9 +55,9 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
     };
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = resolveApiKey();
   if (!apiKey) {
-    console.error("GEMINI_API_KEY is not configured");
+    console.error("No Gemini API key configured (checked GEMINI_API_KEY, GOOGLE_GENERATIVE_AI_API_KEY, GOOGLE_API_KEY)");
     return { status: 503, payload: { error: GENERIC_ERROR } };
   }
 
@@ -66,10 +76,7 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
   ];
 
   const callGemini = async (model: string) => {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 25_000);
-    try {
-      return await fetch(
+    return await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
         {
           method: "POST",
@@ -82,12 +89,8 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
               maxOutputTokens: 2048,
             },
           }),
-          signal: controller.signal,
         },
-      );
-    } finally {
-      clearTimeout(timeout);
-    }
+    );
   };
 
   try {
@@ -150,6 +153,13 @@ interface VercelLikeResponse {
 
 export default async function handler(req: VercelLikeRequest, res: VercelLikeResponse) {
   res.setHeader("Cache-Control", "no-store");
+
+  // Health check: lets you verify from the browser whether the key is wired up
+  // in the deployment environment, without ever exposing its value.
+  if (req.method === "GET") {
+    res.status(200).json({ ok: true, keyConfigured: Boolean(resolveApiKey()) });
+    return;
+  }
 
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });

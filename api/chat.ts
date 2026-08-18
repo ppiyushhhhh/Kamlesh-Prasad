@@ -2,7 +2,7 @@ import { KAMLESH_SYSTEM_PROMPT } from "./_knowledge";
 
 /**
  * Vercel serverless function: POST /api/chat
- * The OpenAI API key is read from the server-side env var OPENAI_API_KEY
+ * The Gemini API key is read from the server-side env var GEMINI_API_KEY
  * and is never sent to the browser.
  */
 
@@ -33,7 +33,12 @@ function sanitizeHistory(history: unknown): HistoryItem[] {
 }
 
 export function resolveApiKey(): string | undefined {
-  const candidates = [process.env.OPENAI_API_KEY, process.env.OPENAI_KEY];
+  const candidates = [
+    process.env.GEMINI_API_KEY,
+    process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+    process.env.GOOGLE_API_KEY,
+    process.env.VITE_GEMINI_API_KEY,
+  ];
   return candidates.find((v) => typeof v === "string" && v.trim().length > 0)?.trim();
 }
 
@@ -52,52 +57,58 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
 
   const apiKey = resolveApiKey();
   if (!apiKey) {
-    console.error("No OpenAI API key configured (checked OPENAI_API_KEY, OPENAI_KEY)");
+    console.error("No Gemini API key configured (checked GEMINI_API_KEY, GOOGLE_GENERATIVE_AI_API_KEY, GOOGLE_API_KEY)");
     return { status: 503, payload: { error: GENERIC_ERROR } };
   }
 
-  const primaryModel = process.env.OPENAI_MODEL || "gpt-4o-mini";
-  const fallbackModel = process.env.OPENAI_FALLBACK_MODEL || "gpt-4.1-mini";
+  // The lite model has a much larger free-tier quota, so it is used first and
+  // the heavier model is the fallback.
+  const primaryModel = process.env.GEMINI_MODEL || "gemini-flash-lite-latest";
+  const fallbackModel = process.env.GEMINI_FALLBACK_MODEL || "gemini-flash-latest";
   const history = sanitizeHistory(body?.history);
 
-  const messages = [
-    { role: "system", content: KAMLESH_SYSTEM_PROMPT },
-    ...history.map((h) => ({ role: h.role, content: h.content })),
-    { role: "user", content: rawMessage },
+  const contents = [
+    ...history.map((h) => ({
+      role: h.role === "assistant" ? "model" : "user",
+      parts: [{ text: h.content }],
+    })),
+    { role: "user", parts: [{ text: rawMessage }] },
   ];
 
-  const callOpenAI = async (model: string) => {
-    return await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
+  const callGemini = async (model: string) => {
+    return await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: KAMLESH_SYSTEM_PROMPT }] },
+          contents,
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 2048,
+          },
+        }),
       },
-      body: JSON.stringify({
-        model,
-        messages,
-        temperature: 0.3,
-        max_tokens: 900,
-      }),
-    });
+    );
   };
 
   try {
-    let response = await callOpenAI(primaryModel);
+    let response = await callGemini(primaryModel);
 
     // Quota/transient failures: retry once, then try the fallback model.
     if (response.status === 429 || response.status >= 500) {
       await new Promise((r) => setTimeout(r, 1500));
-      response = await callOpenAI(primaryModel);
+      response = await callGemini(primaryModel);
     }
     if (!response.ok && fallbackModel && fallbackModel !== primaryModel) {
-      const alt = await callOpenAI(fallbackModel);
+      const alt = await callGemini(fallbackModel);
       if (alt.ok) response = alt;
     }
 
     if (!response.ok) {
       const details = await response.text();
-      console.error(`OpenAI request failed [${response.status}]: ${details}`);
+      console.error(`Gemini request failed [${response.status}]: ${details}`);
       if (response.status === 429) {
         return {
           status: 429,
@@ -108,10 +119,13 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
     }
 
     const data = (await response.json()) as {
-      choices?: Array<{ message?: { content?: string } }>;
+      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
     };
 
-    const reply = (data.choices?.[0]?.message?.content ?? "").trim();
+    const reply = (data.candidates?.[0]?.content?.parts ?? [])
+      .map((p) => p.text ?? "")
+      .join("")
+      .trim();
 
     if (!reply) {
       return { status: 502, payload: { error: GENERIC_ERROR } };

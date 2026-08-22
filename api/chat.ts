@@ -2,13 +2,14 @@ import { KAMLESH_SYSTEM_PROMPT } from "./_knowledge";
 
 /**
  * Vercel serverless function: POST /api/chat
- * The Gemini API key is read from the server-side env var GEMINI_API_KEY
+ * The Groq API key is read from the server-side env var GROQ_API_KEY
  * and is never sent to the browser.
  */
 
 const MAX_MESSAGE_LENGTH = 1000;
 const MAX_HISTORY = 12;
 const GENERIC_ERROR = "Sorry, I'm unable to respond right now. Please try again later.";
+
 
 type HistoryItem = { role: "user" | "assistant"; content: string };
 

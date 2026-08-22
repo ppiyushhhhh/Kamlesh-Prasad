@@ -34,12 +34,7 @@ function sanitizeHistory(history: unknown): HistoryItem[] {
 }
 
 export function resolveApiKey(): string | undefined {
-  const candidates = [
-    process.env.GEMINI_API_KEY,
-    process.env.GOOGLE_GENERATIVE_AI_API_KEY,
-    process.env.GOOGLE_API_KEY,
-    process.env.VITE_GEMINI_API_KEY,
-  ];
+  const candidates = [process.env.GROQ_API_KEY];
   return candidates.find((v) => typeof v === "string" && v.trim().length > 0)?.trim();
 }
 
@@ -58,58 +53,52 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
 
   const apiKey = resolveApiKey();
   if (!apiKey) {
-    console.error("No Gemini API key configured (checked GEMINI_API_KEY, GOOGLE_GENERATIVE_AI_API_KEY, GOOGLE_API_KEY)");
+    console.error("No Groq API key configured (checked GROQ_API_KEY)");
     return { status: 503, payload: { error: GENERIC_ERROR } };
   }
 
-  // The lite model has a much larger free-tier quota, so it is used first and
-  // the heavier model is the fallback.
-  const primaryModel = process.env.GEMINI_MODEL || "gemini-flash-lite-latest";
-  const fallbackModel = process.env.GEMINI_FALLBACK_MODEL || "gemini-flash-latest";
+  const primaryModel = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
+  const fallbackModel = process.env.GROQ_FALLBACK_MODEL || "";
   const history = sanitizeHistory(body?.history);
 
-  const contents = [
-    ...history.map((h) => ({
-      role: h.role === "assistant" ? "model" : "user",
-      parts: [{ text: h.content }],
-    })),
-    { role: "user", parts: [{ text: rawMessage }] },
+  const messages = [
+    { role: "system", content: KAMLESH_SYSTEM_PROMPT },
+    ...history.map((h) => ({ role: h.role, content: h.content })),
+    { role: "user", content: rawMessage },
   ];
 
-  const callGemini = async (model: string) => {
-    return await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: KAMLESH_SYSTEM_PROMPT }] },
-          contents,
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 2048,
-          },
-        }),
+  const callGroq = async (model: string) => {
+    return await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
       },
-    );
+      body: JSON.stringify({
+        model,
+        messages,
+        temperature: 0.3,
+        max_tokens: 2048,
+      }),
+    });
   };
 
   try {
-    let response = await callGemini(primaryModel);
+    let response = await callGroq(primaryModel);
 
     // Quota/transient failures: retry once, then try the fallback model.
     if (response.status === 429 || response.status >= 500) {
       await new Promise((r) => setTimeout(r, 1500));
-      response = await callGemini(primaryModel);
+      response = await callGroq(primaryModel);
     }
     if (!response.ok && fallbackModel && fallbackModel !== primaryModel) {
-      const alt = await callGemini(fallbackModel);
+      const alt = await callGroq(fallbackModel);
       if (alt.ok) response = alt;
     }
 
     if (!response.ok) {
       const details = await response.text();
-      console.error(`Gemini request failed [${response.status}]: ${details}`);
+      console.error(`Groq request failed [${response.status}]: ${details}`);
       if (response.status === 429) {
         return {
           status: 429,
@@ -120,19 +109,17 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
     }
 
     const data = (await response.json()) as {
-      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+      choices?: Array<{ message?: { content?: string } }>;
     };
 
-    const reply = (data.candidates?.[0]?.content?.parts ?? [])
-      .map((p) => p.text ?? "")
-      .join("")
-      .trim();
+    const reply = (data.choices?.[0]?.message?.content ?? "").trim();
 
     if (!reply) {
       return { status: 502, payload: { error: GENERIC_ERROR } };
     }
 
     return { status: 200, payload: { reply } };
+
   } catch (err) {
     console.error("Chat handler error:", err);
     return { status: 502, payload: { error: GENERIC_ERROR } };

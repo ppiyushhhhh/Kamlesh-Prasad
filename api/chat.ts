@@ -57,8 +57,8 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
     return { status: 503, payload: { error: GENERIC_ERROR } };
   }
 
-  const primaryModel = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
-  const fallbackModel = process.env.GROQ_FALLBACK_MODEL || "";
+  const primaryModel = process.env.GROQ_MODEL || "groq/compound-mini";
+  const fallbackModel = process.env.GROQ_FALLBACK_MODEL || "openai/gpt-oss-20b";
   const history = sanitizeHistory(body?.history);
 
   const messages = [

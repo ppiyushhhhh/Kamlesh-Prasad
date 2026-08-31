@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bot, X, Send, Loader2, FileText, RotateCcw } from "lucide-react";
+import { getOfflineAnswer } from "../data/offlineAnswers";
 
 type Role = "user" | "assistant";
 interface ChatMessage {
@@ -84,13 +85,15 @@ const ChatWidget = () => {
       const data = (await res.json().catch(() => null)) as { reply?: string; error?: string } | null;
 
       if (!res.ok || !data?.reply) {
-        setError(data?.error || "Sorry, I'm unable to respond right now. Please try again later.");
+        const offlineReply = getOfflineAnswer(text);
+        setMessages((prev) => [...prev, { role: "assistant", content: offlineReply }]);
         return;
       }
 
       setMessages((prev) => [...prev, { role: "assistant", content: data.reply as string }]);
     } catch {
-      setError("Something went wrong. Please try again.");
+      const offlineReply = getOfflineAnswer(text);
+      setMessages((prev) => [...prev, { role: "assistant", content: offlineReply }]);
     } finally {
       setLoading(false);
     }

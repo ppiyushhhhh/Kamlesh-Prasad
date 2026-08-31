@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bot, X, Send, Loader2, FileText, RotateCcw } from "lucide-react";
+import { getOfflineAnswer } from "../data/offlineAnswers";
 
 type Role = "user" | "assistant";
 interface ChatMessage {

@@ -55,14 +55,19 @@ const companies: Company[] = [
     tenure: "Present",
     roles: [
       {
+        title: "Chief Information Officer (CIO)",
+        duration: "Aug 2026 – Present",
+        location: "Mumbai, India",
+        highlights: [
+          "Chief Information Officer | Information Security & Cyber Security Leader | Start-Up Specialist | e-Commerce & Omni Channel | Cloud | Strategic IT Leader | AI Enthusiast | Digital Transformation | IoT – Retail/Real Estate",
+        ],
+      },
+      {
         title: "Chief Technology Officer (CTO)",
         duration: "May 2026 – Present",
         location: "Mumbai, Maharashtra, India",
         highlights: [
-          "Driving enterprise-wide Digital Transformation across Retail and Real Estate operations",
-          "Leading SAP, Salesforce, and IT Infrastructure modernization programs",
-          "Heading Information Security & Cyber Security practice with Zero Trust posture",
-          "Partnering with CXOs on technology strategy, governance, and business outcomes",
+          "Chief Technology Officer @ Runwal Realty | Digital Transformation | Retail | SAP | Salesforce | IT Infrastructure | Info-Sec & Cyber Security",
         ],
       },
     ],

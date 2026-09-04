@@ -59,7 +59,10 @@ const companies: Company[] = [
         duration: "Aug 2026 – Present",
         location: "Mumbai, India",
         highlights: [
-          "Chief Information Officer | Information Security & Cyber Security Leader | Start-Up Specialist | e-Commerce & Omni Channel | Cloud | Strategic IT Leader | AI Enthusiast | Digital Transformation | IoT – Retail/Real Estate",
+          "Lead enterprise-wide information security and cyber security strategy, governance, and risk management across real estate and retail operations.",
+          "Drive digital transformation initiatives spanning e-commerce, omni-channel platforms, cloud infrastructure, and IoT ecosystems.",
+          "Shape strategic IT roadmap and technology investments as a start-up specialist, aligning innovation with business outcomes.",
+          "Champion AI adoption and data-driven decision-making to modernize operations and enhance customer experience.",
         ],
       },
       {
@@ -67,7 +70,10 @@ const companies: Company[] = [
         duration: "May 2026 – Present",
         location: "Mumbai, Maharashtra, India",
         highlights: [
-          "Chief Technology Officer @ Runwal Realty | Digital Transformation | Retail | SAP | Salesforce | IT Infrastructure | Info-Sec & Cyber Security",
+          "Oversee technology architecture and digital transformation for Runwal Realty, integrating SAP, Salesforce, and cloud-native solutions.",
+          "Lead IT infrastructure, cybersecurity, and enterprise systems to ensure scalable, secure, and resilient technology operations.",
+          "Spearhead retail technology strategy and platform modernization across sales, service, and customer engagement channels.",
+          "Align technology execution with business priorities, enabling secure, high-performance digital platforms for growth.",
         ],
       },
     ],

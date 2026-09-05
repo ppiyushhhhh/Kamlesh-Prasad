@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { Calendar, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Calendar, X, ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import {
   Carousel,

@@ -304,19 +304,24 @@ const AwardCard = ({
   );
 };
 
+const INITIAL_VISIBLE_COUNT = 6;
+
 const AchievementsSection = () => {
   const [lightbox, setLightbox] = useState<LightboxState>(null);
+  const [showAll, setShowAll] = useState(false);
+
+  const visibleAwards = showAll ? awards : awards.slice(0, INITIAL_VISIBLE_COUNT);
 
   const openLightbox = (awardIndex: number, imageIndex: number) =>
     setLightbox({ awardIndex, imageIndex });
   const closeLightbox = () => setLightbox(null);
 
-  const currentImages = lightbox ? awards[lightbox.awardIndex].images : [];
+  const currentImages = lightbox ? visibleAwards[lightbox.awardIndex].images : [];
   const nextImage = () =>
     setLightbox((s) =>
       s === null
         ? null
-        : { ...s, imageIndex: (s.imageIndex + 1) % awards[s.awardIndex].images.length },
+        : { ...s, imageIndex: (s.imageIndex + 1) % visibleAwards[s.awardIndex].images.length },
     );
   const prevImage = () =>
     setLightbox((s) =>
@@ -325,8 +330,8 @@ const AchievementsSection = () => {
         : {
             ...s,
             imageIndex:
-              (s.imageIndex - 1 + awards[s.awardIndex].images.length) %
-              awards[s.awardIndex].images.length,
+              (s.imageIndex - 1 + visibleAwards[s.awardIndex].images.length) %
+              visibleAwards[s.awardIndex].images.length,
           },
     );
 
@@ -355,15 +360,40 @@ const AchievementsSection = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {awards.map((award, idx) => (
-            <AwardCard
-              key={award.id}
-              award={award}
-              awardIndex={idx}
-              onOpenLightbox={openLightbox}
-            />
-          ))}
+          <AnimatePresence initial={false}>
+            {visibleAwards.map((award, idx) => (
+              <AwardCard
+                key={award.id}
+                award={award}
+                awardIndex={idx}
+                onOpenLightbox={openLightbox}
+              />
+            ))}
+          </AnimatePresence>
         </div>
+
+        {awards.length > INITIAL_VISIBLE_COUNT && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="flex justify-center mt-12"
+          >
+            <button
+              type="button"
+              onClick={() => setShowAll((v) => !v)}
+              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-card border border-border text-foreground font-medium shadow-sm hover:shadow-lg hover:border-accent/40 hover:text-accent transition-all duration-300"
+              aria-expanded={showAll}
+            >
+              {showAll ? "View Less" : "View More"}
+              <ChevronDown
+                size={18}
+                className={`transition-transform duration-300 ${showAll ? "rotate-180" : ""}`}
+              />
+            </button>
+          </motion.div>
+        )}
       </div>
 
       {/* Lightbox */}

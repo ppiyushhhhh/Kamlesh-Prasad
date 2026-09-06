@@ -9,7 +9,6 @@ import EducationSection from "@/components/EducationSection";
 import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
 import { Linkedin } from "lucide-react";
-import runtimeLogo from "@/assets/runtime-solutions-logo.png";
 import { lazy, Suspense } from "react";
 
 const ChatWidget = lazy(() => import("@/components/ChatWidget"));
@@ -41,23 +40,6 @@ const Index = () => {
             className="inline-flex items-center gap-1 text-primary-foreground/50 hover:text-accent transition-colors duration-200 hover:scale-105 transform"
           >
             <Linkedin size={14} />
-          </a>
-        </div>
-        <div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-1.5 text-primary-foreground/40 text-xs">
-          <span>Powered by Runtime Solutions</span>
-          <a
-            href="https://www.linkedin.com/company/runtime-solutions"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Runtime Solutions on LinkedIn"
-            className="inline-flex items-center gap-1 text-primary-foreground/50 hover:text-accent transition-colors duration-200 hover:scale-105 transform"
-          >
-            <img
-              src={runtimeLogo}
-              alt="Runtime Solutions logo"
-              className="h-6 w-6 rounded object-cover transition-transform duration-300 hover:scale-110 hover:rotate-3"
-            />
-
           </a>
         </div>
       </footer>

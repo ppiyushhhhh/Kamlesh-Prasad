@@ -152,7 +152,7 @@ const ContactSection = () => {
                   id="name"
                   type="text"
                   autoComplete="name"
-                  placeholder="John Doe"
+                  placeholder="Your full name"
                   className={inputBaseClasses}
                   aria-invalid={errors.name ? "true" : "false"}
                   aria-describedby={errors.name ? "name-error" : undefined}
@@ -173,7 +173,7 @@ const ContactSection = () => {
                   id="email"
                   type="email"
                   autoComplete="email"
-                  placeholder="john@example.com"
+                  placeholder="Your email address"
                   className={inputBaseClasses}
                   aria-invalid={errors.email ? "true" : "false"}
                   aria-describedby={errors.email ? "email-error" : undefined}

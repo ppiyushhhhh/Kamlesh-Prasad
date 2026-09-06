@@ -9,7 +9,6 @@ import EducationSection from "@/components/EducationSection";
 import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
 import { Linkedin } from "lucide-react";
-import runtimeLogo from "@/assets/runtime-solutions-logo.png";
 import { lazy, Suspense } from "react";
 
 const ChatWidget = lazy(() => import("@/components/ChatWidget"));

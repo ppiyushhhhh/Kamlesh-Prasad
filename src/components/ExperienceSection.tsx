@@ -67,7 +67,7 @@ const companies: Company[] = [
       },
       {
         title: "Chief Technology Officer (CTO)",
-        duration: "May 2026 – Present",
+        duration: "May 2026 – July 2026",
         location: "Mumbai, Maharashtra, India",
         highlights: [
           "Oversee technology architecture and digital transformation for Runwal Realty, integrating SAP, Salesforce, and cloud-native solutions.",

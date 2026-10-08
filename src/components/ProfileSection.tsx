@@ -34,7 +34,7 @@ const ProfileSection = () => {
             Effective at partnering with CXOs, senior leaders & partners to understand strategic goals and provide technological direction & IT roadmaps for delivering digital capabilities in alignment with business strategies. Strong business knowledge with proven ability to lead the strategic planning & delivery of innovative, cost-effective solutions by leveraging emerging technologies.
           </p>
           <p className="text-muted-foreground text-lg leading-relaxed mb-10">
-            Collaborative leadership style with experience in building & leading cross-functional teams that deliver results in a highly competitive & continuously changing business landscape. Diversified IT Delivery & Operations model experience with technology partners like IBM, TCS, Wipro & Accenture.
+            Collaborative leadership style with experience in building & leading cross-functional teams that deliver results in a highly competitive & continuously changing business landscape. Diversified IT Delivery & Operations model experience with technology partners like IBM, Dell & Accenture.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -16,7 +16,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#050811] text-white border-t border-slate-800/80 py-12 px-6 md:px-12">
+    <footer className="bg-[#05070B] text-white border-t border-slate-800/80 py-12 px-6 md:px-12">
       <div className="container mx-auto max-w-7xl">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 pb-10 border-b border-slate-800/60">
           {/* Brand & Designation */}

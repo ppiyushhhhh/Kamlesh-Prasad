@@ -93,7 +93,7 @@ const ContactSection = () => {
     "bg-slate-900/80 border-slate-700/80 text-white placeholder:text-slate-500 rounded-sm focus-visible:ring-1 focus-visible:ring-accent focus-visible:border-accent transition-colors hover:border-slate-600";
 
   return (
-    <section id="contact" className="section-padding bg-[#070B16] text-white border-t border-slate-800 scroll-mt-16 tech-grid">
+    <section id="contact" className="section-padding bg-[#080B0F] text-white border-t border-slate-800 scroll-mt-16 tech-grid">
       <div className="container mx-auto max-w-7xl" ref={ref}>
         {/* Section Header */}
         <motion.div

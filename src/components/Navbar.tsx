@@ -77,7 +77,7 @@ const Navbar = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-background/90 dark:bg-[#080D1A]/90 backdrop-blur-md border-b border-border shadow-sm py-3.5"
+          ? "bg-background/90 dark:bg-[#080B0F]/90 backdrop-blur-md border-b border-border shadow-sm py-3.5"
           : "bg-transparent py-5"
       }`}
     >
@@ -176,7 +176,7 @@ const Navbar = () => {
 
       {/* Mobile Drawer */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[65px] bg-background/98 dark:bg-[#080D1A]/98 backdrop-blur-xl border-b border-border shadow-2xl px-6 py-6 transition-all duration-300 animate-in slide-in-from-top-2">
+        <div className="lg:hidden fixed inset-x-0 top-[65px] bg-background/98 dark:bg-[#080B0F]/98 backdrop-blur-xl border-b border-border shadow-2xl px-6 py-6 transition-all duration-300 animate-in slide-in-from-top-2">
           <div className="space-y-1 pb-4">
             {navLinks.map((l) => {
               const isActive = activeSection === l.href.replace("#", "");

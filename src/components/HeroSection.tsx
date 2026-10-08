@@ -16,10 +16,10 @@ const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-[96vh] lg:min-h-screen flex items-center bg-[#070B16] text-white pt-24 pb-16 lg:py-0 overflow-hidden tech-grid"
+      className="relative min-h-[96vh] lg:min-h-screen flex items-center bg-[#080B0F] text-white pt-24 pb-16 lg:py-0 overflow-hidden tech-grid"
     >
       {/* Subtle architectural vertical lines */}
-      <div className="absolute inset-0 pointer-events-none flex justify-between max-w-7xl mx-auto px-6 opacity-[0.07]">
+      <div className="absolute inset-0 pointer-events-none flex justify-between max-w-7xl mx-auto px-6 opacity-[0.06]">
         <div className="w-[1px] h-full bg-white" />
         <div className="w-[1px] h-full bg-white hidden md:block" />
         <div className="w-[1px] h-full bg-white hidden lg:block" />
@@ -27,7 +27,7 @@ const HeroSection = () => {
       </div>
 
       {/* Ambient executive gradient */}
-      <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-blue-600/10 blur-[140px] pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-emerald-500/10 blur-[140px] pointer-events-none" />
 
       <div className="container mx-auto px-6 md:px-12 relative z-10 py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -183,7 +183,7 @@ const HeroSection = () => {
                     className="w-full h-full object-cover object-top filter grayscale contrast-110 hover:grayscale-0 transition-all duration-700"
                   />
                   {/* Subtle technical gradient scrim */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#070B16] via-transparent to-transparent opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#080B0F] via-transparent to-transparent opacity-80" />
 
                   {/* On-image technical overlay badge */}
                   <div className="absolute bottom-3 left-3 right-3 p-3 bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-sm flex items-center justify-between">

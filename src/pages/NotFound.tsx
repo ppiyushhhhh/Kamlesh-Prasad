@@ -17,7 +17,7 @@ const NotFound = () => {
         <meta name="description" content="The page you are looking for could not be found on Kamlesh Prasad's website." />
         <meta name="robots" content="noindex,follow" />
       </Helmet>
-      <main className="flex min-h-screen items-center justify-center bg-[#070B16] text-white p-6 tech-grid">
+      <main className="flex min-h-screen items-center justify-center bg-[#080B0F] text-white p-6 tech-grid">
         <div className="border border-slate-800 bg-slate-900/90 p-8 sm:p-12 text-center max-w-md w-full shadow-2xl">
           <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase block mb-3">
             Error 404 // Invalid Route

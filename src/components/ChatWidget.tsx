@@ -125,7 +125,7 @@ const ChatWidget = () => {
         aria-label={open ? "Close Kamlesh AI" : "Open Kamlesh AI Assistant"}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2.5 rounded-sm border border-slate-700 bg-[#070B16] px-4 py-3 text-xs font-mono font-bold tracking-wider uppercase text-white shadow-2xl hover:border-accent hover:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2.5 rounded-sm border border-slate-700 bg-[#080B0F] px-4 py-3 text-xs font-mono font-bold tracking-wider uppercase text-white shadow-2xl hover:border-accent hover:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         {open ? (
           <X size={16} />
@@ -151,10 +151,10 @@ const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed bottom-20 right-4 left-4 sm:left-auto sm:right-6 sm:w-[420px] z-50 flex max-h-[80dvh] flex-col overflow-hidden border border-slate-800 bg-[#090E1D] text-white shadow-2xl"
+            className="fixed bottom-20 right-4 left-4 sm:left-auto sm:right-6 sm:w-[420px] z-50 flex max-h-[80dvh] flex-col overflow-hidden border border-slate-800 bg-[#0D121B] text-white shadow-2xl"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-slate-800 bg-[#070B16] px-4 py-3">
+            <div className="flex items-center justify-between border-b border-slate-800 bg-[#080B0F] px-4 py-3">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 border border-slate-700 bg-slate-900 flex items-center justify-center text-accent">
                   <Bot size={17} />
@@ -257,7 +257,7 @@ const ChatWidget = () => {
             </div>
 
             {/* Input Composer */}
-            <div className="border-t border-slate-800 bg-[#070B16] p-3">
+            <div className="border-t border-slate-800 bg-[#080B0F] p-3">
               <div className="flex items-end gap-2">
                 <textarea
                   id="kamlesh-ai-input"

@@ -12,7 +12,7 @@ const ThankYou = () => {
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
-      <main className="bg-[#070B16] text-white relative min-h-screen flex items-center justify-center overflow-hidden px-6 py-20 tech-grid">
+      <main className="bg-[#080B0F] text-white relative min-h-screen flex items-center justify-center overflow-hidden px-6 py-20 tech-grid">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

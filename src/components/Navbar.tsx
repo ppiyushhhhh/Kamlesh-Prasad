@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, FileText, Sun, Moon, ArrowUpRight } from "lucide-react";
 import ResumeModal from "@/components/ResumeModal";
+import kpLogo from "@/assets/kamlesh-prasad-logo.png";
 
 const navLinks = [
   { label: "Profile", href: "#profile", number: "01" },
@@ -92,8 +93,12 @@ const Navbar = () => {
           className="group flex items-center gap-3.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm"
           aria-label="Kamlesh Prasad Home"
         >
-          <div className="w-10 h-10 border border-slate-300 dark:border-slate-700 bg-slate-900 dark:bg-slate-950 flex items-center justify-center transition-all duration-200 group-hover:border-accent">
-            <span className="font-mono text-sm font-bold tracking-wider text-white">KP</span>
+          <div className="w-10 h-10 border border-slate-300 dark:border-slate-700 bg-white flex items-center justify-center overflow-hidden rounded-sm transition-all duration-200 group-hover:border-accent shadow-xs p-0.5">
+            <img
+              src={kpLogo}
+              alt="Kamlesh Prasad"
+              className="w-full h-full object-contain"
+            />
           </div>
           <div className="hidden sm:flex flex-col">
             <span className={`text-xs font-bold tracking-wider uppercase leading-none transition-colors ${scrolled ? "text-foreground" : "text-white"}`}>

@@ -1,4 +1,5 @@
 import { Linkedin, ArrowUp } from "lucide-react";
+import kpLogo from "@/assets/kamlesh-prasad-logo.png";
 
 const footerLinks = [
   { label: "Profile", href: "#profile" },
@@ -22,8 +23,12 @@ const Footer = () => {
           {/* Brand & Designation */}
           <div className="space-y-3">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 border border-slate-700 bg-slate-900 flex items-center justify-center">
-                <span className="font-mono text-xs font-bold text-white">KP</span>
+              <div className="w-10 h-10 border border-slate-700 bg-white flex items-center justify-center overflow-hidden rounded-sm p-0.5 shadow-xs">
+                <img
+                  src={kpLogo}
+                  alt="Kamlesh Prasad"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div>
                 <h3 className="font-display text-sm font-bold uppercase tracking-wider text-white">

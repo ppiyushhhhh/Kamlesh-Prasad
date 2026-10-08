@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Award as AwardIcon, Calendar, X, ChevronLeft, ChevronRight, Maximize2, Trophy } from "lucide-react";
+import {
+  Trophy,
+  Calendar,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
+  ChevronDown,
+  Building2,
+  Images,
+  ExternalLink,
+} from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 import trophyImg from "@/assets/award-cybersec-trophy.jpeg";
@@ -33,31 +44,57 @@ import bestTechImpl2024Img3 from "@/assets/award-best-tech-impl-2024-3.jpg";
 import bestTechImpl2024Img4 from "@/assets/award-best-tech-impl-2024-4.jpg";
 
 type AwardImage = { src: string; alt: string };
-type Award = {
+
+interface AwardEntry {
   id: string;
-  title: string;
+  year: string;
   date: string;
+  title: string;
+  category: string;
+  organization: string;
   sortKey: string;
   description: string;
   images: AwardImage[];
-};
+}
 
-const awardsData: Award[] = [
+const ledgerAwards: AwardEntry[] = [
   {
     id: "devops-security-expert-2026",
-    title: "DevOps Security Expert of the Year - DevOps 2.0 Confex & Awards 2026",
+    year: "2026",
     date: "2026",
+    title: "DevOps Security Expert of the Year",
+    category: "DevSecOps & CISO",
+    organization: "DevOps 2.0 Confex & Awards 2026 (Mumbai)",
     sortKey: "2026-05",
     description:
-      "Recognized as \"DevOps Security Expert of the Year\" at the DevOps 2.0 Confex & Awards 2026 - Mumbai Chapter, held at ITC Maratha. A proud moment celebrating leadership in building secure, scalable, and modern digital platforms at Nexus Select Malls.",
+      'Recognized as "DevOps Security Expert of the Year" at the DevOps 2.0 Confex & Awards 2026 - Mumbai Chapter, held at ITC Maratha. Celebrating leadership in building secure, scalable, and modern digital platforms at Nexus Select Malls.',
     images: [
       { src: devopsSecurity2026Img, alt: "DevOps Security Expert of the Year - DevOps 2.0 Confex & Awards 2026" },
     ],
   },
   {
+    id: "digital-retail-guardian",
+    year: "2026",
+    date: "April 2026",
+    title: "Digital Retail Guardian Award",
+    category: "Cybersecurity Defense",
+    organization: "CyberSec India Expo & Awards 2026",
+    sortKey: "2026-04",
+    description:
+      "Awarded for excellence in safeguarding digital retail infrastructure and leadership in enterprise cybersecurity.",
+    images: [
+      { src: trophyImg, alt: "Digital Retail Guardian Award trophy" },
+      { src: stageImg, alt: "On stage at CyberSec India Awards 2026" },
+      { src: ceremonyImg, alt: "Receiving the award at CyberSec India Expo 2026" },
+    ],
+  },
+  {
     id: "dell-tech-world-2025",
-    title: "Dell Technologies World 2025 - Invited Attendee",
+    year: "2025",
     date: "May 2025",
+    title: "Dell Technologies World 2025 – Invited Delegate",
+    category: "Global Technology Summit",
+    organization: "Dell Technologies (The Venetian, Las Vegas)",
     sortKey: "2025-05",
     description:
       "Privileged to be invited by Dell Technologies to attend Dell Tech World 2025 at The Venetian Resort, Las Vegas - engaging with global leaders on the future of enterprise technology, AI, and infrastructure innovation.",
@@ -67,61 +104,28 @@ const awardsData: Award[] = [
     ],
   },
   {
-    id: "best-tech-implementation-2024",
-    title: "Best Technology Implementation of the Year - CIO Conclave & Awards 2024",
-    date: "2024",
-    sortKey: "2024-06",
+    id: "appdevsec-best-grc-strategy",
+    year: "2025",
+    date: "2025",
+    title: "Best GRC Strategy for DevSecOps (Retail)",
+    category: "GRC & Governance",
+    organization: "AppDevSec Show 2025 by Quantic",
+    sortKey: "2025-06",
     description:
-      "Nominated and recognized for \"Best Technology Implementation of the Year\" at the 7th Edition of CIO Conclave & Awards 2024 by UBS Forums. Grateful to Omesh Bhujbal for the unwavering support and to the Jury Members for this proud moment.",
+      "Awarded at the AppDevSec Show 2025, organized by Quantic, for the Best GRC Strategy for DevSecOps in Retail - recognizing Nexus Select Malls' leadership in embedding governance, risk, and compliance into modern DevSecOps practices.",
     images: [
-      { src: bestTechImpl2024Img1, alt: "Best Technology Implementation of the Year - CIO Conclave & Awards 2024" },
-      { src: bestTechImpl2024Img2, alt: "On stage at the 7th Edition CIO Conclave & Awards 2024" },
-      { src: bestTechImpl2024Img3, alt: "Receiving the Best Technology Implementation award" },
-      { src: bestTechImpl2024Img4, alt: "CIO Conclave & Awards 2024 ceremony" },
-    ],
-  },
-  {
-    id: "digital-retail-guardian",
-    title: "Digital Retail Guardian Award 2026",
-    date: "April 2026",
-    sortKey: "2026-04",
-    description:
-      "Awarded for excellence in safeguarding digital retail infrastructure and leadership in cybersecurity.",
-    images: [
-      { src: trophyImg, alt: "Digital Retail Guardian Award trophy" },
-      { src: stageImg, alt: "On stage at CyberSec India Awards 2026" },
-      { src: ceremonyImg, alt: "Receiving the award at CyberSec India Expo 2026" },
-    ],
-  },
-  {
-    id: "nexus-one-heroes",
-    title: "Nexus One Heroes Recognition",
-    date: "July 2024",
-    sortKey: "2024-07",
-    description:
-      "Recognized as a \"Nexus One Hero\" for leadership, dedication, and contributing to organizational excellence.",
-    images: [
-      { src: nexusCertImg, alt: "Nexus One Heroes certificate" },
-      { src: nexusPres1Img, alt: "Receiving the Nexus One Heroes recognition" },
-      { src: nexusPres2Img, alt: "Nexus One Heroes recognition presentation" },
-    ],
-  },
-  {
-    id: "nexus-select-malls-7-years",
-    title: "Nexus Select Malls - Seven Years Completed",
-    date: "March 2025",
-    sortKey: "2025-03",
-    description:
-      "Celebrating seven years of dedicated service and leadership at Nexus Select Malls, contributing to sustained operational excellence and team success.",
-    images: [
-      { src: nexus7Years1Img, alt: "Seven years completion recognition at Nexus Select Malls" },
-      { src: nexus7Years2Img, alt: "Nexus Select Malls 7 years milestone celebration" },
+      { src: appdevsecTrophyImg, alt: "Best GRC Strategy for DevSecOps trophy - AppDevSec Show 2025" },
+      { src: appdevsecStage1Img, alt: "Receiving the Best GRC Strategy for DevSecOps award on stage" },
+      { src: appdevsecStage2Img, alt: "Acceptance speech at AppDevSec Show 2025" },
     ],
   },
   {
     id: "best-cybersec-mgmt-initiative",
-    title: "Best Cybersecurity Management Initiative - Nexus Select Malls",
+    year: "2025",
     date: "2025",
+    title: "Best Cybersecurity Management Initiative",
+    category: "InfoSec Architecture",
+    organization: "2nd Edition CyberSec Innovation Summit & Awards",
     sortKey: "2025-06",
     description:
       "Honored at the 2nd Edition CyberSec Innovation Summit & Awards 2025 for spearheading the Best Cybersecurity Management Initiative at Nexus Select Malls.",
@@ -133,12 +137,63 @@ const awardsData: Award[] = [
     ],
   },
   {
-    id: "upgrad-leadership-excellence",
-    title: "Lightspeed Learner - Leadership Excellence & Development Program",
+    id: "nexus-select-malls-7-years",
+    year: "2025",
+    date: "March 2025",
+    title: "Nexus Select Malls – 7 Years Leadership Milestone",
+    category: "Executive Tenure",
+    organization: "Nexus Select Malls",
+    sortKey: "2025-03",
+    description:
+      "Celebrating seven years of dedicated service and leadership at Nexus Select Malls, contributing to sustained operational excellence, scale from 2 to 20+ malls, and team success.",
+    images: [
+      { src: nexus7Years1Img, alt: "Seven years completion recognition at Nexus Select Malls" },
+      { src: nexus7Years2Img, alt: "Nexus Select Malls 7 years milestone celebration" },
+    ],
+  },
+  {
+    id: "best-tech-implementation-2024",
+    year: "2024",
+    date: "2024",
+    title: "Best Technology Implementation of the Year",
+    category: "Enterprise Transformation",
+    organization: "7th Edition CIO Conclave & Awards (UBS Forums)",
+    sortKey: "2024-06",
+    description:
+      'Nominated and recognized for "Best Technology Implementation of the Year" at the 7th Edition of CIO Conclave & Awards 2024 by UBS Forums. Honored by jury members for high-scale enterprise execution.',
+    images: [
+      { src: bestTechImpl2024Img1, alt: "Best Technology Implementation of the Year - CIO Conclave & Awards 2024" },
+      { src: bestTechImpl2024Img2, alt: "On stage at the 7th Edition CIO Conclave & Awards 2024" },
+      { src: bestTechImpl2024Img3, alt: "Receiving the Best Technology Implementation award" },
+      { src: bestTechImpl2024Img4, alt: "CIO Conclave & Awards 2024 ceremony" },
+    ],
+  },
+  {
+    id: "nexus-one-heroes",
+    year: "2024",
     date: "July 2024",
+    title: "Nexus One Heroes Award",
+    category: "Internal Recognition",
+    organization: "Nexus Malls Executive Committee",
     sortKey: "2024-07",
     description:
-      "Certificate of Appreciation from upGrad Enterprise & Nexus Quest for being the Lightspeed Learner in the Leadership Excellence and Development Program - recognized for exceptional dedication, enthusiasm, and rapid progress.",
+      'Recognized as a "Nexus One Hero" for leadership, dedication, and driving digital excellence across 13 properties and 400,000+ app users.',
+    images: [
+      { src: nexusCertImg, alt: "Nexus One Heroes certificate" },
+      { src: nexusPres1Img, alt: "Receiving the Nexus One Heroes recognition" },
+      { src: nexusPres2Img, alt: "Nexus One Heroes recognition presentation" },
+    ],
+  },
+  {
+    id: "upgrad-leadership-excellence",
+    year: "2024",
+    date: "July 2024",
+    title: "Lightspeed Learner – Leadership Excellence Program",
+    category: "Executive Development",
+    organization: "upGrad Enterprise & Nexus Quest",
+    sortKey: "2024-07",
+    description:
+      "Certificate of Appreciation from upGrad Enterprise & Nexus Quest for being the Lightspeed Learner in the Leadership Excellence and Development Program - recognized for exceptional dedication and rapid mastery.",
     images: [
       { src: upgradCertImg, alt: "upGrad Enterprise Certificate of Appreciation - Lightspeed Learner" },
       { src: upgradCeremonyImg, alt: "Receiving the Leadership Excellence and Development Program certificate" },
@@ -146,8 +201,11 @@ const awardsData: Award[] = [
   },
   {
     id: "quantic-it-infra-leader",
-    title: "IT Infrastructure Leader of the Year (Retail) - Cyber Security Excellence Awards 2023",
+    year: "2023",
     date: "2023",
+    title: "IT Infrastructure Leader of the Year (Retail)",
+    category: "Infrastructure Leadership",
+    organization: "2nd Annual Cyber Security Excellence Awards (Quantic)",
     sortKey: "2023-06",
     description:
       "Honored at the 2nd Annual Cyber Security Excellence Awards 2023, hosted by Quantic, as IT Infrastructure Leader of the Year in the Retail category - recognizing outstanding leadership in securing and scaling enterprise IT infrastructure.",
@@ -158,67 +216,45 @@ const awardsData: Award[] = [
       { src: quanticGroup2Img, alt: "Cyber Security Excellence Awards 2023 ceremony group photo" },
     ],
   },
-  {
-    id: "appdevsec-best-grc-strategy",
-    title: "Best GRC Strategy for DevSecOps (Retail) - AppDevSec Show 2025",
-    date: "2025",
-    sortKey: "2025-06",
-    description:
-      "Awarded at the AppDevSec Show 2025, organized by Quantic, for the Best GRC Strategy for DevSecOps in Retail - recognizing Nexus Select Malls' leadership in embedding governance, risk, and compliance into modern DevSecOps practices.",
-    images: [
-      { src: appdevsecTrophyImg, alt: "Best GRC Strategy for DevSecOps trophy - AppDevSec Show 2025" },
-      { src: appdevsecStage1Img, alt: "Receiving the Best GRC Strategy for DevSecOps award on stage" },
-      { src: appdevsecStage2Img, alt: "Acceptance speech at AppDevSec Show 2025" },
-    ],
-  },
 ];
-
-const awards: Award[] = [...awardsData].sort((a, b) =>
-  b.sortKey.localeCompare(a.sortKey),
-);
 
 type LightboxState = { awardIndex: number; imageIndex: number } | null;
 
 const AchievementsSection = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
+  // Open the first award by default in the ledger
+  const [expandedId, setExpandedId] = useState<string | null>("devops-security-expert-2026");
+  const [yearFilter, setYearFilter] = useState<string>("ALL");
   const [lightbox, setLightbox] = useState<LightboxState>(null);
 
-  const activeAward = awards[selectedIndex] || awards[0];
+  const years = ["ALL", "2026", "2025", "2024", "2023"];
 
-  const handleSelectAward = (idx: number) => {
-    setSelectedIndex(idx);
-    setSelectedPhotoIndex(0);
+  const filteredAwards = yearFilter === "ALL"
+    ? ledgerAwards
+    : ledgerAwards.filter((a) => a.year === yearFilter);
+
+  const toggleRow = (id: string) => {
+    setExpandedId((prev) => (prev === id ? null : id));
   };
 
-  const openLightbox = (awardIndex: number, imageIndex: number) =>
+  const openLightbox = (awardIndex: number, imageIndex: number) => {
     setLightbox({ awardIndex, imageIndex });
+  };
+
   const closeLightbox = () => setLightbox(null);
 
-  const currentLightboxImages = lightbox ? awards[lightbox.awardIndex].images : [];
+  const currentLightboxImages = lightbox !== null ? filteredAwards[lightbox.awardIndex]?.images || [] : [];
 
-  const nextLightboxImage = () =>
-    setLightbox((s) =>
-      s === null
-        ? null
-        : {
-            ...s,
-            imageIndex:
-              (s.imageIndex + 1) % awards[s.awardIndex].images.length,
-          },
-    );
+  const nextLightboxImage = () => {
+    if (!lightbox) return;
+    const total = currentLightboxImages.length;
+    setLightbox({ ...lightbox, imageIndex: (lightbox.imageIndex + 1) % total });
+  };
 
-  const prevLightboxImage = () =>
-    setLightbox((s) =>
-      s === null
-        ? null
-        : {
-            ...s,
-            imageIndex:
-              (s.imageIndex - 1 + awards[s.awardIndex].images.length) %
-              awards[s.awardIndex].images.length,
-          },
-    );
+  const prevLightboxImage = () => {
+    if (!lightbox) return;
+    const total = currentLightboxImages.length;
+    setLightbox({ ...lightbox, imageIndex: (lightbox.imageIndex - 1 + total) % total });
+  };
 
   return (
     <section
@@ -228,167 +264,203 @@ const AchievementsSection = () => {
     >
       <div className="container mx-auto max-w-7xl">
         {/* Section Header */}
-        <div className="flex items-center gap-3 mb-12 pb-4 border-b border-border/60">
-          <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">
-            04 / RECOGNITION
-          </span>
-          <span className="h-[1px] w-12 bg-accent/40" />
-          <span className="text-xs uppercase font-mono tracking-wider text-muted-foreground">
-            Honors, Summits &amp; Industry Awards
-          </span>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 pb-4 border-b border-border/60">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">
+                04 / RECOGNITION
+              </span>
+              <span className="h-[1px] w-12 bg-accent/40" />
+              <span className="text-xs uppercase font-mono tracking-wider text-muted-foreground">
+                Chronological Executive Ledger
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-foreground tracking-tight">
+              Honors, Summits &amp; Industry Awards
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1 max-w-xl">
+              Chronological record of verified industry honors, global invitations, and executive leadership achievements (2026 &mdash; 2023).
+            </p>
+          </div>
+
+          {/* Year Filter Tabs */}
+          <div className="flex items-center gap-1.5 p-1 bg-card border border-border rounded-sm self-start md:self-auto">
+            {years.map((yr) => (
+              <button
+                key={yr}
+                type="button"
+                onClick={() => setYearFilter(yr)}
+                className={`px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider rounded-xs transition-colors ${
+                  yearFilter === yr
+                    ? "bg-accent text-white"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                }`}
+              >
+                {yr}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Featured Award Showcase */}
-        <div className="border border-border bg-card p-6 md:p-8 lg:p-10 mb-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left: Large Featured Image with Gallery Switcher */}
-            <div className="lg:col-span-7">
-              <div className="relative aspect-[16/10] sm:aspect-[16/9] bg-slate-950 overflow-hidden border border-border">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={`${activeAward.id}-${selectedPhotoIndex}`}
-                    src={activeAward.images[selectedPhotoIndex]?.src || activeAward.images[0].src}
-                    alt={activeAward.images[selectedPhotoIndex]?.alt || activeAward.title}
-                    initial={{ opacity: 0, scale: 1.02 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.35, ease: "easeOut" }}
-                    className="w-full h-full object-cover"
-                  />
-                </AnimatePresence>
+        {/* The Chronological Ledger Table */}
+        <div className="border border-border bg-card divide-y divide-border shadow-xs">
+          {filteredAwards.map((award, index) => {
+            const isExpanded = expandedId === award.id;
 
-                {/* Enlarge Trigger */}
+            return (
+              <div
+                key={award.id}
+                className={`transition-colors duration-200 ${
+                  isExpanded ? "bg-accent/[0.02]" : "hover:bg-muted/20"
+                }`}
+              >
+                {/* Ledger Summary Header Row */}
                 <button
                   type="button"
-                  onClick={() => openLightbox(selectedIndex, selectedPhotoIndex)}
-                  className="absolute top-3 right-3 bg-black/70 hover:bg-black text-white p-2 backdrop-blur-sm border border-white/10 transition-colors"
-                  aria-label="Expand image in lightbox"
+                  onClick={() => toggleRow(award.id)}
+                  aria-expanded={isExpanded}
+                  className="w-full text-left px-5 sm:px-7 py-4.5 flex flex-col md:flex-row md:items-center md:justify-between gap-4 focus-visible:outline-none focus-visible:bg-muted/30"
                 >
-                  <Maximize2 size={16} />
-                </button>
-
-                {/* Image counter indicator */}
-                <div className="absolute bottom-3 left-3 bg-black/70 px-2.5 py-1 text-[11px] font-mono text-white backdrop-blur-sm border border-white/10">
-                  {selectedPhotoIndex + 1} / {activeAward.images.length} Photos
-                </div>
-              </div>
-
-              {/* Sub-gallery thumbnails if multiple photos exist */}
-              {activeAward.images.length > 1 && (
-                <div className="flex items-center gap-2 mt-3 overflow-x-auto pb-1">
-                  {activeAward.images.map((img, pIdx) => (
-                    <button
-                      key={pIdx}
-                      type="button"
-                      onClick={() => setSelectedPhotoIndex(pIdx)}
-                      className={`relative w-16 h-12 flex-shrink-0 border overflow-hidden transition-all ${
-                        selectedPhotoIndex === pIdx
-                          ? "border-accent ring-1 ring-accent"
-                          : "border-border opacity-70 hover:opacity-100"
-                      }`}
-                      aria-label={`View photo ${pIdx + 1}`}
-                    >
-                      <img src={img.src} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Right: Featured Award Information */}
-            <div className="lg:col-span-5 flex flex-col justify-between">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeAward.id}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.3 }}
-                  className="space-y-4"
-                >
-                  <div className="inline-flex items-center gap-2 font-mono text-xs font-bold text-accent tracking-widest uppercase">
-                    <Trophy size={14} />
-                    <span>FEATURED AWARD</span>
+                  {/* Left Column: Year + Domain Badge */}
+                  <div className="flex items-center gap-3 shrink-0 md:w-44">
+                    <span className="font-mono text-xs font-bold text-accent bg-accent/10 px-2.5 py-1 rounded-xs tracking-wider">
+                      {award.year}
+                    </span>
+                    <span className="font-mono text-[11px] text-muted-foreground tracking-wide uppercase truncate max-w-[120px]">
+                      {award.category}
+                    </span>
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-foreground leading-tight tracking-tight">
-                    {activeAward.title}
-                  </h3>
-
-                  <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
-                    <Calendar size={14} className="text-accent" />
-                    <span>{activeAward.date}</span>
-                    <span className="text-border">|</span>
-                    <span className="text-slate-500">Executive Honor</span>
-                  </div>
-
-                  <div className="pt-2 border-t border-border/80">
-                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                      {activeAward.description}
+                  {/* Middle Column: Award Title & Issuer */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base sm:text-lg font-display font-bold text-foreground leading-snug">
+                      {award.title}
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1.5">
+                      <Building2 size={13} className="shrink-0 text-accent/80" />
+                      <span className="truncate">{award.organization}</span>
                     </p>
                   </div>
 
-                  <div className="pt-4 flex items-center gap-3">
-                    <button
-                      type="button"
-                      onClick={() => openLightbox(selectedIndex, selectedPhotoIndex)}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-accent text-white font-mono text-xs font-bold uppercase tracking-wider rounded-sm hover:bg-accent/90 transition-colors"
+                  {/* Right Column: Photo Proof Stack + Expand Indicator */}
+                  <div className="flex items-center justify-between md:justify-end gap-4 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-border/40">
+                    {/* Overlapping thumbnail stack preview */}
+                    <div className="flex items-center -space-x-2 overflow-hidden">
+                      {award.images.slice(0, 3).map((img, i) => (
+                        <div
+                          key={i}
+                          className="w-8 h-8 rounded-xs border-2 border-card bg-slate-950 overflow-hidden shrink-0 shadow-xs"
+                        >
+                          <img
+                            src={img.src}
+                            alt=""
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                      {award.images.length > 1 && (
+                        <span className="pl-3 font-mono text-[11px] text-accent font-semibold flex items-center gap-1">
+                          <Images size={12} />
+                          <span>{award.images.length} photos</span>
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Chevron toggle */}
+                    <div
+                      className={`w-7 h-7 border border-border flex items-center justify-center transition-transform duration-300 text-muted-foreground ${
+                        isExpanded ? "rotate-180 bg-accent text-white border-accent" : "bg-card"
+                      }`}
                     >
-                      <Maximize2 size={13} />
-                      <span>View Full Gallery</span>
-                    </button>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-
-        {/* Thumbnail Selector Grid */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between pb-2">
-            <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              Select Award to Inspect ({awards.length} Total Recognitions)
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-            {awards.map((award, idx) => {
-              const isSelected = selectedIndex === idx;
-              return (
-                <button
-                  key={award.id}
-                  type="button"
-                  onClick={() => handleSelectAward(idx)}
-                  className={`text-left border p-2.5 bg-card flex flex-col justify-between transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent ${
-                    isSelected
-                      ? "border-accent ring-1 ring-accent bg-accent/5"
-                      : "border-border hover:border-slate-400 dark:hover:border-slate-600"
-                  }`}
-                >
-                  <div className="relative aspect-[16/10] w-full overflow-hidden mb-2 bg-slate-950">
-                    <img
-                      src={award.images[0]?.src}
-                      alt={award.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    {isSelected && (
-                      <div className="absolute inset-0 bg-accent/20 border border-accent pointer-events-none" />
-                    )}
-                  </div>
-                  <div>
-                    <span className="block font-mono text-[10px] text-accent font-semibold tracking-wider mb-1">
-                      {award.date}
-                    </span>
-                    <h4 className="text-xs font-display font-bold text-foreground line-clamp-2 leading-snug">
-                      {award.title}
-                    </h4>
+                      <ChevronDown size={15} />
+                    </div>
                   </div>
                 </button>
-              );
-            })}
-          </div>
+
+                {/* Expanded Dossier Drawer */}
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: "easeInOut" }}
+                      className="overflow-hidden border-t border-border/80 bg-muted/15"
+                    >
+                      <div className="px-5 sm:px-7 py-6 md:py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        {/* Gallery Grid of Proof Imagery */}
+                        <div className="lg:col-span-7">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {award.images.map((img, imgIdx) => (
+                              <div
+                                key={imgIdx}
+                                className={`relative group border border-border bg-slate-950 overflow-hidden cursor-pointer ${
+                                  award.images.length === 1 ? "sm:col-span-2 aspect-[16/9]" : "aspect-[4/3]"
+                                }`}
+                                onClick={() => openLightbox(index, imgIdx)}
+                              >
+                                <img
+                                  src={img.src}
+                                  alt={img.alt}
+                                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                  loading="lazy"
+                                />
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-mono text-xs">
+                                  <Maximize2 size={16} />
+                                  <span>Inspect Photo</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Citation & Official Narrative */}
+                        <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-5">
+                          <div className="space-y-3">
+                            <div className="inline-flex items-center gap-2 font-mono text-[11px] font-bold text-accent tracking-widest uppercase">
+                              <Trophy size={13} />
+                              <span>OFFICIAL CITATION // {award.year}</span>
+                            </div>
+
+                            <h4 className="text-xl font-display font-black text-foreground leading-tight">
+                              {award.title}
+                            </h4>
+
+                            <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
+                              <Calendar size={13} className="text-accent" />
+                              <span>{award.date}</span>
+                              <span className="text-border">|</span>
+                              <span>{award.organization}</span>
+                            </div>
+
+                            <p className="text-sm text-muted-foreground leading-relaxed pt-2 border-t border-border/60">
+                              {award.description}
+                            </p>
+                          </div>
+
+                          <div className="pt-4 border-t border-border/60 flex items-center justify-between">
+                            <button
+                              type="button"
+                              onClick={() => openLightbox(index, 0)}
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-accent text-white font-mono text-xs font-bold uppercase tracking-wider rounded-sm hover:bg-accent/90 transition-colors"
+                            >
+                              <Maximize2 size={13} />
+                              <span>View Full Size ({award.images.length})</span>
+                            </button>
+
+                            <span className="font-mono text-[10px] text-muted-foreground uppercase">
+                              Verified Honor Proof
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </div>
       </div>
 

@@ -11,7 +11,7 @@
   "description": "",
   "dependencies": {
     "dotenv": "^17.4.2",
-    "nodemailer": "^9.0.1",
+    "nodemailer": "^10.0.13",
     "pdfkit": "^0.18.0"
   }
 }

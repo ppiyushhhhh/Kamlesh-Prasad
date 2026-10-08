@@ -104,7 +104,7 @@ const CertificationsSection = () => {
               {/* Right: Issuer & Verified */}
               <div className="flex items-center justify-between sm:justify-end gap-3 text-xs font-mono">
                 <span className="text-foreground/80 font-medium">{cert.issuer}</span>
-                <span className="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-xs">
+                <span className="inline-flex items-center gap-1 text-[11px] text-foreground bg-muted border border-border/80 px-2 py-0.5 rounded-xs">
                   <CheckCircle size={11} />
                   <span>Verified</span>
                 </span>

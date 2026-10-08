@@ -292,7 +292,7 @@ const AchievementsSection = () => {
                 onClick={() => setYearFilter(yr)}
                 className={`px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider rounded-xs transition-colors ${
                   yearFilter === yr
-                    ? "bg-accent text-white"
+                    ? "bg-foreground text-background"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 }`}
               >
@@ -311,7 +311,7 @@ const AchievementsSection = () => {
               <div
                 key={award.id}
                 className={`transition-colors duration-200 ${
-                  isExpanded ? "bg-accent/[0.02]" : "hover:bg-muted/20"
+                  isExpanded ? "bg-muted/30" : "hover:bg-muted/20"
                 }`}
               >
                 {/* Ledger Summary Header Row */}
@@ -323,7 +323,7 @@ const AchievementsSection = () => {
                 >
                   {/* Left Column: Year + Domain Badge */}
                   <div className="flex items-center gap-3 shrink-0 md:w-44">
-                    <span className="font-mono text-xs font-bold text-accent bg-accent/10 px-2.5 py-1 rounded-xs tracking-wider">
+                    <span className="font-mono text-xs font-bold text-foreground bg-muted border border-border/80 px-2.5 py-1 rounded-xs tracking-wider">
                       {award.year}
                     </span>
                     <span className="font-mono text-[11px] text-muted-foreground tracking-wide uppercase truncate max-w-[120px]">
@@ -337,7 +337,7 @@ const AchievementsSection = () => {
                       {award.title}
                     </h3>
                     <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1.5">
-                      <Building2 size={13} className="shrink-0 text-accent/80" />
+                      <Building2 size={13} className="shrink-0 text-muted-foreground" />
                       <span className="truncate">{award.organization}</span>
                     </p>
                   </div>
@@ -360,7 +360,7 @@ const AchievementsSection = () => {
                         </div>
                       ))}
                       {award.images.length > 1 && (
-                        <span className="pl-3 font-mono text-[11px] text-accent font-semibold flex items-center gap-1">
+                        <span className="pl-3 font-mono text-[11px] text-foreground font-semibold flex items-center gap-1">
                           <Images size={12} />
                           <span>{award.images.length} photos</span>
                         </span>
@@ -370,7 +370,7 @@ const AchievementsSection = () => {
                     {/* Chevron toggle */}
                     <div
                       className={`w-7 h-7 border border-border flex items-center justify-center transition-transform duration-300 text-muted-foreground ${
-                        isExpanded ? "rotate-180 bg-accent text-white border-accent" : "bg-card"
+                        isExpanded ? "rotate-180 bg-foreground text-background border-foreground" : "bg-card"
                       }`}
                     >
                       <ChevronDown size={15} />
@@ -418,7 +418,7 @@ const AchievementsSection = () => {
                         {/* Citation & Official Narrative */}
                         <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-5">
                           <div className="space-y-3">
-                            <div className="inline-flex items-center gap-2 font-mono text-[11px] font-bold text-accent tracking-widest uppercase">
+                            <div className="inline-flex items-center gap-2 font-mono text-[11px] font-bold text-foreground tracking-widest uppercase">
                               <Trophy size={13} />
                               <span>OFFICIAL CITATION // {award.year}</span>
                             </div>
@@ -428,7 +428,7 @@ const AchievementsSection = () => {
                             </h4>
 
                             <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
-                              <Calendar size={13} className="text-accent" />
+                              <Calendar size={13} className="text-muted-foreground" />
                               <span>{award.date}</span>
                               <span className="text-border">|</span>
                               <span>{award.organization}</span>
@@ -443,7 +443,7 @@ const AchievementsSection = () => {
                             <button
                               type="button"
                               onClick={() => openLightbox(index, 0)}
-                              className="inline-flex items-center gap-2 px-4 py-2 bg-accent text-white font-mono text-xs font-bold uppercase tracking-wider rounded-sm hover:bg-accent/90 transition-colors"
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background font-mono text-xs font-bold uppercase tracking-wider rounded-sm hover:opacity-90 transition-opacity"
                             >
                               <Maximize2 size={13} />
                               <span>View Full Size ({award.images.length})</span>

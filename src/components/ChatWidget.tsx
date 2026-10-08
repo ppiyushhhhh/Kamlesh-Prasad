@@ -125,14 +125,14 @@ const ChatWidget = () => {
         aria-label={open ? "Close Kamlesh AI" : "Open Kamlesh AI Assistant"}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2.5 rounded-sm border border-slate-700 bg-[#080B0F] px-4 py-3 text-xs font-mono font-bold tracking-wider uppercase text-white shadow-2xl hover:border-accent hover:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2.5 rounded-sm border border-zinc-700 bg-[#0A0A0C] px-4 py-3 text-xs font-mono font-bold tracking-wider uppercase text-white shadow-2xl hover:border-white hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
       >
         {open ? (
           <X size={16} />
         ) : (
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-            <Bot size={16} className="text-accent" />
+            <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+            <Bot size={16} className="text-white" />
           </div>
         )}
         <span>{open ? "Close AI" : "Kamlesh AI"}</span>
@@ -151,19 +151,19 @@ const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed bottom-20 right-4 left-4 sm:left-auto sm:right-6 sm:w-[420px] z-50 flex max-h-[80dvh] flex-col overflow-hidden border border-slate-800 bg-[#0D121B] text-white shadow-2xl"
+            className="fixed bottom-20 right-4 left-4 sm:left-auto sm:right-6 sm:w-[420px] z-50 flex max-h-[80dvh] flex-col overflow-hidden border border-zinc-800 bg-[#111115] text-white shadow-2xl"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-slate-800 bg-[#080B0F] px-4 py-3">
+            <div className="flex items-center justify-between border-b border-zinc-800 bg-[#0A0A0C] px-4 py-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 border border-slate-700 bg-slate-900 flex items-center justify-center text-accent">
+                <div className="w-8 h-8 border border-zinc-700 bg-zinc-900 flex items-center justify-center text-white">
                   <Bot size={17} />
                 </div>
                 <div>
                   <h3 className="font-display text-xs font-black tracking-wider uppercase text-white">
                     Kamlesh AI
                   </h3>
-                  <p className="font-mono text-[10px] text-slate-400">
+                  <p className="font-mono text-[10px] text-zinc-400">
                     Executive Profile Assistant
                   </p>
                 </div>
@@ -206,7 +206,7 @@ const ChatWidget = () => {
                     key={topic}
                     type="button"
                     onClick={() => void send(STARTER_QUESTIONS[topic] || topic)}
-                    className="px-2 py-0.5 border border-slate-800 bg-slate-900 font-mono text-[10px] text-slate-300 hover:border-accent hover:text-white transition-colors"
+                    className="px-2 py-0.5 border border-zinc-800 bg-zinc-900 font-mono text-[10px] text-zinc-300 hover:border-white hover:text-white transition-colors"
                   >
                     {topic}
                   </button>
@@ -221,7 +221,7 @@ const ChatWidget = () => {
               aria-live="polite"
             >
               {messages.length === 0 && (
-                <div className="p-3 border border-slate-800/80 bg-slate-900/40 text-slate-300 font-light">
+                <div className="p-3 border border-zinc-800 bg-zinc-900/40 text-zinc-300 font-light">
                   {WELCOME}
                 </div>
               )}
@@ -229,13 +229,13 @@ const ChatWidget = () => {
               {messages.map((m, i) =>
                 m.role === "user" ? (
                   <div key={i} className="flex justify-end">
-                    <div className="max-w-[85%] whitespace-pre-wrap break-words bg-accent text-white px-3 py-2 font-medium">
+                    <div className="max-w-[85%] whitespace-pre-wrap break-words bg-white text-black px-3 py-2 font-medium">
                       {m.content}
                     </div>
                   </div>
                 ) : (
                   <div key={i} className="flex justify-start">
-                    <div className="max-w-[95%] whitespace-pre-wrap break-words border border-slate-800 bg-slate-900/90 text-slate-200 px-3 py-2 leading-relaxed font-light">
+                    <div className="max-w-[95%] whitespace-pre-wrap break-words border border-zinc-800 bg-zinc-900/90 text-zinc-200 px-3 py-2 leading-relaxed font-light">
                       {m.content}
                     </div>
                   </div>
@@ -243,8 +243,8 @@ const ChatWidget = () => {
               )}
 
               {loading && (
-                <div className="flex items-center gap-2 text-slate-400 font-mono text-[11px]">
-                  <Loader2 className="animate-spin text-accent" size={13} />
+                <div className="flex items-center gap-2 text-zinc-400 font-mono text-[11px]">
+                  <Loader2 className="animate-spin text-white" size={13} />
                   <span>Retrieving executive data...</span>
                 </div>
               )}
@@ -257,7 +257,7 @@ const ChatWidget = () => {
             </div>
 
             {/* Input Composer */}
-            <div className="border-t border-slate-800 bg-[#080B0F] p-3">
+            <div className="border-t border-zinc-800 bg-[#0A0A0C] p-3">
               <div className="flex items-end gap-2">
                 <textarea
                   id="kamlesh-ai-input"
@@ -268,14 +268,14 @@ const ChatWidget = () => {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Inquire about leadership, cybersecurity, infrastructure..."
-                  className="max-h-24 min-h-[38px] flex-1 resize-none border border-slate-700 bg-slate-900/90 px-3 py-2 text-xs text-white placeholder:text-slate-500 focus-visible:outline-none focus-visible:border-accent"
+                  className="max-h-24 min-h-[38px] flex-1 resize-none border border-zinc-700 bg-zinc-900/90 px-3 py-2 text-xs text-white placeholder:text-zinc-500 focus-visible:outline-none focus-visible:border-white"
                 />
                 <button
                   type="button"
                   onClick={() => void send(input)}
                   disabled={loading}
                   aria-label="Send query"
-                  className="inline-flex h-[38px] w-[38px] flex-shrink-0 items-center justify-center bg-accent text-white hover:bg-accent/90 disabled:opacity-50 transition-colors"
+                  className="inline-flex h-[38px] w-[38px] flex-shrink-0 items-center justify-center bg-white text-black hover:bg-zinc-200 disabled:opacity-50 transition-colors"
                 >
                   {loading ? <Loader2 className="animate-spin" size={14} /> : <Send size={14} />}
                 </button>

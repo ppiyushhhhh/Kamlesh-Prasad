@@ -90,23 +90,23 @@ const ContactSection = () => {
   };
 
   const inputBaseClasses =
-    "bg-slate-900/80 border-slate-700/80 text-white placeholder:text-slate-500 rounded-sm focus-visible:ring-1 focus-visible:ring-accent focus-visible:border-accent transition-colors hover:border-slate-600";
+    "bg-zinc-900/80 border-zinc-700/80 text-white placeholder:text-zinc-500 rounded-sm focus-visible:ring-1 focus-visible:ring-white focus-visible:border-white transition-colors hover:border-zinc-600";
 
   return (
-    <section id="contact" className="section-padding bg-[#080B0F] text-white border-t border-slate-800 scroll-mt-16 tech-grid">
+    <section id="contact" className="section-padding bg-[#0A0A0C] text-white border-t border-zinc-800 scroll-mt-16 tech-grid">
       <div className="container mx-auto max-w-7xl" ref={ref}>
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="flex items-center gap-3 mb-12 pb-4 border-b border-slate-800"
+          className="flex items-center gap-3 mb-12 pb-4 border-b border-zinc-800"
         >
-          <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">
+          <span className="font-mono text-xs font-bold text-zinc-300 tracking-widest uppercase">
             07 / LET&apos;S CONNECT
           </span>
-          <span className="h-[1px] w-12 bg-accent/40" />
-          <span className="text-xs uppercase font-mono tracking-wider text-slate-400">
+          <span className="h-[1px] w-12 bg-zinc-700" />
+          <span className="text-xs uppercase font-mono tracking-wider text-zinc-400">
             Executive Consultation &bull; Strategic Advisory
           </span>
         </motion.div>
@@ -124,22 +124,22 @@ const ContactSection = () => {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black uppercase tracking-tight leading-[1.08] text-white mb-6">
                 Have a technology, cybersecurity or transformation challenge?
                 <br />
-                <span className="text-accent">Let&apos;s talk.</span>
+                <span className="text-zinc-400">Let&apos;s talk.</span>
               </h2>
 
-              <p className="text-slate-300 text-base md:text-lg leading-relaxed mb-8 font-light">
+              <p className="text-zinc-300 text-base md:text-lg leading-relaxed mb-8 font-light">
                 Available for executive consulting, board advisory, technology modernization initiatives, and high-impact leadership discussions.
               </p>
             </div>
 
             {/* Direct Contact Metadata Block */}
-            <div className="space-y-4 pt-6 border-t border-slate-800 font-mono text-xs">
+            <div className="space-y-4 pt-6 border-t border-zinc-800 font-mono text-xs">
               <a
                 href="mailto:kamlesh.prasad@gmail.com"
-                className="flex items-center justify-between p-3.5 border border-slate-800 bg-slate-900/60 text-slate-200 hover:border-accent hover:text-white transition-colors group"
+                className="flex items-center justify-between p-3.5 border border-zinc-800 bg-zinc-900/60 text-zinc-200 hover:border-zinc-500 hover:text-white transition-colors group"
               >
                 <div className="flex items-center gap-3">
-                  <Mail size={16} className="text-accent" />
+                  <Mail size={16} className="text-zinc-300" />
                   <span>kamlesh.prasad@gmail.com</span>
                 </div>
                 <ArrowUpRight size={14} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-transform" />
@@ -149,17 +149,17 @@ const ContactSection = () => {
                 href="https://www.linkedin.com/in/kamleshsprasad0512/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-3.5 border border-slate-800 bg-slate-900/60 text-slate-200 hover:border-accent hover:text-white transition-colors group"
+                className="flex items-center justify-between p-3.5 border border-zinc-800 bg-zinc-900/60 text-zinc-200 hover:border-zinc-500 hover:text-white transition-colors group"
               >
                 <div className="flex items-center gap-3">
-                  <Linkedin size={16} className="text-accent" />
+                  <Linkedin size={16} className="text-zinc-300" />
                   <span>linkedin.com/in/kamleshsprasad0512</span>
                 </div>
                 <ArrowUpRight size={14} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-transform" />
               </a>
 
-              <div className="flex items-center gap-3 p-3.5 border border-slate-850 bg-slate-900/30 text-slate-400">
-                <MapPin size={16} className="text-slate-500" />
+              <div className="flex items-center gap-3 p-3.5 border border-zinc-800 bg-zinc-900/30 text-zinc-400">
+                <MapPin size={16} className="text-zinc-500" />
                 <span>Mumbai, Maharashtra, India</span>
               </div>
             </div>
@@ -170,13 +170,13 @@ const ContactSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-7 border border-slate-800 bg-slate-900/60 p-6 sm:p-8 md:p-10"
+            className="lg:col-span-7 border border-zinc-800 bg-zinc-900/60 p-6 sm:p-8 md:p-10"
           >
             <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div className="space-y-1.5">
-                  <Label htmlFor="name" className="text-slate-300 font-mono text-xs uppercase tracking-wider">
-                    Full Name <span className="text-accent">*</span>
+                  <Label htmlFor="name" className="text-zinc-300 font-mono text-xs uppercase tracking-wider">
+                    Full Name <span className="text-white">*</span>
                   </Label>
                   <Input
                     id="name"
@@ -196,8 +196,8 @@ const ContactSection = () => {
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="email" className="text-slate-300 font-mono text-xs uppercase tracking-wider">
-                    Email Address <span className="text-accent">*</span>
+                  <Label htmlFor="email" className="text-zinc-300 font-mono text-xs uppercase tracking-wider">
+                    Email Address <span className="text-white">*</span>
                   </Label>
                   <Input
                     id="email"
@@ -218,8 +218,8 @@ const ContactSection = () => {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="subject" className="text-slate-300 font-mono text-xs uppercase tracking-wider">
-                  Subject / Topic <span className="text-accent">*</span>
+                <Label htmlFor="subject" className="text-zinc-300 font-mono text-xs uppercase tracking-wider">
+                  Subject / Topic <span className="text-white">*</span>
                 </Label>
                 <Input
                   id="subject"
@@ -239,8 +239,8 @@ const ContactSection = () => {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="message" className="text-slate-300 font-mono text-xs uppercase tracking-wider">
-                  Message Details <span className="text-accent">*</span>
+                <Label htmlFor="message" className="text-zinc-300 font-mono text-xs uppercase tracking-wider">
+                  Message Details <span className="text-white">*</span>
                 </Label>
                 <Textarea
                   id="message"
@@ -261,12 +261,12 @@ const ContactSection = () => {
               {status === "success" && (
                 <div
                   role="status"
-                  className="flex items-start gap-3 border border-emerald-500/30 bg-emerald-500/10 p-4 text-left rounded-sm"
+                  className="flex items-start gap-3 border border-zinc-700 bg-zinc-800/60 p-4 text-left rounded-sm"
                 >
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-5 w-5 text-white shrink-0 mt-0.5" />
                   <div>
                     <p className="font-semibold text-white text-sm">Message Sent Successfully</p>
-                    <p className="text-xs text-slate-300 mt-0.5">
+                    <p className="text-xs text-zinc-300 mt-0.5">
                       Thank you for reaching out. Your communication has been received directly.
                     </p>
                   </div>
@@ -289,7 +289,7 @@ const ContactSection = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto px-8 py-3.5 h-auto bg-accent text-white hover:bg-accent/90 transition-all font-mono text-xs font-bold uppercase tracking-wider rounded-sm disabled:opacity-60"
+                  className="w-full sm:w-auto px-8 py-3.5 h-auto bg-white text-black hover:bg-zinc-200 transition-all font-mono text-xs font-bold uppercase tracking-wider rounded-sm disabled:opacity-60"
                 >
                   {isSubmitting ? (
                     <>

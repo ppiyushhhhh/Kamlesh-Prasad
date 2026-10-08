@@ -18,7 +18,7 @@ const ResumeModal = ({ open, onOpenChange }: ResumeModalProps) => {
         {/* Header */}
         <DialogHeader className="flex flex-row items-center justify-between border-b border-border px-6 py-4 flex-shrink-0 bg-background">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 border border-border bg-card flex items-center justify-center text-accent">
+            <div className="w-8 h-8 border border-border bg-card flex items-center justify-center text-foreground">
               <FileText className="h-4 w-4" />
             </div>
             <div>
@@ -38,7 +38,7 @@ const ResumeModal = ({ open, onOpenChange }: ResumeModalProps) => {
               download="Kamlesh-Prasad-Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-accent text-white font-mono text-xs font-semibold uppercase tracking-wider rounded-sm hover:bg-accent/90 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-foreground text-background font-mono text-xs font-semibold uppercase tracking-wider rounded-sm hover:opacity-90 transition-opacity"
             >
               <Download size={13} />
               <span>Download PDF</span>

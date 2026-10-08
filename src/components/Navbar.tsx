@@ -74,11 +74,22 @@ const Navbar = () => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
 
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/90 dark:bg-[#0A0A0C]/90 backdrop-blur-md border-b border-border shadow-sm py-3.5"
+        scrolled || mobileOpen
+          ? "bg-white dark:bg-[#0A0A0C] border-b border-border shadow-sm py-3.5"
           : "bg-transparent py-5"
       }`}
     >
@@ -101,7 +112,7 @@ const Navbar = () => {
             />
           </div>
           <div className="hidden sm:flex flex-col">
-            <span className={`text-xs font-bold tracking-wider uppercase leading-none transition-colors ${scrolled ? "text-foreground" : "text-white"}`}>
+            <span className={`text-xs font-bold tracking-wider uppercase leading-none transition-colors ${scrolled || mobileOpen ? "text-foreground" : "text-white"}`}>
               Kamlesh Prasad
             </span>
             <span className="text-[10px] tracking-widest uppercase text-zinc-400 font-mono mt-1">
@@ -163,7 +174,7 @@ const Navbar = () => {
         <div className="flex items-center gap-2 lg:hidden">
           <button
             onClick={() => setDark(!dark)}
-            className={`p-2 transition-colors rounded ${scrolled ? "text-foreground" : "text-white"}`}
+            className={`p-2 transition-colors rounded ${scrolled || mobileOpen ? "text-foreground" : "text-white"}`}
             aria-label="Toggle theme"
           >
             {dark ? <Sun size={18} /> : <Moon size={18} />}
@@ -171,7 +182,11 @@ const Navbar = () => {
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className={`p-2 transition-colors rounded border border-border/40 ${scrolled ? "text-foreground bg-muted/50" : "text-white bg-zinc-800/80"}`}
+            className={`p-2 transition-colors rounded border ${
+              scrolled || mobileOpen
+                ? "text-foreground bg-muted border-border"
+                : "text-white bg-zinc-800/80 border-border/40"
+            }`}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -181,47 +196,57 @@ const Navbar = () => {
 
       {/* Mobile Drawer */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[65px] bg-background/98 dark:bg-[#0A0A0C]/98 backdrop-blur-xl border-b border-border shadow-2xl px-6 py-6 transition-all duration-300 animate-in slide-in-from-top-2">
-          <div className="space-y-1 pb-4">
-            {navLinks.map((l) => {
-              const isActive = activeSection === l.href.replace("#", "");
-              return (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  onClick={(e) => {
-                    handleClick(e, l.href);
-                    setMobileOpen(false);
-                  }}
-                  className={`flex items-center justify-between py-3 px-3 text-sm font-semibold tracking-wide uppercase transition-colors rounded-sm ${
-                    isActive
-                      ? "text-foreground bg-muted border-l-2 border-foreground"
-                      : "text-foreground/80 hover:text-foreground hover:bg-muted/40"
-                  }`}
-                >
-                  <span className="flex items-center gap-3">
-                    <span className="font-mono text-xs text-muted-foreground">{l.number}</span>
-                    <span>{l.label}</span>
-                  </span>
-                  <ArrowUpRight size={14} className="opacity-40" />
-                </a>
-              );
-            })}
-          </div>
+        <>
+          {/* Backdrop Dimmer to obscure underlying page content */}
+          <div
+            className="lg:hidden fixed inset-0 bg-black/60 -z-10 transition-opacity"
+            onClick={() => setMobileOpen(false)}
+            aria-hidden="true"
+          />
 
-          <div className="pt-4 border-t border-border flex items-center justify-between">
-            <button
-              onClick={() => {
-                setMobileOpen(false);
-                setResumeOpen(true);
-              }}
-              className="w-full inline-flex items-center justify-center gap-2 py-3 bg-foreground text-background text-xs font-bold tracking-wider uppercase rounded-sm"
-            >
-              <FileText size={15} />
-              <span>View Executive Resume</span>
-            </button>
+          {/* 100% Solid Opaque Drawer */}
+          <div className="lg:hidden absolute top-full inset-x-0 bg-white dark:bg-[#0A0A0C] border-b border-zinc-200 dark:border-zinc-800 shadow-2xl px-6 py-6 z-50 overflow-y-auto max-h-[calc(100dvh-70px)] animate-in slide-in-from-top-2 duration-200">
+            <div className="space-y-1 pb-4">
+              {navLinks.map((l) => {
+                const isActive = activeSection === l.href.replace("#", "");
+                return (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    onClick={(e) => {
+                      handleClick(e, l.href);
+                      setMobileOpen(false);
+                    }}
+                    className={`flex items-center justify-between py-3.5 px-3 text-sm font-semibold tracking-wide uppercase transition-colors rounded-sm ${
+                      isActive
+                        ? "text-black dark:text-white bg-zinc-100 dark:bg-zinc-900 border-l-2 border-black dark:border-white font-bold"
+                        : "text-zinc-800 dark:text-zinc-200 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900/60"
+                    }`}
+                  >
+                    <span className="flex items-center gap-3">
+                      <span className="font-mono text-xs text-zinc-400 dark:text-zinc-500">{l.number}</span>
+                      <span>{l.label}</span>
+                    </span>
+                    <ArrowUpRight size={14} className="opacity-40" />
+                  </a>
+                );
+              })}
+            </div>
+
+            <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  setResumeOpen(true);
+                }}
+                className="w-full inline-flex items-center justify-center gap-2 py-3.5 bg-black dark:bg-white text-white dark:text-black text-xs font-bold tracking-wider uppercase rounded-sm hover:opacity-90 transition-opacity shadow-sm"
+              >
+                <FileText size={15} />
+                <span>View Executive Resume</span>
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       <ResumeModal open={resumeOpen} onOpenChange={setResumeOpen} />

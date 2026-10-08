@@ -180,10 +180,10 @@ const HeroSection = () => {
                     height={600}
                     fetchPriority="high"
                     decoding="async"
-                    className="w-full h-full object-cover object-top filter grayscale contrast-110 hover:grayscale-0 transition-all duration-700"
+                    className="w-full h-full object-cover object-top transition-all duration-500 hover:scale-[1.02]"
                   />
-                  {/* Subtle technical gradient scrim */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#080B0F] via-transparent to-transparent opacity-80" />
+                  {/* Subtle bottom gradient scrim for metadata badge */}
+                  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#080B0F]/90 to-transparent pointer-events-none" />
 
                   {/* On-image technical overlay badge */}
                   <div className="absolute bottom-3 left-3 right-3 p-3 bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-sm flex items-center justify-between">

@@ -1,25 +1,67 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import {
-  Server,
-  ShieldCheck,
-  Cloud,
-  HardDrive,
-  Network,
-  BarChart3,
-  Users,
-  Lock,
-} from "lucide-react";
+import { ShieldCheck, Server, RefreshCw, Scale } from "lucide-react";
 
-const expertise = [
-  { icon: ShieldCheck, title: "IT Security & CISO Practice", desc: "SOC, NOC, ITSM, ITAM, BCP-DR, VAPT (Black, Brown & White Box), SIEM, EDR, Zscaler, SSO. Leading end-to-end cyber security posture." },
-  { icon: Server, title: "Digital Transformation", desc: "Spearheaded transformation from 2 malls to 20+ malls. Built 98% Cloud Compute Organization (SaaS, PaaS, IaaS) with zero data loss." },
-  { icon: Cloud, title: "Cloud & Infrastructure", desc: "3-Tier DC/DR/NDR deployments, Microsoft 365, hybrid cloud migrations, MPLS networks, SD-WAN, and Active-Active HA configurations." },
-  { icon: BarChart3, title: "IT Governance & Compliance", desc: "ITGC, SEBI, CERT-In, DPDP Act, NIST & SANS frameworks. ERM post listing achieving risk score of 3.2 (best in REIT)." },
-  { icon: Network, title: "Program & Vendor Management", desc: "Multi-vendor management with IBM, Dell & Accenture. SOW, RFI/RFP, IT Services contracts & negotiations." },
-  { icon: HardDrive, title: "M&A IT Integration", desc: "Technology due diligence, knowledge transfer, data migration, employee rebadging, and digital transformation for acquisitions." },
-  { icon: Users, title: "Stakeholder Engagement", desc: "Primary IT interface to CXOs, Head of Departments, Centre Directors. Steering committee reviews and business benefits realization." },
-  { icon: Lock, title: "Cyber Security", desc: "End-to-end cyber defense covering threat detection, incident response, Zero Trust architecture, VAPT, DPDP Act 2023 readiness, and continuous security posture management across the enterprise." },
+interface Category {
+  icon: typeof ShieldCheck;
+  title: string;
+  tagline: string;
+  capabilities: string[];
+}
+
+const categories: Category[] = [
+  {
+    icon: ShieldCheck,
+    title: "Cybersecurity",
+    tagline: "CISO Practice & Defense",
+    capabilities: [
+      "Security Strategy & CISO Leadership",
+      "Threat Detection, SIEM & EDR Operations",
+      "VAPT (Red / Blue Team) & Zero Trust",
+      "Endpoint Protection & Zscaler Cloud",
+      "DPDP Act 2023 Readiness & Compliance",
+      "BCP-DR & Incident Response Protocols",
+    ],
+  },
+  {
+    icon: Server,
+    title: "Infrastructure",
+    tagline: "Architecture & Resilience",
+    capabilities: [
+      "3-Tier Data Center (DC, DR & NDR)",
+      "98% Cloud Compute (SaaS, PaaS, IaaS)",
+      "Enterprise SD-WAN & MPLS Networking",
+      "High Availability & GSLB / SLB (Radware)",
+      "Multi-OS (Linux, RHEL, AIX, VMware)",
+      "Enterprise Monitoring & NOC Workflows",
+    ],
+  },
+  {
+    icon: RefreshCw,
+    title: "Transformation",
+    tagline: "Scale & Digital Delivery",
+    capabilities: [
+      "Enterprise Scale (2 to 20+ Malls Unified)",
+      "M&A Technology Due Diligence & Transfer",
+      "Omni-Channel & 100% SSO Implementation",
+      "AI Adoption & Modern Data Architecture",
+      "SAP, Salesforce & Cloud Integrations",
+      "Zero Data Loss System Migrations",
+    ],
+  },
+  {
+    icon: Scale,
+    title: "Governance",
+    tagline: "Risk, Audit & Oversight",
+    capabilities: [
+      "ITGC, SEBI & CERT-In Frameworks",
+      "Enterprise Risk Management (REIT ERM 3.2)",
+      "Multi-Vendor (IBM, Dell & Accenture)",
+      "₹250 Mn Annual IT Budget Oversight",
+      "SOW, RFI/RFP & Contract Negotiations",
+      "ITSM, ITAM & Continuous Quality Audit",
+    ],
+  },
 ];
 
 const ExpertiseSection = () => {
@@ -27,35 +69,72 @@ const ExpertiseSection = () => {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="expertise" className="section-padding bg-background scroll-mt-16">
-      <div className="container mx-auto max-w-6xl" ref={ref}>
+    <section id="expertise" className="section-padding bg-background border-b border-border/80 scroll-mt-16">
+      <div className="container mx-auto max-w-7xl" ref={ref}>
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-3 mb-12 pb-4 border-b border-border/60"
         >
-          <p className="text-accent uppercase tracking-[0.2em] text-sm font-medium mb-3">Specializations</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-12">
-            Core Expertise
-          </h2>
+          <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">
+            03 / CORE EXPERTISE
+          </span>
+          <span className="h-[1px] w-12 bg-accent/40" />
+          <span className="text-xs uppercase font-mono tracking-wider text-muted-foreground">
+            Strategic Competency Matrix
+          </span>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {expertise.map((item, i) => (
+        {/* Four Column Matrix with Thin Dividers */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-b border-border divide-y md:divide-y-0 md:divide-x divide-border">
+          {categories.map((cat, i) => (
             <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 30, scale: 0.97 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ delay: 0.1 * i, duration: 0.5, ease: "easeOut" }}
-              whileHover={{ y: -4, boxShadow: "0 8px 30px -12px hsl(var(--primary) / 0.15)" }}
-              className="bg-card border border-border rounded-lg p-6 group transition-colors duration-300 hover:border-accent/40"
+              key={cat.title}
+              initial={{ opacity: 0, y: 25 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.1 * i, duration: 0.5 }}
+              className="p-6 lg:p-8 flex flex-col justify-between hover:bg-muted/30 transition-colors"
             >
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                <item.icon className="text-primary" size={24} />
+              <div>
+                {/* Category Icon & Index */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-10 h-10 border border-border bg-card flex items-center justify-center text-accent">
+                    <cat.icon size={20} />
+                  </div>
+                  <span className="font-mono text-xs text-muted-foreground tracking-widest">
+                    0{i + 1}
+                  </span>
+                </div>
+
+                {/* Category Title */}
+                <h3 className="text-xl font-display font-black tracking-tight uppercase text-foreground mb-1">
+                  {cat.title}
+                </h3>
+                <p className="text-xs font-mono text-accent uppercase tracking-wider mb-6">
+                  {cat.tagline}
+                </p>
+
+                {/* Capabilities List */}
+                <ul className="space-y-3 pt-2 border-t border-border/60">
+                  {cat.capabilities.map((cap, cIdx) => (
+                    <li
+                      key={cIdx}
+                      className="text-xs text-muted-foreground flex items-start gap-2.5 leading-relaxed"
+                    >
+                      <span className="w-1 h-1 bg-accent/80 shrink-0 mt-1.5" />
+                      <span>{cap}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+
+              {/* Bottom rule indicator */}
+              <div className="mt-8 pt-4 border-t border-border/40 flex items-center justify-between text-[11px] font-mono text-muted-foreground">
+                <span className="uppercase tracking-wider">Enterprise Ready</span>
+                <span>&bull;&bull;&bull;</span>
+              </div>
             </motion.div>
           ))}
         </div>

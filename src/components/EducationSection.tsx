@@ -1,22 +1,25 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { GraduationCap } from "lucide-react";
+import { GraduationCap, Calendar, Award } from "lucide-react";
 
-const education = [
+const educationList = [
   {
-    degree: "Post Graduate Certificate in Cyber Security",
-    institution: "MIT xPRO, USA",
     period: "2024",
+    institution: "MIT xPRO, USA",
+    degree: "Post Graduate Certificate in Cyber Security",
+    details: "Executive Cybersecurity Strategy, Threat Defense & Systems Resilience",
   },
   {
-    degree: "MBA – Systems",
-    institution: "Sikkim Manipal (Open) University, India",
     period: "2014",
+    institution: "Sikkim Manipal (Open) University, India",
+    degree: "MBA – Systems",
+    details: "Information Systems Management, Enterprise IT Strategy & Operations",
   },
   {
-    degree: "BSc – Graduate",
+    period: "Graduate",
     institution: "Madhya Pradesh Bhoj (Open) University, India",
-    period: "",
+    degree: "BSc – Graduate",
+    details: "Foundational Sciences & Quantitative Studies",
   },
 ];
 
@@ -25,37 +28,55 @@ const EducationSection = () => {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="education" className="section-padding bg-background scroll-mt-16">
-      <div className="container mx-auto max-w-5xl" ref={ref}>
+    <section id="education" className="section-padding bg-section-alt border-b border-border/80 scroll-mt-16">
+      <div className="container mx-auto max-w-7xl" ref={ref}>
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-3 mb-10 pb-4 border-b border-border/60"
         >
-          <p className="text-accent uppercase tracking-[0.2em] text-sm font-medium mb-3">Academic</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-10">
-            Education
-          </h2>
+          <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">
+            06 / EDUCATION
+          </span>
+          <span className="h-[1px] w-12 bg-accent/40" />
+          <span className="text-xs uppercase font-mono tracking-wider text-muted-foreground">
+            Academic Background &amp; Executive Credentials
+          </span>
         </motion.div>
 
-        <div className="space-y-4">
-          {education.map((edu, i) => (
+        {/* Editorial Vertical Timeline */}
+        <div className="space-y-6">
+          {educationList.map((edu, i) => (
             <motion.div
               key={edu.degree}
-              initial={{ opacity: 0, y: 30, scale: 0.97 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ delay: 0.1 * i, duration: 0.5, ease: "easeOut" }}
-              whileHover={{ y: -4, boxShadow: "0 8px 30px -12px hsl(var(--primary) / 0.15)" }}
-              className="flex items-start gap-4 bg-card border border-border rounded-lg p-6 transition-colors duration-300 hover:border-accent/40"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.1 * i, duration: 0.5 }}
+              className="border-b border-border pb-6 last:border-b-0 last:pb-0"
             >
-              <div className="w-10 h-10 rounded-full bg-accent/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <GraduationCap className="text-accent" size={20} />
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground">{edu.degree}</h3>
-                <p className="text-muted-foreground text-sm">{edu.institution}</p>
-                <p className="text-xs text-muted-foreground mt-1">{edu.period}</p>
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start">
+                {/* Year Marker */}
+                <div className="md:col-span-3">
+                  <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">
+                    {edu.period}
+                  </span>
+                  <p className="text-sm font-semibold text-foreground mt-0.5">
+                    {edu.institution}
+                  </p>
+                </div>
+
+                {/* Degree & Focus */}
+                <div className="md:col-span-9 border-l-2 border-border pl-6 relative">
+                  <span className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-accent" />
+                  <h3 className="text-lg md:text-xl font-display font-bold text-foreground mb-1">
+                    {edu.degree}
+                  </h3>
+                  <p className="text-xs md:text-sm text-muted-foreground font-light">
+                    {edu.details}
+                  </p>
+                </div>
               </div>
             </motion.div>
           ))}

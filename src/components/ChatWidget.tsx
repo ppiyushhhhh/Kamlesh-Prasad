@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, X, Send, Loader2, FileText, RotateCcw } from "lucide-react";
+import { Bot, X, Send, Loader2, FileText, RotateCcw, Sparkles } from "lucide-react";
 import { getOfflineAnswer } from "../data/offlineAnswers";
 
 type Role = "user" | "assistant";
@@ -10,21 +10,28 @@ interface ChatMessage {
 }
 
 const WELCOME =
-  "Hi! I'm Kamlesh AI. I can answer questions about Kamlesh's experience, skills, certifications, leadership, projects, and career background.";
+  "Welcome. I am Kamlesh AI, executive profile assistant for Kamlesh Prasad. You may inquire about his 22+ years of technology leadership, CISO practice, enterprise infrastructure, certifications, and transformation milestones.";
 
-const STARTER_QUESTIONS = [
-  "Who is Kamlesh Prasad?",
-  "What is Kamlesh's professional experience?",
-  "What are Kamlesh's key skills?",
-  "Tell me about Kamlesh's cybersecurity experience.",
-  "What certifications does Kamlesh have?",
-  "Why should a company hire Kamlesh?",
+const STARTER_TOPICS = [
+  "Experience",
+  "Cybersecurity",
+  "Leadership",
+  "Certifications",
+  "Education",
 ];
 
+const STARTER_QUESTIONS: Record<string, string> = {
+  Experience: "What is Kamlesh's professional experience and leadership background?",
+  Cybersecurity: "Tell me about Kamlesh's cybersecurity leadership and CISO practice.",
+  Leadership: "What is Kamlesh's leadership style and CXO collaboration experience?",
+  Certifications: "What certifications does Kamlesh hold?",
+  Education: "What is Kamlesh's education and academic background?",
+};
+
 const FOLLOW_UPS = [
-  "Tell me more about his experience",
-  "What cloud technologies does he use?",
-  "What certifications does he have?",
+  "Tell me about his cloud & infrastructure scale",
+  "What awards has Kamlesh received?",
+  "How can I contact Kamlesh for an executive role?",
 ];
 
 const MAX_LENGTH = 1000;
@@ -106,29 +113,32 @@ const ChatWidget = () => {
     }
   };
 
-  const suggestions = messages.length === 0 ? STARTER_QUESTIONS : FOLLOW_UPS;
-  const showSuggestions = !loading && (messages.length === 0 || messages[messages.length - 1].role === "assistant");
-
   return (
     <>
-      {/* Floating trigger */}
+      {/* Floating Trigger Button */}
       <motion.button
         ref={triggerRef}
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="dialog"
-        aria-label={open ? "Close Kamlesh AI chat" : "Ask Kamlesh AI"}
-        whileHover={{ y: -2 }}
-        whileTap={{ scale: 0.97 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full border border-border bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition-colors duration-300 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 md:px-5"
+        aria-label={open ? "Close Kamlesh AI" : "Open Kamlesh AI Assistant"}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2.5 rounded-sm border border-slate-700 bg-[#070B16] px-4 py-3 text-xs font-mono font-bold tracking-wider uppercase text-white shadow-2xl hover:border-accent hover:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
-        {open ? <X size={18} /> : <Bot size={18} className="text-gold" />}
-        <span className="hidden sm:inline">{open ? "Close" : "Ask Kamlesh AI"}</span>
-        <span className="sr-only sm:hidden">{open ? "Close chat" : "Ask Kamlesh AI"}</span>
+        {open ? (
+          <X size={16} />
+        ) : (
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+            <Bot size={16} className="text-accent" />
+          </div>
+        )}
+        <span>{open ? "Close AI" : "Kamlesh AI"}</span>
       </motion.button>
 
+      {/* Floating Chat Panel */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -136,24 +146,29 @@ const ChatWidget = () => {
             ref={panelRef}
             role="dialog"
             aria-modal="false"
-            aria-label="Kamlesh AI chat"
+            aria-label="Kamlesh AI Assistant"
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed bottom-24 right-3 left-3 z-50 flex max-h-[75dvh] flex-col overflow-hidden rounded-lg border border-border bg-card shadow-xl sm:left-auto sm:right-5 sm:w-[400px] md:max-h-[70dvh]"
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="fixed bottom-20 right-4 left-4 sm:left-auto sm:right-6 sm:w-[420px] z-50 flex max-h-[80dvh] flex-col overflow-hidden border border-slate-800 bg-[#090E1D] text-white shadow-2xl"
           >
             {/* Header */}
-            <div className="flex items-start justify-between gap-3 border-b border-border bg-card px-4 py-3">
+            <div className="flex items-center justify-between border-b border-slate-800 bg-[#070B16] px-4 py-3">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold/15">
-                  <Bot className="text-gold" size={18} />
+                <div className="w-8 h-8 border border-slate-700 bg-slate-900 flex items-center justify-center text-accent">
+                  <Bot size={17} />
                 </div>
                 <div>
-                  <p className="font-display text-base font-bold leading-tight text-foreground">Kamlesh AI</p>
-                  <p className="text-xs text-muted-foreground">Ask me about Kamlesh</p>
+                  <h3 className="font-display text-xs font-black tracking-wider uppercase text-white">
+                    Kamlesh AI
+                  </h3>
+                  <p className="font-mono text-[10px] text-slate-400">
+                    Executive Profile Assistant
+                  </p>
                 </div>
               </div>
+
               <div className="flex items-center gap-1">
                 <button
                   type="button"
@@ -163,83 +178,87 @@ const ChatWidget = () => {
                     setInput("");
                     inputRef.current?.focus();
                   }}
-                  aria-label="Start a new chat"
-                  title="New chat"
-                  className="rounded-md p-1.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  aria-label="Reset chat"
+                  title="Reset chat"
+                  className="p-1.5 text-slate-400 hover:text-white transition-colors"
                 >
-                  <RotateCcw size={16} />
+                  <RotateCcw size={14} />
                 </button>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
                   aria-label="Close chat"
-                  className="rounded-md p-1.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="p-1.5 text-slate-400 hover:text-white transition-colors"
                 >
-                  <X size={18} />
+                  <X size={16} />
                 </button>
               </div>
             </div>
 
-            {/* Conversation */}
+            {/* Quick Ask Strip */}
+            <div className="border-b border-slate-800/80 bg-slate-950/60 px-4 py-2">
+              <p className="font-mono text-[10px] uppercase tracking-wider text-slate-400 mb-1.5">
+                Ask me about:
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {STARTER_TOPICS.map((topic) => (
+                  <button
+                    key={topic}
+                    type="button"
+                    onClick={() => void send(STARTER_QUESTIONS[topic] || topic)}
+                    className="px-2 py-0.5 border border-slate-800 bg-slate-900 font-mono text-[10px] text-slate-300 hover:border-accent hover:text-white transition-colors"
+                  >
+                    {topic}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Conversation Log */}
             <div
               ref={scrollRef}
-              className="flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4"
+              className="flex-1 space-y-3.5 overflow-y-auto px-4 py-4 text-xs leading-relaxed max-h-[46dvh]"
               aria-live="polite"
-              aria-atomic="false"
             >
               {messages.length === 0 && (
-                <p className="text-sm leading-relaxed text-muted-foreground">{WELCOME}</p>
+                <div className="p-3 border border-slate-800/80 bg-slate-900/40 text-slate-300 font-light">
+                  {WELCOME}
+                </div>
               )}
 
               {messages.map((m, i) =>
                 m.role === "user" ? (
                   <div key={i} className="flex justify-end">
-                    <div className="max-w-[85%] whitespace-pre-wrap break-words rounded-lg bg-primary px-3 py-2 text-sm text-primary-foreground">
+                    <div className="max-w-[85%] whitespace-pre-wrap break-words bg-accent text-white px-3 py-2 font-medium">
                       {m.content}
                     </div>
                   </div>
                 ) : (
-                  <div key={i} className="max-w-full whitespace-pre-wrap break-words text-sm leading-relaxed text-foreground">
-                    {m.content}
+                  <div key={i} className="flex justify-start">
+                    <div className="max-w-[95%] whitespace-pre-wrap break-words border border-slate-800 bg-slate-900/90 text-slate-200 px-3 py-2 leading-relaxed font-light">
+                      {m.content}
+                    </div>
                   </div>
                 ),
               )}
 
               {loading && (
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Loader2 className="animate-spin" size={14} />
-                  <span>Thinking...</span>
+                <div className="flex items-center gap-2 text-slate-400 font-mono text-[11px]">
+                  <Loader2 className="animate-spin text-accent" size={13} />
+                  <span>Retrieving executive data...</span>
                 </div>
               )}
 
               {error && (
-                <p role="alert" className="text-sm text-destructive">
+                <p role="alert" className="text-red-400 font-mono text-[11px]">
                   {error}
                 </p>
               )}
-
-              {showSuggestions && (
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {suggestions.map((q) => (
-                    <button
-                      key={q}
-                      type="button"
-                      onClick={() => void send(q)}
-                      className="rounded-md border border-border bg-muted px-3 py-1.5 text-left text-xs font-medium text-foreground transition-colors duration-200 hover:border-accent/40 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
 
-            {/* Composer */}
-            <div className="border-t border-border bg-card px-3 py-3">
+            {/* Input Composer */}
+            <div className="border-t border-slate-800 bg-[#070B16] p-3">
               <div className="flex items-end gap-2">
-                <label htmlFor="kamlesh-ai-input" className="sr-only">
-                  Ask a question about Kamlesh
-                </label>
                 <textarea
                   id="kamlesh-ai-input"
                   ref={inputRef}
@@ -248,30 +267,31 @@ const ChatWidget = () => {
                   maxLength={MAX_LENGTH}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about experience, skills, certifications..."
-                  className="max-h-28 min-h-[40px] flex-1 resize-none rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  placeholder="Inquire about leadership, cybersecurity, infrastructure..."
+                  className="max-h-24 min-h-[38px] flex-1 resize-none border border-slate-700 bg-slate-900/90 px-3 py-2 text-xs text-white placeholder:text-slate-500 focus-visible:outline-none focus-visible:border-accent"
                 />
                 <button
                   type="button"
                   onClick={() => void send(input)}
                   disabled={loading}
-                  aria-label="Send message"
-                  className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-gold text-primary transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
+                  aria-label="Send query"
+                  className="inline-flex h-[38px] w-[38px] flex-shrink-0 items-center justify-center bg-accent text-white hover:bg-accent/90 disabled:opacity-50 transition-colors"
                 >
-                  {loading ? <Loader2 className="animate-spin" size={16} /> : <Send size={16} />}
+                  {loading ? <Loader2 className="animate-spin" size={14} /> : <Send size={14} />}
                 </button>
               </div>
-              <div className="mt-2 flex items-center justify-between">
+
+              <div className="mt-2 flex items-center justify-between text-[10px] font-mono text-slate-400">
                 <a
                   href="/kamlesh-resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="inline-flex items-center gap-1 hover:text-white transition-colors"
                 >
-                  <FileText size={13} />
-                  View Resume
+                  <FileText size={11} />
+                  <span>Download Resume (PDF)</span>
                 </a>
-                <span className="text-[11px] text-muted-foreground">Press Enter to send</span>
+                <span>Shift+Enter for newline</span>
               </div>
             </div>
           </motion.div>

@@ -7,66 +7,61 @@ const ThankYou = () => {
   return (
     <>
       <Helmet>
-        <title>Message Sent | Kamlesh Prasad</title>
+        <title>Communication Transmitted | Kamlesh Prasad</title>
         <meta name="description" content="Thank you for contacting Kamlesh Prasad. Your message has been received successfully." />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
-      <main className="hero-gradient relative min-h-screen flex items-center justify-center overflow-hidden px-6 py-20">
-        {/* Subtle pattern overlay */}
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-
+      <main className="bg-[#070B16] text-white relative min-h-screen flex items-center justify-center overflow-hidden px-6 py-20 tech-grid">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative z-10 w-full max-w-xl"
+          className="relative z-10 w-full max-w-lg"
         >
-          <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-lg shadow-2xl p-6 sm:p-8 md:p-12 text-center">
+          <div className="border border-slate-850 bg-slate-900/90 p-8 sm:p-12 text-center shadow-2xl">
             <motion.div
-              initial={{ scale: 0.6, opacity: 0 }}
+              initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.15, duration: 0.5, type: "spring", stiffness: 200 }}
-              className="mx-auto mb-5 sm:mb-6 inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gold/10"
+              transition={{ delay: 0.15, duration: 0.4 }}
+              className="mx-auto mb-6 inline-flex items-center justify-center w-16 h-16 border border-emerald-500/30 bg-emerald-500/10 text-emerald-400"
             >
-              <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-gold" strokeWidth={1.5} />
+              <CheckCircle2 size={32} />
             </motion.div>
 
+            <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase block mb-2">
+              Status: Transmitted
+            </span>
+
             <motion.h1
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-card-foreground mb-4"
+              transition={{ delay: 0.25, duration: 0.5 }}
+              className="text-2xl sm:text-3xl font-display font-black tracking-tight uppercase text-white mb-4"
             >
-              Message Sent Successfully
+              Message Received
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45, duration: 0.5 }}
-              className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8"
+              transition={{ delay: 0.35, duration: 0.5 }}
+              className="text-slate-300 text-sm sm:text-base leading-relaxed mb-8 font-light"
             >
-              Thank you for reaching out. Your message has been received successfully. I'll get back to you as soon as possible.
+              Thank you for reaching out. Your communication has been dispatched to Kamlesh Prasad. Expect a direct response shortly.
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
+              transition={{ delay: 0.45, duration: 0.5 }}
             >
               <Link
                 to="/"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-gold text-primary font-semibold rounded-md hover:opacity-90 transition-opacity"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-accent/90 transition-colors"
               >
-                <ArrowLeft size={18} />
-                Back to Portfolio
+                <ArrowLeft size={16} />
+                <span>Return to Portfolio</span>
               </Link>
             </motion.div>
           </div>

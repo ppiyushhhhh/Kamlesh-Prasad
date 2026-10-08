@@ -1,80 +1,99 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Lightbulb, Globe } from "lucide-react";
+import { Cpu, Languages } from "lucide-react";
 
 const SkillsSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
-  const skills = ["Technology Strategy", "IT Security", "Digital Transformation", "IT Roadmaps", "Program Management", "Cloud", "Stakeholder Engagement", "Multi-Vendor Management", "Budgeting", "Risk Management"];
-  const languages = ["Hindi", "English", "Marathi"];
+  const competencies = [
+    "Technology Strategy",
+    "IT Security & CISO Practice",
+    "Digital Transformation",
+    "Enterprise IT Roadmaps",
+    "Program Management",
+    "Cloud Architecture",
+    "Stakeholder Engagement",
+    "Multi-Vendor Governance",
+    "Annual IT Budgeting",
+    "Risk & Compliance Management",
+  ];
+
+  const languages = [
+    { name: "English", level: "Professional Working Proficiency" },
+    { name: "Hindi", level: "Native / Full Professional" },
+    { name: "Marathi", level: "Professional Proficiency" },
+  ];
 
   return (
-    <section id="skills" className="section-padding bg-section-alt">
-      <div className="container mx-auto max-w-5xl" ref={ref}>
+    <section id="skills" className="section-padding bg-background border-b border-border/80 scroll-mt-16">
+      <div className="container mx-auto max-w-7xl" ref={ref}>
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-3 mb-10 pb-4 border-b border-border/60"
         >
-          <p className="text-accent uppercase tracking-[0.2em] text-sm font-medium mb-3">Competencies</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-10">
-            Skills & Languages
-          </h2>
+          <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">
+            Competencies &amp; Communication
+          </span>
+          <span className="h-[1px] w-12 bg-accent/40" />
+          <span className="text-xs uppercase font-mono tracking-wider text-muted-foreground">
+            Strategic Skillsets
+          </span>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.97 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ delay: 0.1, duration: 0.5, ease: "easeOut" }}
-            whileHover={{ y: -4, boxShadow: "0 8px 30px -12px hsl(var(--primary) / 0.15)" }}
-            className="bg-card border border-border rounded-lg p-6 transition-colors duration-300 hover:border-accent/40"
-          >
-            <div className="flex items-center gap-3 mb-5">
-              <Lightbulb className="text-gold" size={22} />
-              <h3 className="text-lg font-semibold text-foreground">Skills</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Core Competencies */}
+          <div className="lg:col-span-8 border border-border bg-card p-6 md:p-8">
+            <div className="flex items-center gap-2 mb-6">
+              <Cpu size={18} className="text-accent" />
+              <h3 className="font-display text-base font-bold text-foreground uppercase tracking-wider">
+                Leadership Competencies
+              </h3>
             </div>
-            <div className="flex flex-wrap gap-3">
-              {skills.map((s) => (
-                <motion.span
-                  key={s}
-                  whileHover={{ y: -2, scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 18 }}
-                  className="px-4 py-2 bg-muted rounded-md text-sm font-medium text-foreground cursor-default transition-colors duration-300 hover:bg-accent hover:text-accent-foreground hover:shadow-md"
-                >
-                  {s}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.97 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
-            whileHover={{ y: -4, boxShadow: "0 8px 30px -12px hsl(var(--primary) / 0.15)" }}
-            className="bg-card border border-border rounded-lg p-6 transition-colors duration-300 hover:border-accent/40"
-          >
-            <div className="flex items-center gap-3 mb-5">
-              <Globe className="text-accent" size={22} />
-              <h3 className="text-lg font-semibold text-foreground">Languages</h3>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {languages.map((l) => (
-                <motion.span
-                  key={l}
-                  whileHover={{ y: -2, scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 18 }}
-                  className="px-4 py-2 bg-muted rounded-md text-sm font-medium text-foreground cursor-default transition-colors duration-300 hover:bg-accent hover:text-accent-foreground hover:shadow-md"
+            <div className="flex flex-wrap gap-2.5">
+              {competencies.map((skill) => (
+                <span
+                  key={skill}
+                  className="px-3.5 py-1.5 border border-border bg-muted/40 text-foreground font-mono text-xs hover:border-accent hover:text-accent transition-colors cursor-default"
                 >
-                  {l}
-                </motion.span>
+                  {skill}
+                </span>
               ))}
             </div>
-          </motion.div>
+          </div>
+
+          {/* Languages */}
+          <div className="lg:col-span-4 border border-border bg-card p-6 md:p-8 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-6">
+                <Languages size={18} className="text-accent" />
+                <h3 className="font-display text-base font-bold text-foreground uppercase tracking-wider">
+                  Languages
+                </h3>
+              </div>
+
+              <div className="space-y-4">
+                {languages.map((l) => (
+                  <div key={l.name} className="flex items-baseline justify-between border-b border-border/50 pb-2">
+                    <span className="font-display font-semibold text-sm text-foreground">
+                      {l.name}
+                    </span>
+                    <span className="font-mono text-[11px] text-muted-foreground">
+                      {l.level}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <p className="text-[11px] font-mono text-muted-foreground pt-4">
+              Cross-functional &bull; Global enterprise collaboration
+            </p>
+          </div>
         </div>
       </div>
     </section>

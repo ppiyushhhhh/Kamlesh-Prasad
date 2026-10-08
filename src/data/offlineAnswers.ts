@@ -34,7 +34,7 @@ const OFFLINE_TOPICS: OfflineTopic[] = [
   {
     keywords: ["skill", "expertise", "technology", "technologies", "tech stack", "good at", "strengths"],
     answer:
-      "Kamlesh's core expertise includes Digital Transformation, IT Infrastructure, Cyber Security & InfoSec, SAP, Salesforce, Cloud technologies, IT Governance, Program Management, M&A IT Integration, Data & Analytics, IT Operations, and Stakeholder Engagement. He has partnered with technology providers like IBM, TCS, Wipro, and Accenture.",
+      "Kamlesh's core expertise includes Digital Transformation, IT Infrastructure, Cyber Security & InfoSec, SAP, Salesforce, Cloud technologies, IT Governance, Program Management, M&A IT Integration, Data & Analytics, IT Operations, and Stakeholder Engagement. He has partnered with technology providers like IBM, Dell, and Accenture.",
   },
   {
     keywords: ["cyber", "security", "infosec", "information security", "grc", "devsecops"],

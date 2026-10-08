@@ -18,7 +18,7 @@ export const kamleshKnowledge = {
   summary: [
     "Senior IT Leader with over 22+ years' experience, including 12+ years in Retail, 8 years in IBM & Accenture, and 4 years in Technical Support Services for India & USA. In the last 8 years, played leadership roles in Digital Transformation, IT Security, Merger IT Integration, Data & Analytics, IT Operations & Business Support Services programs.",
     "Effective at partnering with CXOs, senior leaders & partners to understand strategic goals and provide technological direction & IT roadmaps for delivering digital capabilities in alignment with business strategies. Strong business knowledge with proven ability to lead the strategic planning & delivery of innovative, cost-effective solutions by leveraging emerging technologies.",
-    "Collaborative leadership style with experience in building & leading cross-functional teams that deliver results in a highly competitive & continuously changing business landscape. Diversified IT Delivery & Operations model experience with technology partners like IBM, TCS, Wipro & Accenture.",
+    "Collaborative leadership style with experience in building & leading cross-functional teams that deliver results in a highly competitive & continuously changing business landscape. Diversified IT Delivery & Operations model experience with technology partners like IBM, Dell & Accenture.",
   ],
 
   currentRole: {
@@ -182,7 +182,7 @@ export const kamleshKnowledge = {
     {
       area: "Program & Vendor Management",
       detail:
-        "Multi-vendor management with IBM, TCS, Wipro & Accenture. SOW, RFI/RFP, IT Services contracts & negotiations.",
+        "Multi-vendor management with IBM, Dell & Accenture. SOW, RFI/RFP, IT Services contracts & negotiations.",
     },
     {
       area: "M&A IT Integration",

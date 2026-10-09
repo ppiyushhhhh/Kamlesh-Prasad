@@ -95,7 +95,7 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
           systemInstruction: { parts: [{ text: KAMLESH_SYSTEM_PROMPT }] },
           contents: formattedContents,
           generationConfig: {
-            temperature: 0.3,
+            temperature: 0.1,
             maxOutputTokens: 2048,
           },
         }),

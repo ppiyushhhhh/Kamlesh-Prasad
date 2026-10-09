@@ -1,4 +1,4 @@
-import { defineConfig, type PluginOption } from "vite";
+import { defineConfig, loadEnv, type PluginOption } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
@@ -23,7 +23,8 @@ const devChatApi = (): PluginOption => ({
         const { status, payload } = await handleChat(body);
         res.statusCode = status;
         res.end(JSON.stringify(payload));
-      } catch {
+      } catch (err) {
+        console.error("Dev chat API middleware error:", err);
         res.statusCode = 500;
         res.end(JSON.stringify({ error: "Something went wrong. Please try again." }));
       }
@@ -32,18 +33,23 @@ const devChatApi = (): PluginOption => ({
 });
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  server: {
-    host: "::",
-    port: 8080,
-    hmr: {
-      overlay: false,
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  Object.assign(process.env, env);
+
+  return {
+    server: {
+      host: "::",
+      port: 8080,
+      hmr: {
+        overlay: false,
+      },
     },
-  },
-  plugins: [react(), devChatApi(), mode === "development" && componentTagger()].filter(Boolean),
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+    plugins: [react(), devChatApi(), mode === "development" && componentTagger()].filter(Boolean),
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
     },
-  },
-}));
+  };
+});

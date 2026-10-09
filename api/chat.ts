@@ -61,7 +61,7 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
     return { status: 503, payload: { error: GENERIC_ERROR } };
   }
 
-  const primaryModel = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
+  const primaryModel = process.env.GEMINI_MODEL || "gemini-3.1-flash-lite";
   const fallbackModel = process.env.GEMINI_FALLBACK_MODEL || "";
   const history = sanitizeHistory(body?.history);
 
@@ -129,10 +129,12 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
     }
 
     const data = (await response.json()) as {
-      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+      candidates?: Array<{ content?: { parts?: Array<{ text?: string; thought?: boolean }> } }>;
     };
 
-    const reply = (data.candidates?.[0]?.content?.parts ?? [])
+    const rawParts = data.candidates?.[0]?.content?.parts ?? [];
+    const textParts = rawParts.filter((p) => !p.thought && typeof p.text === "string");
+    const reply = (textParts.length > 0 ? textParts : rawParts)
       .map((p) => p.text ?? "")
       .join("")
       .trim();

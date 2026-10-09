@@ -1,6 +1,10 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { loadEnv } from "vite";
+
+const env = loadEnv("", process.cwd(), "");
+Object.assign(process.env, env);
 
 export default defineConfig({
   plugins: [react()],

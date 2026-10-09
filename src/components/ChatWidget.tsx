@@ -129,34 +129,38 @@ const ChatWidget = () => {
 
   return (
     <>
-      {/* Floating Trigger Button */}
+      {/* Floating Circular Trigger Button - AI */}
       <motion.button
         ref={triggerRef}
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="dialog"
-        aria-label={open ? "Close Kamlesh AI" : "Open Kamlesh AI Assistant"}
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
-        className="fixed bottom-6 right-6 z-50 group flex items-center"
+        aria-label={open ? "Close AI Chat" : "Open AI Assistant"}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.94 }}
+        className="fixed bottom-6 right-6 z-50 group flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
       >
-        <div className="relative p-[1px] rounded-full bg-gradient-to-r from-zinc-700 via-zinc-400 to-zinc-700 shadow-2xl">
-          <div className="flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#0E0E12] border border-zinc-800 text-xs font-mono font-bold tracking-wider uppercase text-white hover:bg-zinc-900 transition-colors">
+        <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2px] bg-gradient-to-tr from-zinc-700 via-white to-zinc-600 shadow-[0_12px_40px_-5px_rgba(0,0,0,0.85)] hover:shadow-[0_18px_50px_-5px_rgba(255,255,255,0.25)] transition-shadow">
+          <div className="w-full h-full rounded-full bg-[#0E0E12] border border-zinc-800 flex flex-col items-center justify-center relative overflow-hidden group-hover:bg-[#14141A] transition-colors">
             {open ? (
-              <X size={16} className="text-zinc-300" />
+              <X size={22} className="text-zinc-200 group-hover:text-white transition-colors" />
             ) : (
-              <div className="relative flex items-center justify-center">
-                <span className="absolute w-2 h-2 rounded-full bg-emerald-400 animate-ping opacity-75" />
-                <span className="w-2 h-2 rounded-full bg-emerald-500 mr-2" />
-                <Bot size={16} className="text-white group-hover:rotate-6 transition-transform" />
-              </div>
-            )}
-            <span className="text-white font-semibold">{open ? "Close Chat" : "Kamlesh AI"}</span>
-            {!open && (
-              <span className="hidden sm:inline-flex text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-zinc-800 text-zinc-400 border border-zinc-700/80">
-                Ask
-              </span>
+              <>
+                {/* Active live indicator beacon */}
+                <span className="absolute top-2.5 right-2.5 flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
+
+                <Sparkles
+                  size={16}
+                  className="text-zinc-300 group-hover:text-amber-400 group-hover:rotate-12 transition-all mb-0.5"
+                />
+                <span className="font-display font-black text-xs sm:text-sm tracking-widest text-white leading-none">
+                  AI
+                </span>
+              </>
             )}
           </div>
         </div>

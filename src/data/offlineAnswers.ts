@@ -12,6 +12,11 @@ interface OfflineTopic {
 
 const OFFLINE_TOPICS: OfflineTopic[] = [
   {
+    keywords: ["hi", "hello", "hey", "good morning", "good evening", "howdy", "greetings"],
+    answer:
+      "Hello! How can I assist you today? Feel free to ask me anything about Kamlesh Prasad's career, experience, achievements, or contact details.",
+  },
+  {
     keywords: ["who", "kamlesh", "about", "introduce", "yourself", "profile", "background"],
     answer:
       "Kamlesh Prasad is the Chief Technology Officer (CTO) at Runwal Realty, based in Mumbai, India. He is a senior IT leader with over 22 years of experience, including 12+ years in Retail, 8 years with IBM & Accenture, and 4 years in Technical Support Services for India & USA. His leadership spans Digital Transformation, IT Security, Merger IT Integration, Data & Analytics, and IT Operations.",

@@ -57,9 +57,9 @@ const OFFLINE_TOPICS: OfflineTopic[] = [
       "Kamlesh's academic background includes executive and leadership education such as the upGrad Leadership Excellence Program, alongside his professional qualifications. The full details are in the Education section of this portfolio.",
   },
   {
-    keywords: ["contact", "email", "reach", "connect", "linkedin", "hire", "location"],
+    keywords: ["contact", "phone", "number", "mobile", "call", "whatsapp", "email", "reach", "connect", "linkedin", "hire", "location"],
     answer:
-      "You can reach Kamlesh through the 'Let's Connect' contact form on this page, or via LinkedIn: linkedin.com/in/kamleshsprasad0512. He is based in Mumbai, Maharashtra, India.",
+      "You can reach Kamlesh Prasad directly:\n- Contact No / Phone: +91 9004348595 (9004348595)\n- Email: kamlesh.prasad@gmail.com\n- LinkedIn: linkedin.com/in/kamleshsprasad0512\n- Location: Mumbai, Maharashtra, India\nYou can also submit a message via the 'Let's Connect' form on this page.",
   },
   {
     keywords: ["why", "hire", "value", "bring", "fit", "choose"],

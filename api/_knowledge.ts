@@ -245,10 +245,11 @@ export const kamleshKnowledge = {
   ],
 
   contact: {
+    phone: "+91 9004348595",
     email: "kamlesh.prasad@gmail.com",
     linkedin: "https://www.linkedin.com/in/kamleshsprasad0512/",
     location: "Mumbai, Maharashtra, India",
-    note: "A contact form is available in the Contact section of the portfolio.",
+    note: "A contact form is available in the Contact section of the portfolio, and he can also be reached directly by phone/WhatsApp at +91 9004348595.",
   },
 
   resume: {
@@ -302,7 +303,8 @@ export function buildKnowledgeText(): string {
   lines.push("\nAWARDS & ACHIEVEMENTS:");
   k.achievements.forEach((a) => lines.push(`- ${a.title} (${a.date})`));
 
-  lines.push("\nCONTACT:");
+  lines.push("\nCONTACT & REACHABILITY:");
+  lines.push(`- Contact No / Phone / Mobile: ${k.contact.phone} (9004348595)`);
   lines.push(`- Email: ${k.contact.email}`);
   lines.push(`- LinkedIn: ${k.contact.linkedin}`);
   lines.push(`- Location: ${k.contact.location}`);
@@ -320,12 +322,14 @@ export function buildKnowledgeText(): string {
 
 export const KAMLESH_SYSTEM_PROMPT = `You are Kamlesh Prasad's professional portfolio AI assistant, called "Kamlesh AI".
 
-Your purpose is to help visitors understand Kamlesh Prasad's professional background, experience, technical skills, certifications, education, achievements, projects, leadership experience, and career profile.
+Your purpose is to help visitors understand Kamlesh Prasad's professional background, experience, technical skills, certifications, education, achievements, projects, leadership experience, and contact details.
 
 Rules:
+- All details and information about Kamlesh Prasad must be retrieved directly from his verified portfolio knowledge base below.
+- If asked for his contact number, phone number, mobile, or how to call/WhatsApp him, provide his contact number: +91 9004348595 (or 9004348595), along with his email (kamlesh.prasad@gmail.com), LinkedIn profile, and the portfolio contact section.
 - For greetings and general inquiries (e.g. "hi", "hello", "what can you do?"), respond warmly and introduce yourself as Kamlesh AI, ready to assist visitors with information regarding Kamlesh's career, technical leadership, experience, or contact information.
 - For questions about Kamlesh Prasad's career, roles, certifications, education, skills, and achievements, base your answers on the verified knowledge base below.
-- Do not invent facts or make up unverified personal details (e.g., private life, unlisted salaries) about Kamlesh. If a specific personal or unlisted detail is asked that is not in the portfolio, politely explain that the detail isn't in Kamlesh's public portfolio and offer related verified details or direct them to the Contact section.
+- Do not invent unverified personal facts (e.g. private personal life, unlisted salaries) about Kamlesh. If a personal or unlisted detail is asked that is not in the portfolio, politely explain that the detail isn't in Kamlesh's public portfolio and offer related verified details or direct them to the Contact section.
 - For general technical, industry, or leadership questions (such as Cloud, Cyber Security, DevSecOps, SAP, Digital Transformation), provide concise, helpful insights and connect them to Kamlesh's professional domain where relevant.
 - Do not pretend to be Kamlesh in person; refer to him in the third person or as the subject of the portfolio.
 - Keep responses concise, well-formatted, friendly, and professional (using short paragraphs or bullet points).

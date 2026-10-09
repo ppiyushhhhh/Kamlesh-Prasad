@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, Linkedin, MapPin, Loader2, Send, CheckCircle2, AlertCircle, ArrowUpRight } from "lucide-react";
+import { Mail, Linkedin, MapPin, Phone, Loader2, Send, CheckCircle2, AlertCircle, ArrowUpRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -134,6 +134,17 @@ const ContactSection = () => {
 
             {/* Direct Contact Metadata Block */}
             <div className="space-y-4 pt-6 border-t border-zinc-800 font-mono text-xs">
+              <a
+                href="tel:+919004348595"
+                className="flex items-center justify-between p-3.5 border border-zinc-800 bg-zinc-900/60 text-zinc-200 hover:border-zinc-500 hover:text-white transition-colors group"
+              >
+                <div className="flex items-center gap-3">
+                  <Phone size={16} className="text-zinc-300" />
+                  <span>+91 9004348595</span>
+                </div>
+                <ArrowUpRight size={14} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-transform" />
+              </a>
+
               <a
                 href="mailto:kamlesh.prasad@gmail.com"
                 className="flex items-center justify-between p-3.5 border border-zinc-800 bg-zinc-900/60 text-zinc-200 hover:border-zinc-500 hover:text-white transition-colors group"

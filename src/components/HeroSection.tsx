@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Linkedin, ChevronDown, FileText, ArrowDown, MapPin, ShieldCheck, Server, RefreshCw } from "lucide-react";
+import { Linkedin, ChevronDown, FileText, ArrowDown, MapPin, ShieldCheck, Server, RefreshCw, Maximize2, X } from "lucide-react";
 import kamleshPhoto from "@/assets/kamlesh-photo.jpg";
 import ResumeModal from "@/components/ResumeModal";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 const HeroSection = () => {
   const [resumeOpen, setResumeOpen] = useState(false);
+  const [photoOpen, setPhotoOpen] = useState(false);
 
   const pillars = [
     { title: "Cybersecurity", icon: ShieldCheck, desc: "CISO Practice & Resilience" },
@@ -172,18 +174,29 @@ const HeroSection = () => {
                 <span className="absolute -bottom-1.5 -right-1.5 w-3 h-3 border-b-2 border-r-2 border-white/80" />
 
                 {/* Portrait container */}
-                <div className="relative overflow-hidden aspect-[4/5] bg-zinc-950">
+                <div
+                  className="relative overflow-hidden aspect-[4/5] bg-zinc-950 cursor-pointer group"
+                  onClick={() => setPhotoOpen(true)}
+                  title="Click to view full photo"
+                >
                   <img
                     src={kamleshPhoto}
                     alt="Kamlesh Prasad – Technology Executive"
                     width={480}
                     height={600}
-                    fetchPriority="high"
                     decoding="async"
-                    className="w-full h-full object-cover object-top transition-all duration-500 hover:scale-[1.02]"
+                    className="w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-[1.02]"
                   />
                   {/* Subtle bottom gradient scrim for metadata badge */}
                   <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0A0A0C]/90 to-transparent pointer-events-none" />
+
+                  {/* Hover Inspect badge */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-black/80 border border-white/20 text-white font-mono text-xs font-semibold rounded-xs shadow-lg backdrop-blur-xs">
+                      <Maximize2 size={13} />
+                      <span>View Full Photo</span>
+                    </span>
+                  </div>
 
                   {/* On-image technical overlay badge */}
                   <div className="absolute bottom-3 left-3 right-3 p-3 bg-zinc-900/90 backdrop-blur-md border border-zinc-800 rounded-sm flex items-center justify-between">
@@ -226,6 +239,38 @@ const HeroSection = () => {
       </motion.div>
 
       <ResumeModal open={resumeOpen} onOpenChange={setResumeOpen} />
+
+      {/* Full Photo Modal */}
+      <Dialog open={photoOpen} onOpenChange={setPhotoOpen}>
+        <DialogContent className="max-w-3xl w-[94vw] p-0 bg-zinc-950 border-zinc-800 text-white [&>button]:hidden overflow-hidden shadow-2xl">
+          <div className="relative flex flex-col items-center">
+            <div className="w-full px-5 py-3.5 bg-zinc-900/90 border-b border-zinc-800 flex items-center justify-between font-mono text-xs">
+              <span className="text-white font-bold tracking-wider uppercase truncate max-w-[80%]">
+                Kamlesh Prasad &bull; Chief Technology Officer
+              </span>
+              <button
+                type="button"
+                onClick={() => setPhotoOpen(false)}
+                aria-label="Close photo view"
+                className="p-1.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xs transition-colors border border-zinc-700"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <div className="p-4 sm:p-6 max-h-[82vh] flex items-center justify-center bg-black w-full">
+              <img
+                src={kamleshPhoto}
+                alt="Kamlesh Prasad – Technology Executive"
+                className="max-h-[75vh] w-auto max-w-full object-contain rounded-xs shadow-2xl"
+              />
+            </div>
+            <div className="w-full px-5 py-3 bg-zinc-900/90 border-t border-zinc-800 flex items-center justify-between text-xs font-mono text-zinc-400">
+              <span>Runwal Realty &bull; Mumbai, India</span>
+              <span className="text-zinc-300">22+ Years Leadership</span>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };

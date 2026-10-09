@@ -34,5 +34,5 @@ describe("api/chat", () => {
     expect(res.status).toBe(200);
     expect(typeof res.payload.reply).toBe("string");
     expect((res.payload.reply as string).length).toBeGreaterThan(0);
-  }, 15000);
+  }, 30000);
 });

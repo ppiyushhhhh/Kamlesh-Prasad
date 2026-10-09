@@ -349,12 +349,12 @@ const AchievementsSection = () => {
                       {award.images.slice(0, 3).map((img, i) => (
                         <div
                           key={i}
-                          className="w-8 h-8 rounded-xs border-2 border-card bg-slate-950 overflow-hidden shrink-0 shadow-xs"
+                          className="w-9 h-9 rounded-xs border-2 border-card bg-zinc-950 overflow-hidden shrink-0 shadow-xs flex items-center justify-center p-0.5"
                         >
                           <img
                             src={img.src}
                             alt=""
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain"
                             loading="lazy"
                           />
                         </div>
@@ -391,24 +391,37 @@ const AchievementsSection = () => {
                       <div className="px-5 sm:px-7 py-6 md:py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                         {/* Gallery Grid of Proof Imagery */}
                         <div className="lg:col-span-7">
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                             {award.images.map((img, imgIdx) => (
                               <div
                                 key={imgIdx}
-                                className={`relative group border border-border bg-slate-950 overflow-hidden cursor-pointer ${
-                                  award.images.length === 1 ? "sm:col-span-2 aspect-[16/9]" : "aspect-[4/3]"
+                                className={`relative group border border-border/80 bg-zinc-950/95 overflow-hidden cursor-pointer rounded-xs flex items-center justify-center p-2.5 transition-all duration-300 hover:border-zinc-500 hover:shadow-xl ${
+                                  award.images.length === 1
+                                    ? "sm:col-span-2 min-h-[300px] sm:min-h-[380px] max-h-[500px]"
+                                    : "min-h-[240px] sm:min-h-[290px] max-h-[380px]"
                                 }`}
                                 onClick={() => openLightbox(index, imgIdx)}
+                                title="Click to view photo in full view"
                               >
+                                {/* Ambient blur background for premium visual aesthetics */}
+                                <img
+                                  src={img.src}
+                                  alt=""
+                                  aria-hidden="true"
+                                  className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-20 scale-125 pointer-events-none select-none"
+                                />
+                                {/* Sharp, fully visible auto-fitted photo */}
                                 <img
                                   src={img.src}
                                   alt={img.alt}
-                                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                  className="relative z-10 max-h-full max-w-full w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] drop-shadow-md select-none"
                                   loading="lazy"
                                 />
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-mono text-xs">
-                                  <Maximize2 size={16} />
-                                  <span>Inspect Photo</span>
+                                <div className="absolute inset-0 z-20 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-mono text-xs backdrop-blur-[1px]">
+                                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-black/85 border border-white/20 rounded-xs shadow-lg font-semibold">
+                                    <Maximize2 size={13} />
+                                    <span>View Full Photo</span>
+                                  </span>
                                 </div>
                               </div>
                             ))}
@@ -466,25 +479,36 @@ const AchievementsSection = () => {
 
       {/* Lightbox Modal */}
       <Dialog open={lightbox !== null} onOpenChange={(open) => !open && closeLightbox()}>
-        <DialogContent className="max-w-5xl w-[95vw] p-0 bg-black border-slate-800 text-white [&>button]:hidden">
+        <DialogContent className="max-w-6xl w-[96vw] max-h-[96vh] p-0 bg-zinc-950/95 backdrop-blur-xl border-zinc-800 text-white [&>button]:hidden shadow-2xl flex flex-col overflow-hidden">
           {lightbox !== null && (
-            <div className="relative flex flex-col justify-center min-h-[60vh] max-h-[90vh]">
-              <div className="relative flex items-center justify-center p-4">
+            <div className="relative flex flex-col justify-between h-full min-h-[70vh] max-h-[92vh]">
+              {/* Header Bar */}
+              <div className="px-5 py-3.5 bg-zinc-900/90 border-b border-zinc-800 flex items-center justify-between z-10 font-mono text-xs">
+                <span className="text-zinc-200 font-semibold truncate max-w-[70%]">
+                  {currentLightboxImages[lightbox.imageIndex]?.alt || "Honor & Achievement Photo"}
+                </span>
+                <div className="flex items-center gap-4">
+                  <span className="text-zinc-400 font-mono text-xs">
+                    {lightbox.imageIndex + 1} of {currentLightboxImages.length}
+                  </span>
+                  <button
+                    onClick={closeLightbox}
+                    aria-label="Close"
+                    className="p-1.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xs transition-colors border border-zinc-700"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Main Image Viewport with full contain auto-fit */}
+              <div className="relative flex-1 flex items-center justify-center p-4 sm:p-6 overflow-hidden bg-black/75">
                 <img
                   src={currentLightboxImages[lightbox.imageIndex]?.src}
                   alt={currentLightboxImages[lightbox.imageIndex]?.alt || ""}
-                  className="max-h-[75vh] w-auto max-w-full object-contain"
+                  className="max-h-[78vh] w-auto max-w-full object-contain rounded-xs shadow-2xl transition-all select-none"
                 />
               </div>
-
-              {/* Close Button */}
-              <button
-                onClick={closeLightbox}
-                aria-label="Close"
-                className="absolute top-4 right-4 bg-slate-900/80 text-white p-2.5 hover:bg-slate-800 transition-colors border border-slate-700"
-              >
-                <X size={18} />
-              </button>
 
               {/* Navigation Arrows */}
               {currentLightboxImages.length > 1 && (
@@ -492,27 +516,27 @@ const AchievementsSection = () => {
                   <button
                     onClick={prevLightboxImage}
                     aria-label="Previous image"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-slate-900/80 text-white p-2.5 hover:bg-slate-800 transition-colors border border-slate-700"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/80 hover:bg-zinc-800 text-white p-3 transition-colors border border-zinc-700 rounded-sm z-20 shadow-xl"
                   >
-                    <ChevronLeft size={20} />
+                    <ChevronLeft size={22} />
                   </button>
                   <button
                     onClick={nextLightboxImage}
                     aria-label="Next image"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-slate-900/80 text-white p-2.5 hover:bg-slate-800 transition-colors border border-slate-700"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/80 hover:bg-zinc-800 text-white p-3 transition-colors border border-zinc-700 rounded-sm z-20 shadow-xl"
                   >
-                    <ChevronRight size={20} />
+                    <ChevronRight size={22} />
                   </button>
                 </>
               )}
 
-              {/* Caption */}
-              <div className="p-4 bg-slate-950/90 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
-                <span className="text-slate-300 truncate max-w-[80%]">
+              {/* Caption Footer */}
+              <div className="px-5 py-3.5 bg-zinc-900/90 border-t border-zinc-800 flex items-center justify-between text-xs font-mono">
+                <span className="text-zinc-400 truncate max-w-[75%]">
                   {currentLightboxImages[lightbox.imageIndex]?.alt}
                 </span>
-                <span className="text-accent font-bold">
-                  {lightbox.imageIndex + 1} / {currentLightboxImages.length}
+                <span className="text-white font-bold tracking-wider">
+                  Verified Honor Proof
                 </span>
               </div>
             </div>

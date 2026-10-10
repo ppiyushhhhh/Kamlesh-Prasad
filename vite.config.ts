@@ -19,10 +19,16 @@ const devChatApi = (): PluginOption => ({
         const chunks: Buffer[] = [];
         for await (const chunk of req) chunks.push(chunk as Buffer);
         const body = JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
-        const { handleChat } = await server.ssrLoadModule("/api/chat.ts");
-        const { status, payload } = await handleChat(body);
-        res.statusCode = status;
-        res.end(JSON.stringify(payload));
+        const { handleChat, handleStreamChat } = await server.ssrLoadModule("/api/chat.ts");
+
+        if (body?.stream && handleStreamChat) {
+          await handleStreamChat(body, res);
+        } else {
+          res.setHeader("Content-Type", "application/json");
+          const { status, payload } = await handleChat(body);
+          res.statusCode = status;
+          res.end(JSON.stringify(payload));
+        }
       } catch (err) {
         console.error("Dev chat API middleware error:", err);
         res.statusCode = 500;

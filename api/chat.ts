@@ -4,6 +4,7 @@ import { KAMLESH_SYSTEM_PROMPT } from "./_knowledge";
  * Vercel serverless function: POST /api/chat
  * The Gemini API key is read from the server-side env var GEMINI_API_KEY
  * and is never sent to the browser.
+ * Supports both streaming responses (SSE) and traditional JSON replies.
  */
 
 const MAX_MESSAGE_LENGTH = 1000;
@@ -12,9 +13,10 @@ const GENERIC_ERROR = "Sorry, I'm unable to respond right now. Please try again 
 
 type HistoryItem = { role: "user" | "assistant"; content: string };
 
-interface ChatRequest {
+export interface ChatRequest {
   message?: unknown;
   history?: unknown;
+  stream?: unknown;
 }
 
 function sanitizeHistory(history: unknown): HistoryItem[] {
@@ -150,8 +152,138 @@ export async function handleChat(body: ChatRequest): Promise<{ status: number; p
   }
 }
 
+export async function handleStreamChat(
+  body: ChatRequest,
+  res: {
+    setHeader: (name: string, value: string) => void;
+    write: (chunk: string) => boolean | void;
+    end: (chunk?: string) => void;
+    flushHeaders?: () => void;
+  },
+): Promise<void> {
+  res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
+  res.setHeader("Cache-Control", "no-cache, no-transform");
+  res.setHeader("Connection", "keep-alive");
+  if (typeof res.flushHeaders === "function") res.flushHeaders();
+
+  const rawMessage = typeof body?.message === "string" ? body.message.trim() : "";
+  if (!rawMessage) {
+    res.write(`data: ${JSON.stringify({ error: "Please enter a question." })}\n\n`);
+    res.end();
+    return;
+  }
+  if (rawMessage.length > MAX_MESSAGE_LENGTH) {
+    res.write(
+      `data: ${JSON.stringify({ error: `Please keep your question under ${MAX_MESSAGE_LENGTH} characters.` })}\n\n`,
+    );
+    res.end();
+    return;
+  }
+
+  const apiKey = resolveApiKey();
+  if (!apiKey) {
+    res.write(`data: ${JSON.stringify({ error: GENERIC_ERROR })}\n\n`);
+    res.end();
+    return;
+  }
+
+  const primaryModel = process.env.GEMINI_MODEL || "gemini-3.1-flash-lite";
+  const history = sanitizeHistory(body?.history);
+
+  const contents = [
+    ...history.map((h) => ({
+      role: h.role === "assistant" ? "model" : "user",
+      parts: [{ text: h.content }],
+    })),
+    { role: "user", parts: [{ text: rawMessage }] },
+  ];
+
+  let formattedContents = contents;
+  while (formattedContents.length > 0 && formattedContents[0].role === "model") {
+    formattedContents = formattedContents.slice(1);
+  }
+  if (formattedContents.length === 0) {
+    formattedContents = [{ role: "user", parts: [{ text: rawMessage }] }];
+  }
+
+  try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(primaryModel)}:streamGenerateContent?alt=sse`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
+        },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: KAMLESH_SYSTEM_PROMPT }] },
+          contents: formattedContents,
+          generationConfig: {
+            temperature: 0.1,
+            maxOutputTokens: 2048,
+          },
+        }),
+      },
+    );
+
+    if (!response.ok || !response.body) {
+      // Fallback: use handleChat
+      const fallback = await handleChat(body);
+      if (fallback.status === 200 && fallback.payload.reply) {
+        res.write(`data: ${JSON.stringify({ text: fallback.payload.reply })}\n\n`);
+      } else {
+        res.write(`data: ${JSON.stringify({ error: (fallback.payload.error as string) || GENERIC_ERROR })}\n\n`);
+      }
+      res.write("data: [DONE]\n\n");
+      res.end();
+      return;
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed.startsWith("data:")) continue;
+        const dataStr = trimmed.slice(5).trim();
+        if (!dataStr || dataStr === "[DONE]") continue;
+        try {
+          const parsed = JSON.parse(dataStr);
+          const rawParts = parsed.candidates?.[0]?.content?.parts ?? [];
+          const text = rawParts
+            .filter((p: { thought?: boolean; text?: string }) => !p.thought && typeof p.text === "string")
+            .map((p: { text?: string }) => p.text ?? "")
+            .join("");
+          if (text) {
+            res.write(`data: ${JSON.stringify({ text })}\n\n`);
+          }
+        } catch {
+          // ignore chunk boundaries
+        }
+      }
+    }
+
+    res.write("data: [DONE]\n\n");
+    res.end();
+  } catch (err) {
+    console.error("handleStreamChat error:", err);
+    res.write(`data: ${JSON.stringify({ error: GENERIC_ERROR })}\n\n`);
+    res.write("data: [DONE]\n\n");
+    res.end();
+  }
+}
+
 interface VercelLikeRequest {
   method?: string;
+  headers?: Record<string, string | string[] | undefined>;
   body?: unknown;
 }
 
@@ -159,6 +291,9 @@ interface VercelLikeResponse {
   status: (code: number) => VercelLikeResponse;
   json: (data: unknown) => void;
   setHeader: (name: string, value: string) => void;
+  write?: (chunk: string) => boolean | void;
+  end?: (chunk?: string) => void;
+  flushHeaders?: () => void;
 }
 
 export default async function handler(req: VercelLikeRequest, res: VercelLikeResponse) {
@@ -186,6 +321,16 @@ export default async function handler(req: VercelLikeRequest, res: VercelLikeRes
     }
   } else if (req.body && typeof req.body === "object") {
     body = req.body as ChatRequest;
+  }
+
+  if (Boolean(body.stream) && typeof res.write === "function" && typeof res.end === "function") {
+    await handleStreamChat(body, res as {
+      setHeader: (name: string, value: string) => void;
+      write: (chunk: string) => boolean | void;
+      end: (chunk?: string) => void;
+      flushHeaders?: () => void;
+    });
+    return;
   }
 
   const { status, payload } = await handleChat(body);

@@ -34,12 +34,20 @@ interface ChatMessage {
   role: Role;
   content: string;
   userQuery?: string;
+  isStreaming?: boolean;
 }
 
 interface DeepLink {
   label: string;
   target?: string;
   action?: "resume" | "scroll";
+  icon: typeof Trophy;
+}
+
+interface SmartFollowUp {
+  label: string;
+  actionType: "query" | "resume" | "scroll";
+  target?: string;
   icon: typeof Trophy;
 }
 
@@ -220,22 +228,39 @@ function getDeepLinks(content: string, userQuery?: string): DeepLink[] {
 }
 
 /** Determine contextual follow-up questions tailored to conversation context */
-function getSmartFollowUps(userQuery: string, reply: string): string[] {
+function getSmartFollowUps(userQuery: string, reply: string): SmartFollowUp[] {
   const text = `${userQuery} ${reply}`.toLowerCase();
 
-  if (text.includes("pitch") || text.includes("board-ready") || text.includes("60 second")) {
+  // Cybersecurity / CISO / Zero Trust
+  if (
+    text.includes("cyber") ||
+    text.includes("security") ||
+    text.includes("ciso") ||
+    text.includes("zero trust") ||
+    text.includes("threat") ||
+    text.includes("soc") ||
+    text.includes("dpdp")
+  ) {
     return [
-      "What is his current role at Runwal Realty?",
-      "What cybersecurity awards has he won?",
-      "How can I contact him directly?",
+      { label: "View CISO Certifications", actionType: "scroll", target: "#certifications", icon: ShieldCheck },
+      { label: "See Security Awards", actionType: "scroll", target: "#achievements", icon: Award },
+      { label: "Download Resume", actionType: "resume", icon: FileText },
+    ];
+  }
+
+  if (text.includes("pitch") || text.includes("board-ready") || text.includes("60 second") || text.includes("60-sec")) {
+    return [
+      { label: "What is his current role at Runwal Realty?", actionType: "query", icon: Briefcase },
+      { label: "See Security Awards", actionType: "scroll", target: "#achievements", icon: Award },
+      { label: "Download Resume", actionType: "resume", icon: FileText },
     ];
   }
 
   if (text.includes("who is") || text.includes("introduce") || text.includes("about kamlesh")) {
     return [
-      "⚡ Generate 60-Second Executive Pitch",
-      "Tell me about his Cyber Security leadership",
-      "What are his key awards & achievements?",
+      { label: "⚡ Generate 60-Second Executive Pitch", actionType: "query", icon: Zap },
+      { label: "Tell me about his Cyber Security leadership", actionType: "query", icon: ShieldCheck },
+      { label: "Download Resume", actionType: "resume", icon: FileText },
     ];
   }
 
@@ -243,51 +268,51 @@ function getSmartFollowUps(userQuery: string, reply: string): string[] {
     text.includes("experience") ||
     text.includes("runwal") ||
     text.includes("nexus") ||
-    text.includes("career")
+    text.includes("career") ||
+    text.includes("cio") ||
+    text.includes("cto")
   ) {
     return [
-      "Tell me about his Cyber Security leadership",
-      "What certifications does he hold?",
-      "How can I get in touch with him?",
+      { label: "View 22-Year Career Timeline", actionType: "scroll", target: "#experience", icon: Briefcase },
+      { label: "Tell me about his Cyber Security leadership", actionType: "query", icon: ShieldCheck },
+      { label: "Download Resume", actionType: "resume", icon: FileText },
     ];
   }
 
-  if (text.includes("cyber") || text.includes("security") || text.includes("ciso") || text.includes("zero trust")) {
+  if (text.includes("award") || text.includes("achievement") || text.includes("honor") || text.includes("trophy")) {
     return [
-      "What cybersecurity awards has he won?",
-      "What credentials does he hold?",
-      "Ask about his enterprise infrastructure scale",
+      { label: "Tell me about the DevOps Security Expert award", actionType: "query", icon: Trophy },
+      { label: "View All Honors & Stage Photos", actionType: "scroll", target: "#achievements", icon: Award },
+      { label: "Download Resume", actionType: "resume", icon: FileText },
     ];
   }
 
-  if (text.includes("award") || text.includes("achievement") || text.includes("honor")) {
+  if (
+    text.includes("certification") ||
+    text.includes("education") ||
+    text.includes("degree") ||
+    text.includes("mit") ||
+    text.includes("smu")
+  ) {
     return [
-      "Tell me about the DevOps Security Expert 2026 award",
-      "What certifications does he hold?",
-      "⚡ Generate 60-Second Executive Pitch",
+      { label: "View MIT & Academic Background", actionType: "scroll", target: "#education", icon: GraduationCap },
+      { label: "View CISO Certifications", actionType: "scroll", target: "#certifications", icon: ShieldCheck },
+      { label: "Download Resume", actionType: "resume", icon: FileText },
     ];
   }
 
-  if (text.includes("certification") || text.includes("education") || text.includes("degree")) {
+  if (text.includes("contact") || text.includes("phone") || text.includes("email") || text.includes("hire") || text.includes("call")) {
     return [
-      "Tell me about his 22+ years career journey",
-      "What are his leadership competencies?",
-      "How can I schedule a call / reach him?",
-    ];
-  }
-
-  if (text.includes("contact") || text.includes("phone") || text.includes("email") || text.includes("hire")) {
-    return [
-      "⚡ Generate 60-Second Executive Pitch",
-      "What is his current role at Runwal Realty?",
-      "Download his executive resume",
+      { label: "Open Contact Form", actionType: "scroll", target: "#contact", icon: Mail },
+      { label: "⚡ Generate 60-Second Executive Pitch", actionType: "query", icon: Zap },
+      { label: "Download Resume", actionType: "resume", icon: FileText },
     ];
   }
 
   return [
-    "⚡ Generate 60-Second Executive Pitch",
-    "What is his current role & experience?",
-    "Tell me about his Cyber Security leadership",
+    { label: "⚡ Generate 60-Second Executive Pitch", actionType: "query", icon: Zap },
+    { label: "Tell me about his Cyber Security leadership", actionType: "query", icon: ShieldCheck },
+    { label: "Download Resume", actionType: "resume", icon: FileText },
   ];
 }
 
@@ -437,6 +462,30 @@ const ChatWidget = () => {
     }
   };
 
+  const handleFollowUpClick = (chip: SmartFollowUp) => {
+    if (chip.actionType === "resume") {
+      setResumeOpen(true);
+      return;
+    }
+    if (chip.actionType === "scroll" && chip.target) {
+      const id = chip.target.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        el.classList.add("ring-2", "ring-accent", "ring-offset-2", "transition-all");
+        setTimeout(() => {
+          el.classList.remove("ring-2", "ring-accent", "ring-offset-2");
+        }, 2200);
+
+        if (window.innerWidth < 640) {
+          setOpen(false);
+        }
+      }
+      return;
+    }
+    void send(chip.label.replace(/^⚡\s*/, ""));
+  };
+
   const send = async (raw: string) => {
     const text = raw.trim();
     if (loading) return;
@@ -452,38 +501,124 @@ const ChatWidget = () => {
 
     setError(null);
     const history = messages;
-    setMessages([...history, { role: "user", content: text }]);
+    const newMessages: ChatMessage[] = [
+      ...history,
+      { role: "user", content: text },
+      { role: "assistant", content: "", userQuery: text, isStreaming: true },
+    ];
+    setMessages(newMessages);
     setInput("");
     setLoading(true);
+
+    const assistantIndex = newMessages.length - 1;
+
+    // Helper for typewriter simulation (offline / non-streaming fallback)
+    const runTypewriter = async (fullReply: string) => {
+      const step = Math.max(2, Math.floor(fullReply.length / 35));
+      for (let i = 0; i <= fullReply.length; i += step) {
+        const slice = fullReply.slice(0, i + step);
+        setMessages((prev) => {
+          const clone = [...prev];
+          if (clone[assistantIndex]) {
+            clone[assistantIndex] = {
+              ...clone[assistantIndex],
+              content: slice,
+              isStreaming: true,
+            };
+          }
+          return clone;
+        });
+        await new Promise((r) => setTimeout(r, 14));
+      }
+      setMessages((prev) => {
+        const clone = [...prev];
+        if (clone[assistantIndex]) {
+          clone[assistantIndex] = {
+            ...clone[assistantIndex],
+            content: fullReply,
+            isStreaming: false,
+          };
+        }
+        return clone;
+      });
+    };
 
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, history }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "text/event-stream, application/json",
+        },
+        body: JSON.stringify({ message: text, history, stream: true }),
       });
 
-      const data = (await res.json().catch(() => null)) as { reply?: string; error?: string } | null;
+      const contentType = res.headers.get("content-type") || "";
 
-      if (!res.ok || !data?.reply) {
-        const offlineReply = getOfflineAnswer(text);
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", content: offlineReply, userQuery: text },
-        ]);
-        return;
+      if (res.ok && contentType.includes("text/event-stream") && res.body) {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let accumulated = "";
+        let buffer = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed.startsWith("data:")) continue;
+            const dataStr = trimmed.slice(5).trim();
+            if (dataStr === "[DONE]") break;
+            try {
+              const parsed = JSON.parse(dataStr);
+              if (parsed.error && !accumulated) {
+                const offlineReply = getOfflineAnswer(text);
+                await runTypewriter(offlineReply);
+                return;
+              }
+              if (parsed.text) {
+                accumulated += parsed.text;
+                setMessages((prev) => {
+                  const clone = [...prev];
+                  if (clone[assistantIndex]) {
+                    clone[assistantIndex] = {
+                      ...clone[assistantIndex],
+                      content: accumulated,
+                      isStreaming: true,
+                    };
+                  }
+                  return clone;
+                });
+              }
+            } catch {
+              // chunk split
+            }
+          }
+        }
+
+        setMessages((prev) => {
+          const clone = [...prev];
+          if (clone[assistantIndex]) {
+            clone[assistantIndex] = {
+              ...clone[assistantIndex],
+              content: accumulated || getOfflineAnswer(text),
+              isStreaming: false,
+            };
+          }
+          return clone;
+        });
+      } else {
+        const data = (await res.json().catch(() => null)) as { reply?: string; error?: string } | null;
+        const finalReply = res.ok && data?.reply ? data.reply : getOfflineAnswer(text);
+        await runTypewriter(finalReply);
       }
-
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: data.reply as string, userQuery: text },
-      ]);
     } catch {
       const offlineReply = getOfflineAnswer(text);
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: offlineReply, userQuery: text },
-      ]);
+      await runTypewriter(offlineReply);
     } finally {
       setLoading(false);
     }
@@ -710,9 +845,12 @@ const ChatWidget = () => {
                       <div className="relative max-w-[88%] w-full">
                         <div className="whitespace-pre-wrap break-words border border-zinc-800/90 bg-zinc-900/80 text-zinc-200 px-4 py-3 rounded-2xl rounded-tl-xs shadow-sm leading-relaxed text-xs font-normal">
                           {m.content}
+                          {m.isStreaming && (
+                            <span className="inline-block w-1.5 h-3.5 bg-amber-400 ml-1 translate-y-0.5 animate-pulse rounded-xs" />
+                          )}
 
                           {/* FEATURE 1: Interactive Section Deep-Links */}
-                          {deepLinks.length > 0 && (
+                          {!m.isStreaming && deepLinks.length > 0 && (
                             <div className="mt-3 pt-2.5 border-t border-zinc-800/80 flex flex-wrap gap-2">
                               {deepLinks.map((link) => {
                                 const Icon = link.icon;
@@ -737,46 +875,53 @@ const ChatWidget = () => {
                         </div>
 
                         {/* Copy button */}
-                        <button
-                          type="button"
-                          onClick={() => copyMessage(m.content, i)}
-                          aria-label="Copy response"
-                          title="Copy to clipboard"
-                          className="opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-4 right-2 text-[10px] text-zinc-400 hover:text-white flex items-center gap-1 bg-zinc-800/90 px-1.5 py-0.5 rounded border border-zinc-700/60"
-                        >
-                          {copiedIdx === i ? (
-                            <>
-                              <Check size={10} className="text-emerald-400" />
-                              <span className="text-emerald-400">Copied</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy size={10} />
-                              <span>Copy</span>
-                            </>
-                          )}
-                        </button>
+                        {!m.isStreaming && m.content && (
+                          <button
+                            type="button"
+                            onClick={() => copyMessage(m.content, i)}
+                            aria-label="Copy response"
+                            title="Copy to clipboard"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-4 right-2 text-[10px] text-zinc-400 hover:text-white flex items-center gap-1 bg-zinc-800/90 px-1.5 py-0.5 rounded border border-zinc-700/60 cursor-pointer"
+                          >
+                            {copiedIdx === i ? (
+                              <>
+                                <Check size={10} className="text-emerald-400" />
+                                <span className="text-emerald-400">Copied</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy size={10} />
+                                <span>Copy</span>
+                              </>
+                            )}
+                          </button>
+                        )}
                       </div>
                     </div>
 
                     {/* FEATURE 2: Smart Contextual Follow-Up Suggestions */}
-                    {followUps.length > 0 && (
+                    {!m.isStreaming && followUps.length > 0 && (
                       <div className="ml-8 mt-1 space-y-1.5">
-                        <p className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 px-1">
-                          Suggested follow-ups:
+                        <p className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 px-1 flex items-center gap-1.5">
+                          <Sparkles size={11} className="text-amber-400" />
+                          <span>Suggested next steps:</span>
                         </p>
                         <div className="flex flex-wrap gap-1.5">
-                          {followUps.map((suggestion) => (
-                            <button
-                              key={suggestion}
-                              type="button"
-                              onClick={() => void send(suggestion)}
-                              className="text-left text-[11px] px-2.5 py-1 rounded-full border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-800 hover:border-zinc-600 text-zinc-300 hover:text-white transition-all shadow-xs flex items-center gap-1.5"
-                            >
-                              <span>{suggestion}</span>
-                              <ArrowRight size={10} className="text-zinc-500 shrink-0" />
-                            </button>
-                          ))}
+                          {followUps.map((chip) => {
+                            const ChipIcon = chip.icon;
+                            return (
+                              <button
+                                key={chip.label}
+                                type="button"
+                                onClick={() => handleFollowUpClick(chip)}
+                                className="group/chip text-left text-[11px] font-medium px-2.5 py-1 rounded-full border border-zinc-800 bg-zinc-900/70 hover:bg-zinc-800 hover:border-zinc-600 text-zinc-300 hover:text-white transition-all shadow-xs flex items-center gap-1.5 cursor-pointer hover:shadow-sm"
+                              >
+                                <ChipIcon size={12} className="text-amber-400 shrink-0 group-hover/chip:scale-110 transition-transform" />
+                                <span>{chip.label}</span>
+                                <ArrowRight size={10} className="text-zinc-500 group-hover/chip:text-white group-hover/chip:translate-x-0.5 transition-transform shrink-0" />
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                     )}
@@ -784,7 +929,7 @@ const ChatWidget = () => {
                 );
               })}
 
-              {loading && (
+              {loading && (!messages.length || !messages[messages.length - 1]?.content) && (
                 <div className="flex items-center gap-2.5 text-zinc-400 font-mono text-[11px]">
                   <div className="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-300 shrink-0">
                     <Bot size={13} />

@@ -23,7 +23,7 @@ const Footer = () => {
           {/* Brand & Designation */}
           <div className="space-y-3">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 border border-zinc-700 bg-white flex items-center justify-center overflow-hidden rounded-sm p-0.5 shadow-xs">
+              <div className="w-10 h-10 border border-zinc-800 bg-black flex items-center justify-center overflow-hidden rounded-md p-0.5 shadow-xs">
                 <img
                   src={kpLogo}
                   alt="Kamlesh Prasad"

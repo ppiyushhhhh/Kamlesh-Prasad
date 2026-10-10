@@ -146,7 +146,7 @@ const Navbar = () => {
             className="group flex items-center gap-3.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground rounded-sm"
             aria-label="Kamlesh Prasad Home"
           >
-            <div className="w-10 h-10 border border-slate-300 dark:border-zinc-700 bg-white flex items-center justify-center overflow-hidden rounded-sm transition-all duration-200 group-hover:border-foreground shadow-xs p-0.5">
+            <div className="w-10 h-10 border border-zinc-800 bg-black flex items-center justify-center overflow-hidden rounded-md transition-all duration-200 group-hover:border-zinc-500 shadow-xs p-0.5">
               <img
                 src={kpLogo}
                 alt="Kamlesh Prasad"

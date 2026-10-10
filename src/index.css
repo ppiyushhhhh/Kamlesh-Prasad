@@ -156,3 +156,25 @@
   }
 }
 
+/* Custom Cursor styles for desktop fine-pointers */
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor-active,
+  html.custom-cursor-active body,
+  html.custom-cursor-active a,
+  html.custom-cursor-active button,
+  html.custom-cursor-active [role="button"],
+  html.custom-cursor-active .cursor-pointer {
+    cursor: none !important;
+  }
+
+  html.custom-cursor-active input[type="text"],
+  html.custom-cursor-active input[type="email"],
+  html.custom-cursor-active input[type="search"],
+  html.custom-cursor-active input[type="tel"],
+  html.custom-cursor-active textarea,
+  html.custom-cursor-active [contenteditable="true"] {
+    cursor: text !important;
+  }
+}
+
+

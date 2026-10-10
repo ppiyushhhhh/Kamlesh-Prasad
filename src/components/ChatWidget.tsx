@@ -636,7 +636,7 @@ const ChatWidget = () => {
       {/* Executive Resume Modal */}
       <ResumeModal open={resumeOpen} onOpenChange={setResumeOpen} />
 
-      {/* Floating Circular Trigger Button - AI */}
+      {/* Floating Circular Trigger Button - AI Chatbot */}
       <motion.button
         ref={triggerRef}
         type="button"
@@ -644,30 +644,33 @@ const ChatWidget = () => {
         aria-expanded={open}
         aria-haspopup="dialog"
         aria-label={open ? "Close AI Chat" : "Open AI Assistant"}
-        whileHover={{ scale: 1.08 }}
+        whileHover={{ scale: 1.08, y: -2 }}
         whileTap={{ scale: 0.94 }}
-        className="fixed bottom-6 right-6 z-50 group flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 sm:w-15 sm:h-15 rounded-full border-0 bg-transparent p-0 flex items-center justify-center outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black cursor-pointer group shadow-[0_12px_40px_-5px_rgba(0,0,0,0.85)] hover:shadow-[0_16px_45px_-5px_rgba(255,255,255,0.2)] select-none"
       >
-        <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2px] bg-gradient-to-tr from-zinc-700 via-white to-zinc-600 shadow-[0_12px_40px_-5px_rgba(0,0,0,0.85)] hover:shadow-[0_18px_50px_-5px_rgba(255,255,255,0.25)] transition-shadow">
-          <div className="w-full h-full rounded-full bg-[#0E0E12] border border-zinc-800 flex flex-col items-center justify-center relative overflow-hidden group-hover:bg-[#14141A] transition-colors">
+        <div className="relative w-full h-full rounded-full p-[1.5px] bg-gradient-to-tr from-zinc-700 via-zinc-400 to-zinc-700 group-hover:from-zinc-500 group-hover:via-white group-hover:to-zinc-500 transition-all duration-300">
+          <div className="w-full h-full rounded-full bg-[#0D0D12] group-hover:bg-[#14141C] flex flex-col items-center justify-center relative overflow-hidden transition-colors">
+            {/* Subtle radial glass specular highlight */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+
             {open ? (
-              <X size={22} className="text-zinc-200 group-hover:text-white transition-colors" />
+              <X size={21} className="text-zinc-200 group-hover:text-white transition-colors" />
             ) : (
-              <>
+              <div className="relative flex flex-col items-center justify-center">
                 {/* Active live indicator beacon */}
-                <span className="absolute top-2.5 right-2.5 flex h-2 w-2">
+                <span className="absolute -top-1 -right-2 flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_#10B981]" />
                 </span>
 
-                <Sparkles
-                  size={16}
-                  className="text-zinc-300 group-hover:text-amber-400 group-hover:rotate-12 transition-all mb-0.5"
+                <Bot
+                  size={20}
+                  className="text-zinc-100 group-hover:text-white group-hover:scale-105 transition-all mb-0.5"
                 />
-                <span className="font-display font-black text-xs sm:text-sm tracking-widest text-white leading-none">
+                <span className="font-mono text-[9px] font-extrabold tracking-widest text-zinc-400 group-hover:text-zinc-200 uppercase leading-none">
                   AI
                 </span>
-              </>
+              </div>
             )}
           </div>
         </div>

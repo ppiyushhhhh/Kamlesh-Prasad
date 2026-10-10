@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Linkedin, ChevronDown, FileText, ArrowDown, MapPin, ShieldCheck, Server, RefreshCw, Maximize2, X } from "lucide-react";
+import { Linkedin, ChevronDown, FileText, ArrowDown, MapPin, ShieldCheck, Server, RefreshCw, Maximize2, X, Share2 } from "lucide-react";
+import { toast } from "sonner";
 import kamleshPhoto from "@/assets/kamlesh-photo.jpg";
 import ResumeModal from "@/components/ResumeModal";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -8,6 +9,30 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 const HeroSection = () => {
   const [resumeOpen, setResumeOpen] = useState(false);
   const [photoOpen, setPhotoOpen] = useState(false);
+
+  const handleShare = async () => {
+    const shareData = {
+      title: "Kamlesh Prasad | Technology Executive • CIO • CISO",
+      text: "Executive portfolio of Kamlesh Prasad — Chief Technology Officer with 22+ years in IT Infrastructure, Cyber Security, and Digital Transformation.",
+      url: window.location.origin || window.location.href,
+    };
+
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (err: unknown) {
+        if ((err as Error)?.name === "AbortError") return;
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareData.url);
+      toast.success("Profile URL copied to clipboard!");
+    } catch {
+      toast("Profile URL: " + shareData.url);
+    }
+  };
 
   const pillars = [
     { title: "Cybersecurity", icon: ShieldCheck, desc: "CISO Practice & Resilience" },
@@ -125,6 +150,17 @@ const HeroSection = () => {
               >
                 <FileText size={15} />
                 <span>Executive Resume</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleShare}
+                className="inline-flex items-center gap-2 px-4 py-3.5 border border-zinc-800 bg-zinc-900/40 text-zinc-300 font-mono text-xs font-bold uppercase tracking-wider rounded-sm hover:border-zinc-600 hover:text-white transition-all duration-200 cursor-pointer"
+                aria-label="Share Profile"
+                title="Share Executive Profile"
+              >
+                <Share2 size={15} />
+                <span>Share</span>
               </button>
 
               <a

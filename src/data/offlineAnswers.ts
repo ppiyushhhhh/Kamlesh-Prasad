@@ -81,6 +81,11 @@ const OFFLINE_TOPICS: OfflineTopic[] = [
     answer:
       "You can view Kamlesh's full resume by clicking the 'View Resume' link just below this chat input.",
   },
+  {
+    keywords: ["pitch", "60 second", "60-second", "elevator pitch", "board summary", "executive pitch", "pitch summarizing"],
+    answer:
+      "⚡ **60-Second Board-Ready Executive Summary: Kamlesh Prasad**\n\n• **Strategic Leadership & CISO Mastery:** Over 22+ years driving enterprise-scale IT operations, cloud architectures (98% cloud compute), and cyber security resilience (Zero Trust, DPDP Act 2023, CISO governance) across retail, real estate, and global consulting.\n\n• **Enterprise Scale & M&A Proven:** Scaled IT ecosystems from 2 to 20+ mega properties at Nexus Malls (India's leading retail REIT), overseeing ₹250M+ annual IT budgets and multi-vendor delivery with IBM, Dell, and Accenture.\n\n• **Industry-Recognized CTO:** Currently Chief Technology Officer at Runwal Realty; recognized as DevOps Security Expert of the Year (2026), Digital Retail Guardian (2026), and Best Technology Implementation of the Year (CIO Conclave). Holds Post Graduate Cyber Security credentials from MIT xPRO.",
+  },
 ];
 
 const DEFAULT_ANSWER =

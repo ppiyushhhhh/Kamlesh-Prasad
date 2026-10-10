@@ -16,13 +16,31 @@ import {
   User,
   Award,
   GraduationCap,
+  Mic,
+  MicOff,
+  ArrowUpRight,
+  Zap,
+  Trophy,
+  Cpu,
+  Mail,
+  ArrowRight,
 } from "lucide-react";
 import { getOfflineAnswer } from "../data/offlineAnswers";
+import ResumeModal from "@/components/ResumeModal";
 
 type Role = "user" | "assistant";
+
 interface ChatMessage {
   role: Role;
   content: string;
+  userQuery?: string;
+}
+
+interface DeepLink {
+  label: string;
+  target?: string;
+  action?: "resume" | "scroll";
+  icon: typeof Trophy;
 }
 
 const QUICK_PROMPTS = [
@@ -34,7 +52,244 @@ const QUICK_PROMPTS = [
   { label: "What certifications does he hold?", icon: GraduationCap },
 ];
 
+const EXECUTIVE_PITCH_PROMPT = "Generate 60-Second Executive Pitch";
+
 const MAX_LENGTH = 1000;
+
+// Type declaration for SpeechRecognition
+interface SpeechRecognitionResultItem {
+  transcript: string;
+}
+interface SpeechRecognitionResultList {
+  [index: number]: { [index: number]: SpeechRecognitionResultItem };
+  length: number;
+}
+interface SpeechRecognitionEventLike {
+  results: SpeechRecognitionResultList;
+}
+interface SpeechRecognitionInstance {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  start: () => void;
+  stop: () => void;
+  abort: () => void;
+  onstart: (() => void) | null;
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  onerror: ((event: { error: string }) => void) | null;
+  onend: (() => void) | null;
+}
+
+type SpeechRecognitionConstructor = new () => SpeechRecognitionInstance;
+
+function getSpeechRecognitionClass(): SpeechRecognitionConstructor | null {
+  if (typeof window === "undefined") return null;
+  const win = window as unknown as {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  };
+  return win.SpeechRecognition || win.webkitSpeechRecognition || null;
+}
+
+/** Determine high-impact interactive deep-links based on message content */
+function getDeepLinks(content: string, userQuery?: string): DeepLink[] {
+  const text = `${userQuery || ""} ${content}`.toLowerCase();
+  const links: DeepLink[] = [];
+
+  if (
+    text.includes("award") ||
+    text.includes("devops security expert") ||
+    text.includes("recognition") ||
+    text.includes("trophy") ||
+    text.includes("krypton") ||
+    text.includes("quantic") ||
+    text.includes("cio conclave") ||
+    text.includes("digital retail guardian")
+  ) {
+    links.push({
+      label: "View Recognition & Awards",
+      target: "#achievements",
+      icon: Trophy,
+    });
+  }
+
+  if (
+    text.includes("experience") ||
+    text.includes("career") ||
+    text.includes("nexus malls") ||
+    text.includes("runwal") ||
+    text.includes("avenue") ||
+    text.includes("accenture") ||
+    text.includes("ibm") ||
+    text.includes("sitel") ||
+    text.includes("tenure") ||
+    text.includes("journey")
+  ) {
+    links.push({
+      label: "View Experience Timeline",
+      target: "#experience",
+      icon: Briefcase,
+    });
+  }
+
+  if (
+    text.includes("certification") ||
+    text.includes("credential") ||
+    text.includes("itil") ||
+    text.includes("vmware") ||
+    text.includes("mcitp") ||
+    text.includes("upgrad")
+  ) {
+    links.push({
+      label: "View Credentials",
+      target: "#certifications",
+      icon: ShieldCheck,
+    });
+  }
+
+  if (
+    text.includes("education") ||
+    text.includes("degree") ||
+    text.includes("mit xpro") ||
+    text.includes("mba") ||
+    text.includes("university") ||
+    text.includes("academic")
+  ) {
+    links.push({
+      label: "View Academic Background",
+      target: "#education",
+      icon: GraduationCap,
+    });
+  }
+
+  if (
+    text.includes("skill") ||
+    text.includes("competenc") ||
+    text.includes("zero trust") ||
+    text.includes("ciso") ||
+    text.includes("infrastructure") ||
+    text.includes("governance") ||
+    text.includes("sap") ||
+    text.includes("salesforce") ||
+    text.includes("dpdp")
+  ) {
+    links.push({
+      label: "Explore Core Expertise",
+      target: "#expertise",
+      icon: Cpu,
+    });
+  }
+
+  if (
+    text.includes("contact") ||
+    text.includes("phone") ||
+    text.includes("email") ||
+    text.includes("reach") ||
+    text.includes("9004348595") ||
+    text.includes("call") ||
+    text.includes("hire")
+  ) {
+    links.push({
+      label: "Open Contact Form",
+      target: "#contact",
+      icon: Mail,
+    });
+  }
+
+  if (text.includes("resume") || text.includes("cv") || text.includes("download")) {
+    links.push({
+      label: "Open Executive Resume",
+      action: "resume",
+      icon: FileText,
+    });
+  }
+
+  // Deduplicate by target/action and return maximum 2 chips
+  const seen = new Set<string>();
+  const uniqueLinks: DeepLink[] = [];
+  for (const link of links) {
+    const key = link.target || link.action || link.label;
+    if (!seen.has(key)) {
+      seen.add(key);
+      uniqueLinks.push(link);
+    }
+    if (uniqueLinks.length >= 2) break;
+  }
+
+  return uniqueLinks;
+}
+
+/** Determine contextual follow-up questions tailored to conversation context */
+function getSmartFollowUps(userQuery: string, reply: string): string[] {
+  const text = `${userQuery} ${reply}`.toLowerCase();
+
+  if (text.includes("pitch") || text.includes("board-ready") || text.includes("60 second")) {
+    return [
+      "What is his current role at Runwal Realty?",
+      "What cybersecurity awards has he won?",
+      "How can I contact him directly?",
+    ];
+  }
+
+  if (text.includes("who is") || text.includes("introduce") || text.includes("about kamlesh")) {
+    return [
+      "⚡ Generate 60-Second Executive Pitch",
+      "Tell me about his Cyber Security leadership",
+      "What are his key awards & achievements?",
+    ];
+  }
+
+  if (
+    text.includes("experience") ||
+    text.includes("runwal") ||
+    text.includes("nexus") ||
+    text.includes("career")
+  ) {
+    return [
+      "Tell me about his Cyber Security leadership",
+      "What certifications does he hold?",
+      "How can I get in touch with him?",
+    ];
+  }
+
+  if (text.includes("cyber") || text.includes("security") || text.includes("ciso") || text.includes("zero trust")) {
+    return [
+      "What cybersecurity awards has he won?",
+      "What credentials does he hold?",
+      "Ask about his enterprise infrastructure scale",
+    ];
+  }
+
+  if (text.includes("award") || text.includes("achievement") || text.includes("honor")) {
+    return [
+      "Tell me about the DevOps Security Expert 2026 award",
+      "What certifications does he hold?",
+      "⚡ Generate 60-Second Executive Pitch",
+    ];
+  }
+
+  if (text.includes("certification") || text.includes("education") || text.includes("degree")) {
+    return [
+      "Tell me about his 22+ years career journey",
+      "What are his leadership competencies?",
+      "How can I schedule a call / reach him?",
+    ];
+  }
+
+  if (text.includes("contact") || text.includes("phone") || text.includes("email") || text.includes("hire")) {
+    return [
+      "⚡ Generate 60-Second Executive Pitch",
+      "What is his current role at Runwal Realty?",
+      "Download his executive resume",
+    ];
+  }
+
+  return [
+    "⚡ Generate 60-Second Executive Pitch",
+    "What is his current role & experience?",
+    "Tell me about his Cyber Security leadership",
+  ];
+}
 
 const ChatWidget = () => {
   const [open, setOpen] = useState(false);
@@ -43,19 +298,31 @@ const ChatWidget = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [resumeOpen, setResumeOpen] = useState(false);
+  const [listening, setListening] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
+
+  useEffect(() => {
+    setSpeechSupported(Boolean(getSpeechRecognitionClass()));
+  }, []);
 
   useEffect(() => {
     if (open) {
       setTimeout(() => inputRef.current?.focus(), 100);
     } else {
       triggerRef.current?.focus({ preventScroll: true });
+      if (listening && recognitionRef.current) {
+        recognitionRef.current.stop();
+        setListening(false);
+      }
     }
-  }, [open]);
+  }, [open, listening]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -72,6 +339,69 @@ const ChatWidget = () => {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  // Clean up speech recognition on unmount
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.abort();
+      }
+    };
+  }, []);
+
+  const toggleListening = () => {
+    const SpeechClass = getSpeechRecognitionClass();
+    if (!SpeechClass) {
+      setError("Speech recognition is not supported in this browser. Please type your query.");
+      return;
+    }
+
+    if (listening) {
+      recognitionRef.current?.stop();
+      setListening(false);
+      return;
+    }
+
+    try {
+      const recognition = new SpeechClass();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = "en-US";
+
+      recognition.onstart = () => {
+        setListening(true);
+        setError(null);
+      };
+
+      recognition.onresult = (event: SpeechRecognitionEventLike) => {
+        const transcript = Array.from({ length: event.results.length })
+          .map((_, i) => event.results[i]?.[0]?.transcript || "")
+          .join("");
+        if (transcript) {
+          setInput(transcript);
+        }
+      };
+
+      recognition.onerror = (event: { error: string }) => {
+        if (event.error === "not-allowed") {
+          setError("Microphone permission was denied. Please allow microphone access to speak.");
+        } else if (event.error !== "no-speech") {
+          setError("Voice input error. Please try again or type your question.");
+        }
+        setListening(false);
+      };
+
+      recognition.onend = () => {
+        setListening(false);
+      };
+
+      recognitionRef.current = recognition;
+      recognition.start();
+    } catch {
+      setError("Unable to start microphone. Please type your question.");
+      setListening(false);
+    }
+  };
+
   const copyMessage = async (content: string, idx: number) => {
     try {
       await navigator.clipboard.writeText(content);
@@ -82,12 +412,42 @@ const ChatWidget = () => {
     }
   };
 
+  const handleDeepLinkClick = (link: DeepLink) => {
+    if (link.action === "resume") {
+      setResumeOpen(true);
+      return;
+    }
+
+    if (link.target) {
+      const id = link.target.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        // Pulse ring highlight on target element
+        el.classList.add("ring-2", "ring-accent", "ring-offset-2", "transition-all");
+        setTimeout(() => {
+          el.classList.remove("ring-2", "ring-accent", "ring-offset-2");
+        }, 2200);
+
+        // On small mobile screens, minimize chat to reveal section
+        if (window.innerWidth < 640) {
+          setOpen(false);
+        }
+      }
+    }
+  };
+
   const send = async (raw: string) => {
     const text = raw.trim();
     if (loading) return;
     if (!text) {
       setError("Please enter a question.");
       return;
+    }
+
+    if (listening && recognitionRef.current) {
+      recognitionRef.current.stop();
+      setListening(false);
     }
 
     setError(null);
@@ -107,14 +467,23 @@ const ChatWidget = () => {
 
       if (!res.ok || !data?.reply) {
         const offlineReply = getOfflineAnswer(text);
-        setMessages((prev) => [...prev, { role: "assistant", content: offlineReply }]);
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: offlineReply, userQuery: text },
+        ]);
         return;
       }
 
-      setMessages((prev) => [...prev, { role: "assistant", content: data.reply as string }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: data.reply as string, userQuery: text },
+      ]);
     } catch {
       const offlineReply = getOfflineAnswer(text);
-      setMessages((prev) => [...prev, { role: "assistant", content: offlineReply }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: offlineReply, userQuery: text },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -129,6 +498,9 @@ const ChatWidget = () => {
 
   return (
     <>
+      {/* Executive Resume Modal */}
+      <ResumeModal open={resumeOpen} onOpenChange={setResumeOpen} />
+
       {/* Floating Circular Trigger Button - AI */}
       <motion.button
         ref={triggerRef}
@@ -179,7 +551,7 @@ const ChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="fixed bottom-24 right-4 sm:right-6 w-[calc(100vw-32px)] sm:w-[440px] max-w-[440px] z-50 flex flex-col h-[600px] max-h-[82dvh] overflow-hidden rounded-2xl border border-zinc-800/90 bg-[#0C0C10]/95 backdrop-blur-2xl text-white shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)]"
+            className="fixed bottom-24 right-4 sm:right-6 w-[calc(100vw-32px)] sm:w-[450px] max-w-[450px] z-50 flex flex-col h-[630px] max-h-[84dvh] overflow-hidden rounded-2xl border border-zinc-800/90 bg-[#0C0C10]/95 backdrop-blur-2xl text-white shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)]"
           >
             {/* Executive Header */}
             <div className="flex items-center justify-between border-b border-zinc-800/90 bg-[#121218]/90 px-4 py-3.5">
@@ -205,6 +577,17 @@ const ChatWidget = () => {
               </div>
 
               <div className="flex items-center gap-1">
+                {/* 60s Pitch Header Shortcut */}
+                <button
+                  type="button"
+                  onClick={() => void send(EXECUTIVE_PITCH_PROMPT)}
+                  title="Generate 60-Second Executive Pitch"
+                  className="hidden xs:inline-flex items-center gap-1 px-2 py-1 text-[11px] font-mono font-medium rounded border border-amber-500/30 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 transition-colors"
+                >
+                  <Zap size={11} className="text-amber-400" />
+                  <span>60s Pitch</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={() => {
@@ -239,16 +622,43 @@ const ChatWidget = () => {
             >
               {/* Empty State Welcome Card & Quick Chips */}
               {messages.length === 0 && (
-                <div className="space-y-4 py-2">
+                <div className="space-y-4 py-1">
                   <div className="p-4 rounded-xl border border-zinc-800/80 bg-zinc-900/40 text-zinc-300">
                     <div className="flex items-center gap-2 text-white font-semibold text-xs mb-1.5">
                       <Sparkles size={14} className="text-zinc-300" />
                       <span>Hello! How can I assist you?</span>
                     </div>
                     <p className="text-zinc-400 text-[11px] leading-relaxed">
-                      I am Kamlesh Prasad&apos;s AI assistant. Ask me questions about his executive background, cyber security leadership, or contact channels.
+                      I am Kamlesh Prasad&apos;s AI executive assistant. Ask me questions about his leadership, cyber security governance, M&amp;A scale, or request his board pitch.
                     </p>
                   </div>
+
+                  {/* FEATURE 3: Highlighted 60-Second Executive Pitch Card */}
+                  <button
+                    type="button"
+                    onClick={() => void send(EXECUTIVE_PITCH_PROMPT)}
+                    className="w-full text-left p-3.5 rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500/10 via-zinc-900/60 to-zinc-900/40 hover:border-amber-400 hover:from-amber-500/20 transition-all group flex items-center justify-between gap-3 shadow-sm"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 group-hover:scale-105 transition-transform">
+                        <Zap size={16} />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-display font-bold text-xs uppercase tracking-wider text-white">
+                            60-Second Executive Pitch
+                          </span>
+                          <span className="text-[9px] font-mono uppercase bg-amber-400/20 text-amber-300 px-1.5 py-0.2 rounded border border-amber-400/30 font-semibold">
+                            Board Ready
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
+                          Instant high-impact summary of Kamlesh&apos;s 22-year career for CXOs &amp; boards.
+                        </p>
+                      </div>
+                    </div>
+                    <ArrowRight size={14} className="text-amber-400 shrink-0 group-hover:translate-x-1 transition-transform" />
+                  </button>
 
                   <div>
                     <p className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 mb-2 px-1">
@@ -277,45 +687,102 @@ const ChatWidget = () => {
               )}
 
               {/* Message Bubbles */}
-              {messages.map((m, i) =>
-                m.role === "user" ? (
+              {messages.map((m, i) => {
+                const isAssistant = m.role === "assistant";
+                const isLatestAssistant =
+                  isAssistant &&
+                  i === messages.map((msg, idx) => (msg.role === "assistant" ? idx : -1)).filter((x) => x !== -1).pop();
+                const deepLinks = isAssistant ? getDeepLinks(m.content, m.userQuery) : [];
+                const followUps = isLatestAssistant ? getSmartFollowUps(m.userQuery || "", m.content) : [];
+
+                return m.role === "user" ? (
                   <div key={i} className="flex justify-end">
                     <div className="max-w-[85%] whitespace-pre-wrap break-words bg-zinc-100 text-zinc-950 px-4 py-2.5 rounded-2xl rounded-tr-xs font-medium text-xs shadow-sm">
                       {m.content}
                     </div>
                   </div>
                 ) : (
-                  <div key={i} className="flex items-start gap-2.5 group">
-                    <div className="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-300 shrink-0 mt-1">
-                      <Bot size={13} />
-                    </div>
-                    <div className="relative max-w-[88%]">
-                      <div className="whitespace-pre-wrap break-words border border-zinc-800/90 bg-zinc-900/80 text-zinc-200 px-4 py-3 rounded-2xl rounded-tl-xs shadow-sm leading-relaxed text-xs font-normal">
-                        {m.content}
+                  <div key={i} className="flex flex-col gap-2 group">
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-300 shrink-0 mt-1">
+                        <Bot size={13} />
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => copyMessage(m.content, i)}
-                        aria-label="Copy response"
-                        title="Copy to clipboard"
-                        className="opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-4 right-2 text-[10px] text-zinc-400 hover:text-white flex items-center gap-1 bg-zinc-800/90 px-1.5 py-0.5 rounded border border-zinc-700/60"
-                      >
-                        {copiedIdx === i ? (
-                          <>
-                            <Check size={10} className="text-emerald-400" />
-                            <span className="text-emerald-400">Copied</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy size={10} />
-                            <span>Copy</span>
-                          </>
-                        )}
-                      </button>
+                      <div className="relative max-w-[88%] w-full">
+                        <div className="whitespace-pre-wrap break-words border border-zinc-800/90 bg-zinc-900/80 text-zinc-200 px-4 py-3 rounded-2xl rounded-tl-xs shadow-sm leading-relaxed text-xs font-normal">
+                          {m.content}
+
+                          {/* FEATURE 1: Interactive Section Deep-Links */}
+                          {deepLinks.length > 0 && (
+                            <div className="mt-3 pt-2.5 border-t border-zinc-800/80 flex flex-wrap gap-2">
+                              {deepLinks.map((link) => {
+                                const Icon = link.icon;
+                                return (
+                                  <button
+                                    key={link.label}
+                                    type="button"
+                                    onClick={() => handleDeepLinkClick(link)}
+                                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium border border-zinc-700 bg-zinc-800/90 hover:bg-zinc-700 text-zinc-200 hover:text-white transition-colors cursor-pointer group/link shadow-xs"
+                                  >
+                                    <Icon size={12} className="text-amber-400 shrink-0" />
+                                    <span>{link.label}</span>
+                                    <ArrowUpRight
+                                      size={11}
+                                      className="text-zinc-400 group-hover/link:text-white group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform"
+                                    />
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Copy button */}
+                        <button
+                          type="button"
+                          onClick={() => copyMessage(m.content, i)}
+                          aria-label="Copy response"
+                          title="Copy to clipboard"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-4 right-2 text-[10px] text-zinc-400 hover:text-white flex items-center gap-1 bg-zinc-800/90 px-1.5 py-0.5 rounded border border-zinc-700/60"
+                        >
+                          {copiedIdx === i ? (
+                            <>
+                              <Check size={10} className="text-emerald-400" />
+                              <span className="text-emerald-400">Copied</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy size={10} />
+                              <span>Copy</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
                     </div>
+
+                    {/* FEATURE 2: Smart Contextual Follow-Up Suggestions */}
+                    {followUps.length > 0 && (
+                      <div className="ml-8 mt-1 space-y-1.5">
+                        <p className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 px-1">
+                          Suggested follow-ups:
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {followUps.map((suggestion) => (
+                            <button
+                              key={suggestion}
+                              type="button"
+                              onClick={() => void send(suggestion)}
+                              className="text-left text-[11px] px-2.5 py-1 rounded-full border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-800 hover:border-zinc-600 text-zinc-300 hover:text-white transition-all shadow-xs flex items-center gap-1.5"
+                            >
+                              <span>{suggestion}</span>
+                              <ArrowRight size={10} className="text-zinc-500 shrink-0" />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                ),
-              )}
+                );
+              })}
 
               {loading && (
                 <div className="flex items-center gap-2.5 text-zinc-400 font-mono text-[11px]">
@@ -338,7 +805,24 @@ const ChatWidget = () => {
 
             {/* Input Composer */}
             <div className="border-t border-zinc-800/90 bg-[#121218]/90 p-3 space-y-2">
-              <div className="relative flex items-end gap-2 p-1.5 rounded-xl border border-zinc-800 bg-zinc-950/80 focus-within:border-zinc-500 transition-colors">
+              {/* Voice Listening Active Banner */}
+              {listening && (
+                <div className="flex items-center justify-between px-3 py-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 text-[11px] font-mono animate-pulse">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                    <span>Listening... Speak your question now</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={toggleListening}
+                    className="text-xs font-semibold text-emerald-200 hover:underline"
+                  >
+                    Done
+                  </button>
+                </div>
+              )}
+
+              <div className="relative flex items-end gap-1.5 p-1.5 rounded-xl border border-zinc-800 bg-zinc-950/80 focus-within:border-zinc-500 transition-colors">
                 <textarea
                   id="kamlesh-ai-input"
                   ref={inputRef}
@@ -347,9 +831,32 @@ const ChatWidget = () => {
                   maxLength={MAX_LENGTH}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask a question about Kamlesh Prasad..."
+                  placeholder={
+                    listening
+                      ? "Listening to voice input..."
+                      : "Ask about Kamlesh Prasad's career, CISO leadership..."
+                  }
                   className="max-h-24 min-h-[36px] flex-1 resize-none border-0 bg-transparent px-2.5 py-2 text-xs text-white placeholder:text-zinc-500 focus:outline-none focus:ring-0 leading-normal"
                 />
+
+                {/* FEATURE 4: Voice-to-Text Microphone Toggle */}
+                {speechSupported && (
+                  <button
+                    type="button"
+                    onClick={toggleListening}
+                    disabled={loading}
+                    aria-label={listening ? "Stop voice listening" : "Start voice search"}
+                    title={listening ? "Click to stop listening" : "Speak your question (Voice Input)"}
+                    className={`inline-flex h-[34px] w-[34px] flex-shrink-0 items-center justify-center rounded-lg transition-all ${
+                      listening
+                        ? "bg-rose-500/20 text-rose-300 border border-rose-500/50 animate-pulse"
+                        : "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                    }`}
+                  >
+                    {listening ? <MicOff size={15} /> : <Mic size={15} />}
+                  </button>
+                )}
+
                 <button
                   type="button"
                   onClick={() => void send(input)}
@@ -364,15 +871,14 @@ const ChatWidget = () => {
               {/* Quick Actions Footer */}
               <div className="flex items-center justify-between px-1 text-[10px] font-mono text-zinc-400">
                 <div className="flex items-center gap-3">
-                  <a
-                    href="/kamlesh-resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-zinc-400 hover:text-white transition-colors"
+                  <button
+                    type="button"
+                    onClick={() => setResumeOpen(true)}
+                    className="inline-flex items-center gap-1 text-zinc-400 hover:text-white transition-colors cursor-pointer"
                   >
                     <FileText size={11} />
-                    <span>Resume</span>
-                  </a>
+                    <span>View Resume</span>
+                  </button>
                   <a
                     href="tel:+919004348595"
                     className="inline-flex items-center gap-1 text-zinc-400 hover:text-white transition-colors"

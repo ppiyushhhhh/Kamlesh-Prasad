@@ -356,6 +356,7 @@ const AchievementsSection = () => {
                             alt=""
                             className="w-full h-full object-contain"
                             loading="lazy"
+                            decoding="async"
                           />
                         </div>
                       ))}
@@ -409,6 +410,8 @@ const AchievementsSection = () => {
                                   alt=""
                                   aria-hidden="true"
                                   className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-20 scale-125 pointer-events-none select-none"
+                                  loading="lazy"
+                                  decoding="async"
                                 />
                                 {/* Sharp, fully visible auto-fitted photo */}
                                 <img
@@ -416,6 +419,7 @@ const AchievementsSection = () => {
                                   alt={img.alt}
                                   className="relative z-10 max-h-full max-w-full w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] drop-shadow-md select-none"
                                   loading="lazy"
+                                  decoding="async"
                                 />
                                 <div className="absolute inset-0 z-20 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-mono text-xs backdrop-blur-[1px]">
                                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-black/85 border border-white/20 rounded-xs shadow-lg font-semibold">

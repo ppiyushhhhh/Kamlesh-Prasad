@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { Trophy } from "lucide-react";
 
@@ -32,14 +32,16 @@ const awards = [
 
 const AwardsSection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduceMotion = useReducedMotion();
+  const inView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
+  const isVisible = inView || shouldReduceMotion;
 
   return (
     <section id="awards" className="section-padding bg-background">
       <div className="container mx-auto max-w-5xl" ref={ref}>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
         >
           <p className="text-accent uppercase tracking-[0.2em] text-sm font-medium mb-3">Recognition</p>

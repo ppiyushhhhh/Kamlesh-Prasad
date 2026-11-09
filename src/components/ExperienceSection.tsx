@@ -1,4 +1,4 @@
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   Building2,
@@ -244,15 +244,17 @@ const ExperienceSection = () => {
   const [viewMode, setViewMode] = useState<"detailed" | "timeline">("detailed");
   const [expandedTimelineIndex, setExpandedTimelineIndex] = useState<number | null>(null);
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduceMotion = useReducedMotion();
+  const inView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
+  const isVisible = inView || shouldReduceMotion;
 
   return (
     <section id="experience" className="section-padding bg-section-alt border-b border-border/80 scroll-mt-16">
       <div className="container mx-auto max-w-7xl" ref={ref}>
         {/* Section Header with View Toggle */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-12 pb-4 border-b border-border/60"
         >

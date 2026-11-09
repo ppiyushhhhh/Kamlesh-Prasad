@@ -57,5 +57,26 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
+    build: {
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              if (id.includes("framer-motion")) {
+                return "vendor-motion";
+              }
+              if (id.includes("react") || id.includes("react-dom") || id.includes("react-router-dom") || id.includes("react-helmet-async")) {
+                return "vendor-react";
+              }
+              if (id.includes("lucide-react") || id.includes("@radix-ui")) {
+                return "vendor-ui";
+              }
+            }
+          },
+        },
+      },
+      chunkSizeWarningLimit: 800,
+    },
   };
 });

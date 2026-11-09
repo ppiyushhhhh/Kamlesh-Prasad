@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { ShieldCheck, Server, RefreshCw, Scale } from "lucide-react";
 
@@ -66,15 +66,17 @@ const categories: Category[] = [
 
 const ExpertiseSection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduceMotion = useReducedMotion();
+  const inView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
+  const isVisible = inView || shouldReduceMotion;
 
   return (
     <section id="expertise" className="section-padding bg-background border-b border-border/80 scroll-mt-16">
       <div className="container mx-auto max-w-7xl" ref={ref}>
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="flex items-center gap-3 mb-12 pb-4 border-b border-border/60"
         >
@@ -92,9 +94,9 @@ const ExpertiseSection = () => {
           {categories.map((cat, i) => (
             <motion.div
               key={cat.title}
-              initial={{ opacity: 0, y: 25 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.1 * i, duration: 0.5 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 25 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
+              transition={{ delay: shouldReduceMotion ? 0 : 0.08 * i, duration: 0.4 }}
               className="p-6 lg:p-8 flex flex-col justify-between hover:bg-muted/30 transition-colors"
             >
               <div>

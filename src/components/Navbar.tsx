@@ -37,7 +37,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -150,6 +150,10 @@ const Navbar = () => {
               <img
                 src={kpLogo}
                 alt="Kamlesh Prasad"
+                width={40}
+                height={40}
+                loading="eager"
+                decoding="async"
                 className="w-full h-full object-contain"
               />
             </div>

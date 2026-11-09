@@ -1,10 +1,12 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { Shield, Server, Building2, Rocket } from "lucide-react";
 
 const ProfileSection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const shouldReduceMotion = useReducedMotion();
+  const inView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
+  const isVisible = inView || shouldReduceMotion;
 
   const metrics = [
     { value: "22+", label: "Years Experience", sub: "Enterprise IT & Security" },
@@ -41,8 +43,8 @@ const ProfileSection = () => {
       <div className="container mx-auto max-w-7xl" ref={ref}>
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="flex items-center gap-3 mb-10 pb-4 border-b border-border/60"
         >
@@ -59,8 +61,8 @@ const ProfileSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Big Statement + Metric Matrix */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-5 flex flex-col justify-between"
           >
@@ -96,8 +98,8 @@ const ProfileSection = () => {
 
           {/* Right Column: Detailed Narrative + Pillars */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-7 space-y-6"
           >

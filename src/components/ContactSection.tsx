@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef, useState } from "react";
 import { Mail, Linkedin, MapPin, Phone, Loader2, Send, CheckCircle2, AlertCircle, ArrowUpRight } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -39,7 +39,9 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 const ContactSection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduceMotion = useReducedMotion();
+  const inView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
+  const isVisible = inView || shouldReduceMotion;
 
   const {
     register,
@@ -97,8 +99,8 @@ const ContactSection = () => {
       <div className="container mx-auto max-w-7xl" ref={ref}>
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="flex items-center gap-3 mb-12 pb-4 border-b border-zinc-800"
         >
@@ -115,8 +117,8 @@ const ContactSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Strong CTA Typography & Contact Channels */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-5 flex flex-col justify-between"
           >
@@ -178,8 +180,8 @@ const ContactSection = () => {
 
           {/* Right Column: Premium Minimal Contact Form */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-7 border border-zinc-800 bg-zinc-900/60 p-6 sm:p-8 md:p-10"
           >

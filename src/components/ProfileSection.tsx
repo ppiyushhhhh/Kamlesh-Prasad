@@ -1,10 +1,12 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { Shield, Server, Building2, Rocket } from "lucide-react";
 
 const ProfileSection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const shouldReduceMotion = useReducedMotion();
+  const inView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
+  const isVisible = inView || shouldReduceMotion;
 
   const metrics = [
     { value: "22+", label: "Years Experience", sub: "Enterprise IT & Security" },
@@ -16,23 +18,23 @@ const ProfileSection = () => {
   const corePillars = [
     {
       icon: Shield,
-      title: "Cyber Security & Risk Governance",
-      desc: "CISO leadership, SIEM/EDR, Zscaler, 4 VAPT cycles, and DPDP Act 2023 readiness.",
+      title: "IT Service Management & Asset Governance",
+      desc: "ManageEngine ServiceDesk Plus, ITIL operations, 10,000+ asset lifecycles, and SLA compliance.",
     },
     {
       icon: Server,
-      title: "Enterprise Infrastructure at Scale",
-      desc: "3-Tier DC/DR/NDR, hybrid cloud architectures, MPLS networks, and high-availability systems.",
+      title: "Cloud Infrastructure & Linux Systems",
+      desc: "AWS compute, Linux/Ubuntu administration, Nginx reverse proxy, Cloudflare DNS/WAF, and 3-Tier DC/DR.",
     },
     {
       icon: Building2,
-      title: "Multi-Industry Domain Leadership",
-      desc: "12+ years in Retail/REIT, 8 years in IBM & Accenture, and Global Enterprise Delivery.",
+      title: "Cyber Security & Risk Governance",
+      desc: "Zero Trust architecture, CISO leadership, SIEM/EDR, Zscaler, 4 VAPT cycles, and DPDP Act readiness.",
     },
     {
       icon: Rocket,
-      title: "Strategic Transformation & M&A",
-      desc: "Post-merger IT integrations, vendor contracts (IBM, Dell & Accenture), and IT roadmaps.",
+      title: "DevOps & Operational Automation",
+      desc: "GitHub Actions CI/CD pipelines, automated server backups, health monitoring, and BCP/DR resilience.",
     },
   ];
 
@@ -41,8 +43,8 @@ const ProfileSection = () => {
       <div className="container mx-auto max-w-7xl" ref={ref}>
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="flex items-center gap-3 mb-10 pb-4 border-b border-border/60"
         >
@@ -59,17 +61,17 @@ const ProfileSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Big Statement + Metric Matrix */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-5 flex flex-col justify-between"
           >
             <div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-foreground tracking-tight leading-[1.1] mb-6">
-                Technology leadership focused on cybersecurity, infrastructure, and enterprise transformation.
+                Enterprise technology leadership anchored in IT operations, service management, and cloud modernization.
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed mb-8">
-                Partnering with CXOs, boards, and global technology teams to align technological direction with business resilience and measurable growth.
+                Partnering with engineering teams, CXOs, and global technology partners to deliver dependable infrastructure, robust security governance, and scalable cloud systems.
               </p>
             </div>
 
@@ -96,20 +98,20 @@ const ProfileSection = () => {
 
           {/* Right Column: Detailed Narrative + Pillars */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-7 space-y-6"
           >
             <div className="prose prose-slate dark:prose-invert max-w-none text-muted-foreground leading-relaxed space-y-4 text-base md:text-lg">
               <p>
-                Senior IT Leader with over <strong className="text-foreground font-semibold">22+ years&apos; experience</strong>, including 12+ years in Retail &amp; Real Estate, 8 years in IBM &amp; Accenture, and 4 years in Technical Support Services for India &amp; USA. In the last 8 years, played pivotal leadership roles in Digital Transformation, IT Security, Merger IT Integration, Data &amp; Analytics, and Business Support Services.
+                Senior IT Infrastructure &amp; Service Operations Leader with over <strong className="text-foreground font-semibold">22 years of enterprise experience</strong> across retail operations, enterprise consulting (IBM &amp; Accenture), and technical support services. Proven expertise in IT Service Management (ITIL/ITSM), enterprise IT asset lifecycles (10,000+ assets), and transitioning infrastructure into modern Linux, AWS, and automated CI/CD cloud architectures.
               </p>
               <p>
-                Effective at partnering with CXOs, senior leaders &amp; global partners to understand strategic goals and provide technological direction &amp; IT roadmaps. Proven track record leading the delivery of innovative, cost-effective solutions leveraging emerging technologies while maintaining an uncompromising security posture.
+                Track record of managing complex multi-site operations, overseeing enterprise ServiceDesk operations, enforcing strict SLA compliance, and leading infrastructure modernizations with zero data loss. Extensive hands-on and governance experience across high-availability architectures, cloud platforms, and cybersecurity frameworks.
               </p>
               <p className="text-base text-muted-foreground/90">
-                Collaborative leadership style with experience building and mentoring cross-functional teams that execute with rigor. Diversified IT Delivery &amp; Operations model experience managing tier-one technology partners including IBM, Dell &amp; Accenture.
+                Collaborative leadership style with deep experience building resilient operational models, managing tier-one partners (IBM, Dell &amp; Accenture), and automating infrastructure workflows to enhance reliability, visibility, and business agility.
               </p>
             </div>
 

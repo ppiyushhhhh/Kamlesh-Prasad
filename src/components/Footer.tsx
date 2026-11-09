@@ -35,12 +35,12 @@ const Footer = () => {
                   Kamlesh Prasad
                 </h3>
                 <p className="font-mono text-[11px] text-zinc-400">
-                  Technology Executive &bull; CIO &bull; CISO
+                  Technology Executive &bull; Cloud, DevOps &bull; CISO
                 </p>
               </div>
             </div>
             <p className="text-xs text-zinc-400 max-w-md font-light leading-relaxed">
-              Enterprise technology leadership, cybersecurity governance, and infrastructure modernization across complex multi-site operations.
+              Enterprise IT infrastructure leadership, service operations (ITSM), and cloud modernization across mission-critical environments.
             </p>
           </div>
 

@@ -1,4 +1,4 @@
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   Building2,
@@ -72,41 +72,30 @@ interface Company {
 const experienceData: Company[] = [
   {
     name: "Runwal Realty",
-    period: "2026 — PRESENT",
+    period: "2024 — PRESENT",
     tenure: "Present",
     domain: "Real Estate & Retail Transformation",
     executiveSummary:
       "Leading enterprise digital transformation, SAP & Salesforce architecture, and CISO cybersecurity governance with a Zero Trust posture.",
-    keyMetrics: ["Enterprise CIO & CTO", "Zero Trust Posture", "SAP & Salesforce", "IoT Ecosystems"],
+    keyMetrics: ["Enterprise CTO", "Zero Trust Posture", "SAP & Salesforce", "Cloud Infrastructure"],
     roles: [
       {
-        title: "Chief Information Officer (CIO)",
-        duration: "Aug 2026 – Present",
-        location: "Mumbai, India",
-        highlights: [
-          "Lead enterprise-wide information security and cyber security strategy, governance, and risk management across real estate and retail operations.",
-          "Drive digital transformation initiatives spanning e-commerce, omni-channel platforms, cloud infrastructure, and IoT ecosystems.",
-          "Shape strategic IT roadmap and technology investments as a start-up specialist, aligning innovation with business outcomes.",
-          "Champion AI adoption and data-driven decision-making to modernize operations and enhance customer experience.",
-        ],
-      },
-      {
         title: "Chief Technology Officer (CTO)",
-        duration: "May 2026 – July 2026",
+        duration: "May 2024 – Present",
         location: "Mumbai, Maharashtra, India",
         highlights: [
-          "Oversee technology architecture and digital transformation for Runwal Realty, integrating SAP, Salesforce, and cloud-native solutions.",
+          "Oversee technology architecture, infrastructure modernization, and enterprise cloud systems for Runwal Realty.",
           "Lead IT infrastructure, cybersecurity, and enterprise systems to ensure scalable, secure, and resilient technology operations.",
-          "Spearhead retail technology strategy and platform modernization across sales, service, and customer engagement channels.",
-          "Align technology execution with business priorities, enabling secure, high-performance digital platforms for growth.",
+          "Direct enterprise information security and cybersecurity strategy with an uncompromising Zero Trust posture.",
+          "Align technology execution with business priorities, modernizing sales, service, and customer engagement platforms.",
         ],
       },
     ],
   },
   {
     name: "Nexus Malls",
-    period: "2017 — 2026",
-    tenure: "9 years",
+    period: "2017 — 2024",
+    tenure: "7 years",
     domain: "Retail REIT Infrastructure & CISO Practice",
     executiveSummary:
       "Scaled IT ecosystem from 2 to 20+ mega malls with Zero Data Loss, oversaw ₹250M annual budget, 100% SSO, 98% Cloud compute, and established CISO governance.",
@@ -114,15 +103,15 @@ const experienceData: Company[] = [
     roles: [
       {
         title: "General Manager – Information Technology & Cyber Security",
-        duration: "Dec 2017 – May 2026",
+        duration: "Dec 2017 – May 2024",
         location: "Mumbai, India",
         highlights: [
-          "Primary IT interface to CXOs & Head of Departments, Centre Directors, and Finance Heads.",
-          "Managed prioritization, IT Governance, Steering committee reviews on progress & business benefits realization.",
-          "Head IT Security Practice and leads cyber security - SOC, NOC, ITSM, ITAM, CISO practice, BCP-DR.",
-          "Accountable for ₹250 Mn annual IT budget, with continuous focus on quality & cost efficiencies.",
-          "Closely work with M&A Team to initiate knowledge transfer and digital transformation.",
-          "Worked on SOW, RFI/RFP, IT Services contracts & negotiations in close coordination with commercial teams.",
+          "Directed Pan-India IT operations, ITSM workflows, and asset management (ITAM) across 20+ properties.",
+          "Managed enterprise ServiceDesk operations, establishing strict SLA governance and incident response standards.",
+          "Led IT Security Practice across SOC, NOC, ITSM, ITAM, and BCP-DR business continuity frameworks.",
+          "Accountable for ₹250M annual IT budget, driving continuous quality improvements and cost efficiencies.",
+          "Partnered with M&A leadership to execute seamless knowledge transfer and digital capability integrations.",
+          "Structured SOWs, RFIs/RFPs, and IT services contracts in close coordination with commercial teams.",
         ],
       },
       {
@@ -130,14 +119,14 @@ const experienceData: Company[] = [
         duration: "Leadership Impact",
         location: "Pan-India",
         highlights: [
-          "Led IT Department from 2 malls to 20+ malls with seamless data migration and employee rebadging with Zero Data Loss.",
+          "Scaled IT operations from 2 malls to 20+ properties with seamless data migration and zero data loss.",
           "Established and directed CISO practice for the entire organization.",
-          "Successfully executed 4 VAPT cycles with RED Team and Blue Team across Mobile App and Omnichannel Platform.",
-          "Implemented 100% SSO (Single Sign-On) across all applications in Nexus.",
+          "Executed 4 comprehensive VAPT cycles with Red and Blue Teams across mobile and omnichannel platforms.",
+          "Implemented 100% SSO (Single Sign-On) across all enterprise applications.",
           "Spearheaded SIEM deployment and enhanced endpoint defense via EDR and Zscaler.",
-          "Performed ERM post-listing and achieved risk score of 3.2 (best in REIT).",
-          "Supported Nexus One App deployment across 13 malls onboarding 400,000+ active customers.",
-          "Built Nexus as 98% Cloud Compute Organization (SaaS, PaaS, IaaS).",
+          "Completed post-listing ERM audit, achieving a risk score of 3.2 (benchmark within REIT).",
+          "Supported Nexus One platform deployment across 13 malls, onboarding 400,000+ customers.",
+          "Transformed Nexus into a 98% Cloud Compute organization across SaaS, PaaS, and IaaS.",
           "Engineered DPDP Act 2023 compliance readiness framework.",
         ],
       },
@@ -244,15 +233,17 @@ const ExperienceSection = () => {
   const [viewMode, setViewMode] = useState<"detailed" | "timeline">("detailed");
   const [expandedTimelineIndex, setExpandedTimelineIndex] = useState<number | null>(null);
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduceMotion = useReducedMotion();
+  const inView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
+  const isVisible = inView || shouldReduceMotion;
 
   return (
     <section id="experience" className="section-padding bg-section-alt border-b border-border/80 scroll-mt-16">
       <div className="container mx-auto max-w-7xl" ref={ref}>
         {/* Section Header with View Toggle */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-12 pb-4 border-b border-border/60"
         >

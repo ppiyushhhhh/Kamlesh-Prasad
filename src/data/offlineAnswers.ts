@@ -39,7 +39,7 @@ const OFFLINE_TOPICS: OfflineTopic[] = [
   {
     keywords: ["skill", "expertise", "technology", "technologies", "tech stack", "good at", "strengths"],
     answer:
-      "Kamlesh's core expertise includes Digital Transformation, IT Infrastructure, Cyber Security & InfoSec, SAP, Salesforce, Cloud technologies, IT Governance, Program Management, M&A IT Integration, Data & Analytics, IT Operations, and Stakeholder Engagement. He has partnered with technology providers like IBM, Dell, and Accenture.",
+      "Kamlesh's core expertise spans IT Service Management (ITSM, ManageEngine ServiceDesk Plus, ITIL operations), IT Asset Management (10,000+ assets), Cloud & Linux Infrastructure (AWS EC2/S3/VPC, Ubuntu, Nginx, Cloudflare DNS/WAF, VMware), DevOps Automation (GitHub Actions CI/CD, Bash scripting, automated health monitoring), and Enterprise Cybersecurity (Zero Trust, SIEM/EDR, Zscaler, DPDP Act 2023 readiness).",
   },
   {
     keywords: ["cyber", "security", "infosec", "information security", "grc", "devsecops"],

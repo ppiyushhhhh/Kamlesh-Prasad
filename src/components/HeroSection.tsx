@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Linkedin, ChevronDown, FileText, ArrowDown, MapPin, ShieldCheck, Server, RefreshCw, Maximize2, X, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import kamleshPhoto from "@/assets/kamlesh-photo.jpg";
@@ -9,6 +9,33 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 const HeroSection = () => {
   const [resumeOpen, setResumeOpen] = useState(false);
   const [photoOpen, setPhotoOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // On mobile or reduced motion, render immediately without hiding content behind opacity: 0
+  const getHeroMotion = (yOffset = 20, delay = 0, duration = 0.6) => {
+    if (shouldReduceMotion || isMobile) {
+      return {
+        initial: false,
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: isMobile ? 0.25 : 0 },
+      };
+    }
+    return {
+      initial: { opacity: 0, y: yOffset },
+      animate: { opacity: 1, y: 0 },
+      transition: { duration, delay },
+    };
+  };
 
   const handleShare = async () => {
     const shareData = {
@@ -35,9 +62,9 @@ const HeroSection = () => {
   };
 
   const pillars = [
-    { title: "Cybersecurity", icon: ShieldCheck, desc: "CISO Practice & Resilience" },
-    { title: "Infrastructure", icon: Server, desc: "Cloud, Hybrid & Scale" },
-    { title: "Transformation", icon: RefreshCw, desc: "Enterprise & M&A Strategy" },
+    { title: "ITSM & Operations", icon: Server, desc: "ServiceDesk & Asset Governance" },
+    { title: "Cloud & DevOps", icon: RefreshCw, desc: "Linux, AWS & CI/CD Pipelines" },
+    { title: "Cybersecurity", icon: ShieldCheck, desc: "Zero Trust & Systems Resilience" },
   ];
 
   return (
@@ -62,22 +89,18 @@ const HeroSection = () => {
           <div className="lg:col-span-7 xl:col-span-7 text-left">
             {/* Top Technical Metadata Bar */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              {...getHeroMotion(15, 0, 0.5)}
               className="inline-flex items-center gap-3 border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 rounded-sm mb-6 font-mono text-[11px] tracking-widest uppercase text-zinc-300"
             >
               <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-              <span>Technology Executive &bull; CIO &bull; CISO</span>
+              <span>IT Infrastructure &bull; ITSM &bull; Cloud &bull; DevOps</span>
               <span className="text-zinc-600">|</span>
               <span className="text-zinc-400">22+ Years</span>
             </motion.div>
 
             {/* Massive Hero Name */}
             <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              {...getHeroMotion(25, 0.1, 0.7)}
               className="mb-6"
             >
               <h1 className="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-display font-black tracking-tighter uppercase leading-[0.92] text-white">
@@ -91,24 +114,20 @@ const HeroSection = () => {
 
             {/* Executive Core Domain Subheader */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              {...getHeroMotion(20, 0.2, 0.6)}
               className="mb-6 space-y-2"
             >
               <p className="text-sm md:text-base font-mono uppercase tracking-[0.2em] text-zinc-200 font-semibold">
-                Cybersecurity &bull; Infrastructure &bull; Transformation
+                Enterprise IT Operations &bull; Cloud Infrastructure &bull; Systems Resilience
               </p>
               <p className="text-zinc-300 text-base md:text-lg lg:text-xl font-light leading-relaxed max-w-2xl">
-                Building resilient enterprise technology environments, safeguarding mission-critical infrastructure, and leading strategic digital transformation at scale.
+                Delivering dependable enterprise IT services, managing mission-critical infrastructure, and architecting resilient Linux, AWS, and automated CI/CD environments.
               </p>
             </motion.div>
 
             {/* Technical Pillars Matrix */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              {...getHeroMotion(20, 0.3, 0.6)}
               className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 pt-2"
             >
               {pillars.map((p) => (
@@ -131,9 +150,7 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              {...getHeroMotion(20, 0.4, 0.6)}
               className="flex flex-wrap items-center gap-4 pt-2"
             >
               <a
@@ -177,9 +194,7 @@ const HeroSection = () => {
 
             {/* Location & Verified Strip */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              {...getHeroMotion(10, 0.5, 0.6)}
               className="mt-8 pt-6 border-t border-zinc-800 flex flex-wrap items-center gap-6 text-xs text-zinc-400 font-mono"
             >
               <div className="flex items-center gap-1.5">
@@ -188,7 +203,7 @@ const HeroSection = () => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 animate-pulse" />
-                <span>Current: CIO, Runwal Realty</span>
+                <span>Current: Chief Technology Officer, Runwal Realty</span>
               </div>
             </motion.div>
           </div>
@@ -196,9 +211,10 @@ const HeroSection = () => {
           {/* Right Column: Editorial Architectural Portrait */}
           <div className="lg:col-span-5 xl:col-span-5 flex justify-center lg:justify-end">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              {...(shouldReduceMotion || isMobile
+                ? { initial: false, animate: { opacity: 1, scale: 1, y: 0 }, transition: { duration: isMobile ? 0.25 : 0 } }
+                : { initial: { opacity: 0, scale: 0.95, y: 20 }, animate: { opacity: 1, scale: 1, y: 0 }, transition: { duration: 0.8, delay: 0.2 } }
+              )}
               className="relative w-full max-w-md"
             >
               {/* Technical architectural framing */}
@@ -221,6 +237,8 @@ const HeroSection = () => {
                     width={480}
                     height={600}
                     decoding="async"
+                    loading="eager"
+                    fetchPriority="high"
                     className="w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-[1.02]"
                   />
                   {/* Subtle bottom gradient scrim for metadata badge */}

@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef, useState } from "react";
 import { Mail, Linkedin, MapPin, Phone, Loader2, Send, CheckCircle2, AlertCircle, ArrowUpRight } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -39,7 +39,9 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 const ContactSection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduceMotion = useReducedMotion();
+  const inView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
+  const isVisible = inView || shouldReduceMotion;
 
   const {
     register,
@@ -97,17 +99,17 @@ const ContactSection = () => {
       <div className="container mx-auto max-w-7xl" ref={ref}>
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="flex items-center gap-3 mb-12 pb-4 border-b border-zinc-800"
         >
           <span className="font-mono text-xs font-bold text-zinc-300 tracking-widest uppercase">
-            07 / LET&apos;S CONNECT
+            07 / CONTACT
           </span>
           <span className="h-[1px] w-12 bg-zinc-700" />
           <span className="text-xs uppercase font-mono tracking-wider text-zinc-400">
-            Executive Consultation &bull; Strategic Advisory
+            Professional Inquiries &bull; Engineering &bull; Leadership
           </span>
         </motion.div>
 
@@ -115,20 +117,20 @@ const ContactSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Strong CTA Typography & Contact Channels */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-5 flex flex-col justify-between"
           >
             <div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black uppercase tracking-tight leading-[1.08] text-white mb-6">
-                Have a technology, cybersecurity or transformation challenge?
+                Looking for IT Infrastructure, Service Management or Cloud Leadership?
                 <br />
-                <span className="text-zinc-400">Let&apos;s talk.</span>
+                <span className="text-zinc-400">Let&apos;s connect.</span>
               </h2>
 
               <p className="text-zinc-300 text-base md:text-lg leading-relaxed mb-8 font-light">
-                Available for executive consulting, board advisory, technology modernization initiatives, and high-impact leadership discussions.
+                Open to executive leadership roles, enterprise IT infrastructure modernization projects, and cloud/DevOps engineering opportunities. Based in Mumbai, engaging globally.
               </p>
             </div>
 
@@ -178,8 +180,8 @@ const ContactSection = () => {
 
           {/* Right Column: Premium Minimal Contact Form */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-7 border border-zinc-800 bg-zinc-900/60 p-6 sm:p-8 md:p-10"
           >

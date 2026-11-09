@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { ShieldCheck, Award, CheckCircle } from "lucide-react";
 
@@ -50,15 +50,17 @@ const credentials: CredentialItem[] = [
 
 const CertificationsSection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduceMotion = useReducedMotion();
+  const inView = useInView(ref, { once: true, margin: "0px 0px -40px 0px" });
+  const isVisible = inView || shouldReduceMotion;
 
   return (
     <section id="certifications" className="section-padding bg-background border-b border-border/80 scroll-mt-16">
       <div className="container mx-auto max-w-7xl" ref={ref}>
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="flex items-center gap-3 mb-10 pb-4 border-b border-border/60"
         >
@@ -76,9 +78,9 @@ const CertificationsSection = () => {
           {credentials.map((cert, i) => (
             <motion.div
               key={cert.code}
-              initial={{ opacity: 0, x: -10 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.08 * i, duration: 0.4 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, x: -10 }}
+              animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+              transition={{ delay: shouldReduceMotion ? 0 : 0.05 * i, duration: 0.35 }}
               className="px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:bg-muted/30 transition-colors"
             >
               {/* Left: Code badge & Title */}

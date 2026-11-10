@@ -53,7 +53,7 @@ export class ErrorBoundary extends Component<Props, State> {
               <RefreshCw size={14} />
               <span>Reload Portfolio</span>
             </button>
-            {process.env.NODE_ENV !== "production" && this.state.error && (
+            {Boolean(import.meta.env?.DEV) && this.state.error && (
               <pre className="mt-4 p-3 bg-black/60 border border-zinc-800 text-[11px] font-mono text-red-300 text-left overflow-auto max-h-32 rounded">
                 {this.state.error.toString()}
               </pre>

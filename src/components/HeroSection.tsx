@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Linkedin, ChevronDown, FileText, ArrowDown, MapPin, ShieldCheck, Server, RefreshCw, Maximize2, X, Share2 } from "lucide-react";
+import { Linkedin, ChevronDown, FileText, ArrowDown, MapPin, ShieldCheck, Server, Cloud, RefreshCw, Maximize2, X, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import kamleshPhoto from "@/assets/kamlesh-photo.jpg";
 import ResumeModal from "@/components/ResumeModal";

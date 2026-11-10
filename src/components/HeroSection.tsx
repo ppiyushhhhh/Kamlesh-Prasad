@@ -40,7 +40,7 @@ const HeroSection = () => {
   const handleShare = async () => {
     const shareData = {
       title: "Kamlesh Prasad | Technology Executive • CIO • CISO",
-      text: "Executive portfolio of Kamlesh Prasad — Chief Technology Officer with 22+ years in IT Infrastructure, Cyber Security, and Digital Transformation.",
+      text: "Executive portfolio of Kamlesh Prasad — Chief Information Officer with 22+ years in IT Infrastructure, Cyber Security, and Digital Transformation.",
       url: window.location.origin || window.location.href,
     };
 
@@ -203,7 +203,7 @@ const HeroSection = () => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 animate-pulse" />
-                <span>Current: Chief Technology Officer, Runwal Realty</span>
+                <span>Current: Chief Information Officer, Runwal Realty</span>
               </div>
             </motion.div>
           </div>
@@ -300,7 +300,7 @@ const HeroSection = () => {
           <div className="relative flex flex-col items-center">
             <div className="w-full px-5 py-3.5 bg-zinc-900/90 border-b border-zinc-800 flex items-center justify-between font-mono text-xs">
               <span className="text-white font-bold tracking-wider uppercase truncate max-w-[80%]">
-                Kamlesh Prasad &bull; Chief Technology Officer
+                Kamlesh Prasad &bull; Chief Information Officer
               </span>
               <button
                 type="button"

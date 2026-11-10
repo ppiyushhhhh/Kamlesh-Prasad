@@ -72,30 +72,40 @@ interface Company {
 const experienceData: Company[] = [
   {
     name: "Runwal Realty",
-    period: "2024 — PRESENT",
+    period: "MAY 2026 — PRESENT",
     tenure: "Present",
     domain: "Real Estate & Retail Transformation",
     executiveSummary:
-      "Leading enterprise digital transformation, SAP & Salesforce architecture, and CISO cybersecurity governance with a Zero Trust posture.",
-    keyMetrics: ["Enterprise CTO", "Zero Trust Posture", "SAP & Salesforce", "Cloud Infrastructure"],
+      "Leading enterprise IT strategy, digital transformation, SAP & Salesforce architecture, and CISO cybersecurity governance with a Zero Trust posture as Chief Information Officer.",
+    keyMetrics: ["Chief Information Officer", "Zero Trust Posture", "SAP & Salesforce", "Cloud & AI/ML"],
     roles: [
       {
-        title: "Chief Technology Officer (CTO)",
-        duration: "May 2024 – Present",
+        title: "Chief Information Officer",
+        duration: "Aug 2026 – Present",
         location: "Mumbai, Maharashtra, India",
         highlights: [
-          "Oversee technology architecture, infrastructure modernization, and enterprise cloud systems for Runwal Realty.",
-          "Lead IT infrastructure, cybersecurity, and enterprise systems to ensure scalable, secure, and resilient technology operations.",
-          "Direct enterprise information security and cybersecurity strategy with an uncompromising Zero Trust posture.",
-          "Align technology execution with business priorities, modernizing sales, service, and customer engagement platforms.",
+          "Direct enterprise information technology strategy, digital transformation, and cybersecurity governance across Runwal Realty.",
+          "Drive AI/ML integration, IoT for retail and real estate, and enterprise cloud modernization.",
+          "Oversee core enterprise platforms including SAP, Salesforce (SFDC), omnichannel retail, and high-availability infrastructure.",
+          "Head the Information Security & Cyber Security practice, enforcing an uncompromising Zero Trust posture and regulatory compliance.",
+        ],
+      },
+      {
+        title: "Chief Technology Officer",
+        duration: "May 2026 – Aug 2026",
+        location: "Mumbai, Maharashtra, India",
+        highlights: [
+          "Directed technology architecture, infrastructure modernization, and enterprise cloud systems for Runwal Realty.",
+          "Led IT infrastructure, cybersecurity, and enterprise systems to ensure scalable, secure, and resilient technology operations.",
+          "Aligned technology execution with business priorities, modernizing sales, service, and customer engagement platforms.",
         ],
       },
     ],
   },
   {
     name: "Nexus Malls",
-    period: "2017 — 2024",
-    tenure: "7 years",
+    period: "DEC 2017 — MAY 2026",
+    tenure: "8+ years",
     domain: "Retail REIT Infrastructure & CISO Practice",
     executiveSummary:
       "Scaled IT ecosystem from 2 to 20+ mega malls with Zero Data Loss, oversaw ₹250M annual budget, 100% SSO, 98% Cloud compute, and established CISO governance.",
@@ -103,7 +113,7 @@ const experienceData: Company[] = [
     roles: [
       {
         title: "General Manager – Information Technology & Cyber Security",
-        duration: "Dec 2017 – May 2024",
+        duration: "Dec 2017 – May 2026",
         location: "Mumbai, India",
         highlights: [
           "Directed Pan-India IT operations, ITSM workflows, and asset management (ITAM) across 20+ properties.",

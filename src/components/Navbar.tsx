@@ -83,7 +83,7 @@ const Navbar = () => {
   const handleShare = async () => {
     const shareData = {
       title: "Kamlesh Prasad | Technology Executive • CIO • CISO",
-      text: "Executive portfolio of Kamlesh Prasad — Chief Technology Officer with 22+ years in IT Infrastructure, Cyber Security, and Digital Transformation.",
+      text: "Executive portfolio of Kamlesh Prasad — Chief Information Officer with 22+ years in IT Infrastructure, Cyber Security, and Digital Transformation.",
       url: window.location.origin || window.location.href,
     };
 

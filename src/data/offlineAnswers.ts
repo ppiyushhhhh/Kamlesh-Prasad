@@ -19,22 +19,22 @@ const OFFLINE_TOPICS: OfflineTopic[] = [
   {
     keywords: ["who", "kamlesh", "about", "introduce", "yourself", "profile", "background"],
     answer:
-      "Kamlesh Prasad is the Chief Technology Officer (CTO) at Runwal Realty, based in Mumbai, India. He is a senior IT leader with over 22 years of experience, including 12+ years in Retail, 8 years with IBM & Accenture, and 4 years in Technical Support Services for India & USA. His leadership spans Digital Transformation, IT Security, Merger IT Integration, Data & Analytics, and IT Operations.",
+      "Kamlesh Prasad is the Chief Information Officer (CIO) at Runwal Realty, based in Mumbai, India. He is a senior IT leader with over 22 years of experience, including 12+ years in Retail, 8 years with IBM & Accenture, and 4 years in Technical Support Services for India & USA. His leadership spans Digital Transformation, IT Security, Merger IT Integration, Data & Analytics, and IT Operations.",
   },
   {
     keywords: ["experience", "work", "career", "companies", "job", "roles", "history", "worked"],
     answer:
-      "Kamlesh's career journey:\n\n- Runwal Realty - Chief Technology Officer (CTO), May 2026 - Present\n- Nexus Malls - General Manager, Information Technology & Cyber Security (9 years)\n- Avenue E-Commerce Limited - Manager, IT Infrastructure / Start-Up Lead (3 years)\n- Accenture Consulting Services - Consulting, IT Infrastructure (1 year)\n- IBM - IT Infrastructure roles (part of 8 years across IBM & Accenture)\n- Sitel India Pvt Ltd - Team Manager (4 years)",
+      "Kamlesh's career journey:\n\n- Runwal Realty - Chief Information Officer (CIO) (Aug 2026 - Present) & Chief Technology Officer (CTO) (May 2026 - Aug 2026)\n- Nexus Malls - General Manager, Information Technology & Cyber Security (Dec 2017 - May 2026, 8+ years)\n- Avenue E-Commerce Limited - Manager, IT Infrastructure / Start-Up Lead (3 years)\n- Accenture Consulting Services - Consulting, IT Infrastructure (1 year)\n- IBM - IT Infrastructure roles (part of 8 years across IBM & Accenture)\n- Sitel India Pvt Ltd - Team Manager (4 years)",
   },
   {
-    keywords: ["current", "runwal", "cto", "present", "now", "latest role"],
+    keywords: ["current", "runwal", "cio", "cto", "present", "now", "latest role"],
     answer:
-      "Kamlesh is currently the Chief Technology Officer (CTO) at Runwal Realty (May 2026 - Present, Mumbai). He drives enterprise-wide Digital Transformation across Retail and Real Estate, leads SAP, Salesforce, and IT Infrastructure modernization programs, and heads the Information Security & Cyber Security practice with a Zero Trust posture.",
+      "Kamlesh is currently the Chief Information Officer (CIO) at Runwal Realty (Mumbai, serving as CIO since Aug 2026; joined as CTO in May 2026). He drives enterprise-wide Digital Transformation across Retail and Real Estate, leads AI/ML, IoT, SAP, Salesforce, and IT Infrastructure modernization programs, and heads the Information Security & Cyber Security practice with a Zero Trust posture.",
   },
   {
-    keywords: ["nexus", "mall", "general manager", "9 years"],
+    keywords: ["nexus", "mall", "general manager", "8 years", "9 years"],
     answer:
-      "At Nexus Malls, Kamlesh served as General Manager - Information Technology & Cyber Security for 9 years, leading IT operations, digital transformation, and cyber security for one of India's largest retail mall portfolios.",
+      "At Nexus Malls, Kamlesh served as General Manager - Information Technology & Cyber Security from Dec 2017 to May 2026 (8+ years), leading IT operations, digital transformation, and cyber security for one of India's largest retail mall portfolios.",
   },
   {
     keywords: ["skill", "expertise", "technology", "technologies", "tech stack", "good at", "strengths"],
@@ -84,12 +84,12 @@ const OFFLINE_TOPICS: OfflineTopic[] = [
   {
     keywords: ["pitch", "60 second", "60-second", "elevator pitch", "board summary", "executive pitch", "pitch summarizing"],
     answer:
-      "⚡ **60-Second Board-Ready Executive Summary: Kamlesh Prasad**\n\n• **Strategic Leadership & CISO Mastery:** Over 22+ years driving enterprise-scale IT operations, cloud architectures (98% cloud compute), and cyber security resilience (Zero Trust, DPDP Act 2023, CISO governance) across retail, real estate, and global consulting.\n\n• **Enterprise Scale & M&A Proven:** Scaled IT ecosystems from 2 to 20+ mega properties at Nexus Malls (India's leading retail REIT), overseeing ₹250M+ annual IT budgets and multi-vendor delivery with IBM, Dell, and Accenture.\n\n• **Industry-Recognized CTO:** Currently Chief Technology Officer at Runwal Realty; recognized as DevOps Security Expert of the Year (2026), Digital Retail Guardian (2026), and Best Technology Implementation of the Year (CIO Conclave). Holds Post Graduate Cyber Security credentials from MIT xPRO.",
+      "⚡ **60-Second Board-Ready Executive Summary: Kamlesh Prasad**\n\n• **Strategic Leadership & CISO Mastery:** Over 22+ years driving enterprise-scale IT operations, cloud architectures (98% cloud compute), and cyber security resilience (Zero Trust, DPDP Act 2023, CISO governance) across retail, real estate, and global consulting.\n\n• **Enterprise Scale & M&A Proven:** Scaled IT ecosystems from 2 to 20+ mega properties at Nexus Malls (India's leading retail REIT), overseeing ₹250M+ annual IT budgets and multi-vendor delivery with IBM, Dell, and Accenture.\n\n• **Industry-Recognized CIO:** Currently Chief Information Officer at Runwal Realty; recognized as DevOps Security Expert of the Year (2026), Digital Retail Guardian (2026), and Best Technology Implementation of the Year (CIO Conclave). Holds Post Graduate Cyber Security credentials from MIT xPRO.",
   },
 ];
 
 const DEFAULT_ANSWER =
-  "Kamlesh Prasad is the CTO at Runwal Realty with 22+ years of IT leadership experience across digital transformation, cyber security, and infrastructure. Try asking me about his experience, skills, certifications, awards, or how to contact him.";
+  "Kamlesh Prasad is the CIO at Runwal Realty with 22+ years of IT leadership experience across digital transformation, cyber security, and infrastructure. Try asking me about his experience, skills, certifications, awards, or how to contact him.";
 
 /** Match a user question against the offline knowledge base. */
 export function getOfflineAnswer(question: string): string {

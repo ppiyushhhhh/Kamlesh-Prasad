@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
-import { Cpu, Languages, Server, Cloud, ShieldCheck, GitBranch } from "lucide-react";
+import { Cpu, Languages, Server, Cloud, ShieldCheck, Layers } from "lucide-react";
 
 interface SkillCategory {
   title: string;
@@ -22,11 +22,11 @@ const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: "Cloud & Linux Infrastructure",
+    title: "Cloud & Hybrid Infrastructure",
     icon: Cloud,
     skills: [
-      "AWS (EC2, S3, IAM, CloudWatch)",
-      "Linux / Ubuntu Server Administration",
+      "AWS (EC2, S3, IAM, CloudWatch, VPC)",
+      "Linux & Ubuntu Server Architecture",
       "Nginx Web Server & Reverse Proxy",
       "Cloudflare (DNS, SSL/TLS, WAF)",
       "VMware vSphere & Virtualization",
@@ -34,15 +34,15 @@ const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: "DevOps, CI/CD & Automation",
-    icon: GitBranch,
+    title: "Digital Transformation & Enterprise Platforms",
+    icon: Layers,
     skills: [
-      "GitHub Actions Automated CI/CD",
-      "Bash Shell Scripting & Maintenance",
-      "Infrastructure Monitoring & 5-Min Alerts",
-      "Automated Backups & Retention Policy",
-      "Automated PDF Health Reporting (Node.js)",
-      "Git Version Control & Release Automation",
+      "SAP ERP Architecture & Modernization",
+      "Salesforce (SFDC) CRM Integration",
+      "Retail & Real Estate IT Ecosystems",
+      "Omnichannel & E-Commerce Platforms",
+      "IoT & AI/ML Integrations (Retail Tech)",
+      "Enterprise Data & Analytics Roadmaps",
     ],
   },
   {
@@ -86,7 +86,7 @@ const SkillsSection = () => {
           </span>
           <span className="h-[1px] w-12 bg-accent/40" />
           <span className="text-xs uppercase font-mono tracking-wider text-muted-foreground">
-            IT Operations &bull; Cloud &bull; DevOps
+            IT Operations &bull; Cloud &bull; Enterprise Platforms &bull; Cyber Security
           </span>
         </motion.div>
 

@@ -33,8 +33,8 @@ const ProfileSection = () => {
     },
     {
       icon: Rocket,
-      title: "DevOps & Operational Automation",
-      desc: "GitHub Actions CI/CD pipelines, automated server backups, health monitoring, and BCP/DR resilience.",
+      title: "Digital Transformation & Platforms",
+      desc: "Enterprise ERP (SAP), Salesforce CRM, omnichannel retail architectures, AI/ML integrations, and business alignment.",
     },
   ];
 
@@ -105,7 +105,7 @@ const ProfileSection = () => {
           >
             <div className="prose prose-slate dark:prose-invert max-w-none text-muted-foreground leading-relaxed space-y-4 text-base md:text-lg">
               <p>
-                Senior IT Infrastructure &amp; Service Operations Leader with over <strong className="text-foreground font-semibold">22 years of enterprise experience</strong> across retail operations, enterprise consulting (IBM &amp; Accenture), and technical support services. Proven expertise in IT Service Management (ITIL/ITSM), enterprise IT asset lifecycles (10,000+ assets), and transitioning infrastructure into modern Linux, AWS, and automated CI/CD cloud architectures.
+                Senior IT Infrastructure &amp; Service Operations Leader with over <strong className="text-foreground font-semibold">22 years of enterprise experience</strong> across retail operations, enterprise consulting (IBM &amp; Accenture), and technical support services. Proven expertise in IT Service Management (ITIL/ITSM), enterprise IT asset lifecycles (10,000+ assets), and modernizing enterprise infrastructure across hybrid cloud, SAP, Salesforce, and Zero Trust cybersecurity architectures.
               </p>
               <p>
                 Track record of managing complex multi-site operations, overseeing enterprise ServiceDesk operations, enforcing strict SLA compliance, and leading infrastructure modernizations with zero data loss. Extensive hands-on and governance experience across high-availability architectures, cloud platforms, and cybersecurity frameworks.

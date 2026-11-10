@@ -130,7 +130,7 @@ const ContactSection = () => {
               </h2>
 
               <p className="text-zinc-300 text-base md:text-lg leading-relaxed mb-8 font-light">
-                Open to executive leadership roles, enterprise IT infrastructure modernization projects, and cloud/DevOps engineering opportunities. Based in Mumbai, engaging globally.
+                Open to executive leadership roles (CIO/CTO/CISO), enterprise IT infrastructure modernization initiatives, and digital transformation programs. Based in Mumbai, engaging globally.
               </p>
             </div>
 

@@ -39,7 +39,7 @@ const OFFLINE_TOPICS: OfflineTopic[] = [
   {
     keywords: ["skill", "expertise", "technology", "technologies", "tech stack", "good at", "strengths"],
     answer:
-      "Kamlesh's core expertise spans IT Service Management (ITSM, ManageEngine ServiceDesk Plus, ITIL operations), IT Asset Management (10,000+ assets), Cloud & Linux Infrastructure (AWS EC2/S3/VPC, Ubuntu, Nginx, Cloudflare DNS/WAF, VMware), DevOps Automation (GitHub Actions CI/CD, Bash scripting, automated health monitoring), and Enterprise Cybersecurity (Zero Trust, SIEM/EDR, Zscaler, DPDP Act 2023 readiness).",
+      "Kamlesh's core expertise spans IT Service Management (ITSM, ManageEngine ServiceDesk Plus, ITIL operations), IT Asset Management (10,000+ assets), Cloud & Hybrid Infrastructure (AWS, Linux, VMware, Active Directory, Cloudflare), Digital Transformation (SAP ERP, Salesforce SFDC, Retail & Real Estate IT, Omnichannel), and Enterprise Cybersecurity (Zero Trust, SIEM/EDR, Zscaler, DPDP Act 2023 readiness).",
   },
   {
     keywords: ["cyber", "security", "infosec", "information security", "grc", "devsecops"],

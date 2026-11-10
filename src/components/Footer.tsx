@@ -35,7 +35,7 @@ const Footer = () => {
                   Kamlesh Prasad
                 </h3>
                 <p className="font-mono text-[11px] text-zinc-400">
-                  Technology Executive &bull; CIO &bull; CISO &bull; Cloud & DevOps
+                  Technology Executive &bull; CIO &bull; CISO &bull; Enterprise IT
                 </p>
               </div>
             </div>

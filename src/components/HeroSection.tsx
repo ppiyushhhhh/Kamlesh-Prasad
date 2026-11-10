@@ -63,7 +63,7 @@ const HeroSection = () => {
 
   const pillars = [
     { title: "ITSM & Operations", icon: Server, desc: "ServiceDesk & Asset Governance" },
-    { title: "Cloud & DevOps", icon: RefreshCw, desc: "Linux, AWS & CI/CD Pipelines" },
+    { title: "Cloud & Enterprise IT", icon: Cloud, desc: "AWS, Hybrid Infra & Platforms" },
     { title: "Cybersecurity", icon: ShieldCheck, desc: "Zero Trust & Systems Resilience" },
   ];
 
@@ -93,7 +93,7 @@ const HeroSection = () => {
               className="inline-flex items-center gap-3 border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 rounded-sm mb-6 font-mono text-[11px] tracking-widest uppercase text-zinc-300"
             >
               <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-              <span>IT Infrastructure &bull; ITSM &bull; Cloud &bull; DevOps</span>
+              <span>IT Infrastructure &bull; ITSM &bull; Cloud &bull; Cyber Security</span>
               <span className="text-zinc-600">|</span>
               <span className="text-zinc-400">22+ Years</span>
             </motion.div>
